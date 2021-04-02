@@ -1,0 +1,554 @@
+﻿<Window x:Class="XamlAnalyzer.View.XamlEditor"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:XamlAnalyzer.View" 
+        xmlns:editor="clr-namespace:XamlAnalyzer.UserControls.Editor"
+        xmlns:vm="clr-namespace:XamlAnalyzer.ViewModel"
+        xmlns:utilities="clr-namespace:XamlAnalyzer.Utilities"
+        xmlns:interactivity="http://schemas.microsoft.com/expression/2010/interactivity"
+        xmlns:behaviors="clr-namespace:XamlAnalyzer.Behaviors"
+        xmlns:model="clr-namespace:XamlAnalyzer.Model"
+        xmlns:templateSelectors="clr-namespace:XamlAnalyzer.TemplateSelectors"
+        xmlns:converter="clr-namespace:XamlAnalyzer.Converters"
+        d:DataContext="{d:DesignInstance Type=vm:XamlEditorViewModel}"
+        mc:Ignorable="d" x:Name="xamlEditor"  WindowStartupLocation="CenterScreen"
+        Title="Xaml Editor" Height="600" Width="1000" MinHeight="600" MinWidth="1000">
+
+   
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/XamlAnalyzer;component/Resources/Styles/Light/MainTheme.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+
+
+
+            <converter:NoneBackgroundToBoolConverter x:Key="NoneBackgroundToBoolConverter"/>
+            <converter:SolidBackgroundToBoolConverter x:Key="SolidBackgroundToBoolConverter"/>
+            <converter:LinearBackgroundToBoolConverter x:Key="LinearBackgroundToBoolConverter"/>
+            <converter:RadialBackgroundToBoolConverter x:Key="RadialBackgroundToBoolConverter"/>
+            <converter:ImageBackgroundToBoolConverter x:Key="ImageBackgroundToBoolConverter"/>
+
+            <templateSelectors:BrushTemplateSelector x:Key="BrushTemplateSelector" 
+                                                     LinearBrushTemplate="{StaticResource LinearBrushPropertiesTemplate}"
+                                                     SolidColorBrushTemplate="{StaticResource SolidColorBrushPropertiesTemplate}"
+                                                     RadialBrushTemplate="{StaticResource RadialBrushPropertiesTemplate}"
+                                                     ImageBrushTemplate="{StaticResource ImageBrushPropertiesTemplate}"
+                                                     NoneTemplate="{StaticResource NoneBrushPropertiesTemplate}"/>
+        </ResourceDictionary>
+    </Window.Resources>
+    
+    <Window.InputBindings>
+        <KeyBinding Command="{Binding ExportCommand}" Key="E"  Modifiers="Ctrl"/>
+        <KeyBinding Command="{Binding EditXamlCommand}" Key="D"  Modifiers="Ctrl"/>
+    </Window.InputBindings>
+    
+    <Grid Background="{StaticResource SecondaryBackgroundColor}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <!--<RowDefinition Height="20"/>-->
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width=".2*" MinWidth="165" MaxWidth="400" />
+                <ColumnDefinition Width="5" />
+                <ColumnDefinition Width=".8*" />
+            </Grid.ColumnDefinitions>
+
+            <Grid Grid.Column="0" >
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+
+                    <Grid Grid.Row="0"  Height="40">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <Grid.Resources>
+                            <Style TargetType="Button" BasedOn="{StaticResource buttonStyle}"/>
+                        </Grid.Resources>
+                        <Menu   VerticalAlignment="Center" Margin="2,2,10,2" FontSize="12" Grid.Column="0" >
+                            <MenuItem Header="_File" Padding="10">
+                                <MenuItem Header="_Export Styles" Command="{Binding ExportCommand}" InputGestureText="Ctrl+E">
+                                    <MenuItem.Icon>
+                                        <TextBlock Text="&#xEDE1;" FontFamily="segoe mdl2 assets"  FontSize="16" HorizontalAlignment="Stretch"
+                                                   TextAlignment="Center" />
+                                    </MenuItem.Icon>
+                                </MenuItem>
+                                <Separator />
+                                <MenuItem Header="E_xit"  InputGestureText="Alt+F4"
+                                          Command="{Binding ExitCommand}" 
+                                          CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType={x:Type Window}}}">
+                                    <MenuItem.Icon>
+                                        <TextBlock Text="&#xF3B1;" FontFamily="segoe mdl2 assets" FontSize="16" HorizontalAlignment="Stretch"
+                                                   TextAlignment="Center" />
+                                    </MenuItem.Icon>
+                                </MenuItem>
+                            </MenuItem>
+                            <MenuItem Header="_View">
+                                <MenuItem Header="_Edit Xaml" Command="{Binding EditXamlCommand}"  InputGestureText="Ctrl+D"/>
+
+                            </MenuItem>
+                        </Menu>
+                        <StackPanel Orientation="Horizontal" Grid.Column="1">
+                            <Button Content="&#xEDE1;" ToolTip="Export" Width="40"
+                                    Command="{Binding ExportCommand}"
+                                    FontFamily="Segoe MDL2 Assets" FontSize="18"/>
+                        </StackPanel>
+                    </Grid>
+                    
+                    <Grid Grid.Row="1"  >
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="1*" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="1*" />
+                        </Grid.RowDefinitions>
+                        <TextBlock Text="Controls" Grid.Row="0" Style="{StaticResource headerTextBlockStyle}"/>
+                        <TreeView x:Name="uITreeView" Grid.Row="1"  ItemsSource="{Binding UIControl.Children}" Style="{StaticResource ControlsTreeViewStyle}" >
+                            
+                        </TreeView>
+                        <TextBlock Text="Properties" Grid.Row="2" Style="{StaticResource headerTextBlockStyle}"/>
+                        <ListView x:Name="brushPropertiesListView" Grid.Row="3" HorizontalContentAlignment="Center" ItemsSource="{Binding SelectedValue.BrushProperties, ElementName=uITreeView}" >
+                            <interactivity:Interaction.Triggers>
+                                <interactivity:EventTrigger EventName="SelectionChanged" SourceName="brushPropertiesListView">
+                                    <interactivity:InvokeCommandAction Command="{Binding SelectPropertyCommand}"
+                                                                       CommandParameter="{Binding SelectedValue,Mode=OneWay,ElementName=brushPropertiesListView}"/>
+                                </interactivity:EventTrigger>
+                            </interactivity:Interaction.Triggers>
+                            <ListView.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <UniformGrid  HorizontalAlignment="Stretch" VerticalAlignment="Top"/>
+                                </ItemsPanelTemplate>
+                            </ListView.ItemsPanel>
+                            <ListView.ItemTemplate>
+                                <DataTemplate DataType="{x:Type model:PropertyModel}">
+                                    <Border  VerticalAlignment="Center" HorizontalAlignment="Center">
+                                        <Grid>
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="1*" />
+                                                <RowDefinition Height="1*" />
+                                            </Grid.RowDefinitions>
+                                            <Rectangle Grid.Row="0" Fill="{Binding Value}" Width="60" Height="60"/>
+                                            <TextBlock Grid.Row="1" Text="{Binding Property.Name}"/>
+                                        </Grid>
+                                    </Border>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                        </ListView>
+                    </Grid>
+                </Grid>
+            </Grid>
+            <GridSplitter Grid.Column="1" VerticalAlignment="Stretch" HorizontalAlignment="Center"  Width="5"  />
+
+
+                <Grid Grid.Column="2"  HorizontalAlignment="Stretch">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="5" />
+                    <RowDefinition Height="*" MaxHeight="200" MinHeight="100"/>
+                </Grid.RowDefinitions>
+
+                <Grid Grid.Row="0" Background="#ff222222">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="5" />
+                        <ColumnDefinition Width="250" MaxWidth="300"/>
+                    </Grid.ColumnDefinitions>
+                    <!--<editor:Editor Grid.Column="0"/>-->
+                    <ContentPresenter x:Name="graphicalXaml"   Content="{Binding UI,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" 
+                          HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="0"/>
+                    
+                    <GridSplitter Grid.Column="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"/>
+
+                    <ScrollViewer Grid.Column="2" Background="WhiteSmoke" >
+                    <Grid  Grid.Column="2" >
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+
+                        <!--brushes-->
+                            <Grid  Grid.Row="0">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="1*" />
+                                    <RowDefinition Height="Auto" />
+                                </Grid.RowDefinitions>
+                                <TextBlock  Grid.Row="0" Text="Brush" Style="{StaticResource HeaderTextBlockStyle}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+                                <CheckBox x:Name="showBrushCheckBox" HorizontalAlignment="Stretch" Margin="2" Grid.Row="0" Style="{StaticResource expanderCheckBox}"/>
+                                <Grid Grid.Row="1">
+                                    <Grid.Style>
+                                        <Style TargetType="Grid">
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding IsChecked,ElementName=showBrushCheckBox}" Value="true">
+                                                    <Setter Property="Height" Value="0" />
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Grid.Style>
+
+                                    <Grid VerticalAlignment="Center"  >
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="*" />
+                                        </Grid.ColumnDefinitions>
+                                        <RadioButton Content="None"  Grid.Column="0" TextBlock.TextAlignment="Center" Padding="2,6"
+                                         IsChecked="{Binding SelectedProperty.Value,Mode=OneWay,Converter={StaticResource NoneBackgroundToBoolConverter}}"
+                                         Command="{Binding SetBackgroundToNoneCommand}"
+                                         CommandParameter="{Binding SelectedProperty}"/>
+
+                                        <RadioButton Content="Solid"  Grid.Column="1" TextBlock.TextAlignment="Center" Padding="2,6"
+                                         IsChecked="{Binding SelectedProperty.Value,Mode=OneWay,Converter={StaticResource SolidBackgroundToBoolConverter}}"
+                                         Command="{Binding SetBackgroundToSolidCommand}"
+                                         CommandParameter="{Binding SelectedProperty}"/>
+
+                                        <RadioButton Content="Linear"  Grid.Column="2" TextBlock.TextAlignment="Center" Padding="2,6"
+                                         IsChecked="{Binding SelectedProperty.Value,Mode=OneWay,Converter={StaticResource LinearBackgroundToBoolConverter}}"                                         
+                                         Command="{Binding SetBackgroundToLinearCommand}"
+                                         CommandParameter="{Binding SelectedProperty}"/>
+
+                                        <RadioButton Content="Radial"  Grid.Column="3" TextBlock.TextAlignment="Center" Padding="2,6"
+                                         IsChecked="{Binding SelectedProperty.Value,Mode=OneWay,Converter={StaticResource RadialBackgroundToBoolConverter}}"                                        
+                                         Command="{Binding SetBackgroundToRadialCommand}"
+                                         CommandParameter="{Binding SelectedProperty}"/>
+
+                                        <RadioButton Content="Image"  Grid.Column="4" TextBlock.TextAlignment="Center" Padding="2,6"
+                                         IsChecked="{Binding SelectedProperty.Value,Mode=OneWay,Converter={StaticResource ImageBackgroundToBoolConverter}}"
+                                         Command="{Binding SetBackgroundToImageCommand}"
+                                         CommandParameter="{Binding SelectedProperty}"/>
+
+                                    </Grid>
+                                </Grid>
+                            </Grid>
+<!--propertyname-->
+                            <Grid  Grid.Row="1">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="1*" />
+                                    <RowDefinition Height="Auto" />
+                                </Grid.RowDefinitions>
+                                <TextBlock  Grid.Row="0" Text="Info" Style="{StaticResource HeaderTextBlockStyle}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+                                <CheckBox x:Name="showPropertyCheckbox" HorizontalAlignment="Stretch" Margin="2" Grid.Row="0" Style="{StaticResource expanderCheckBox}"/>
+                                <Grid Grid.Row="1">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="1*" />
+                                        <RowDefinition Height="1*" />
+                                    </Grid.RowDefinitions>
+                                    <Grid.Style>
+                                        <Style TargetType="Grid">
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding IsChecked,ElementName=showPropertyCheckbox}" Value="true">
+                                                    <Setter Property="Height" Value="0" />
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Grid.Style>
+                                    <Grid Margin="0,5"  Grid.Row="0">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width=".4*" />
+                                            <ColumnDefinition Width=".6*" />
+                                        </Grid.ColumnDefinitions>
+                                        <TextBlock Text="Property Name" VerticalAlignment="Center" Grid.Column="0" Margin="2,0,0,0"/>
+                                        <TextBox Text="{Binding SelectedProperty.Property.Name,Mode=OneWay}" Background="Transparent" BorderBrush="#ffff9801" 
+                             VerticalAlignment="Center" Padding="3"  IsReadOnly="True"
+                             Grid.Column="1" Margin="0,0,2,0"/>
+                                    </Grid>
+                                    <Grid Grid.Row="1" Margin="0,0,0,5">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width=".4*" />
+                                            <ColumnDefinition Width=".6*" />
+                                        </Grid.ColumnDefinitions>
+                                        <TextBlock Text="Class Name" VerticalAlignment="Center" Grid.Column="0" Margin="2,0,0,0"/>
+                                        <TextBox Text="{Binding SelectedProperty.Owner,Mode=OneWay}" Background="Transparent" BorderBrush="#ffff9801" 
+                             VerticalAlignment="Center" Padding="3"  IsReadOnly="True"
+                             Grid.Column="1" Margin="0,0,2,0"/>
+                                    </Grid>
+
+                                </Grid>
+                            </Grid>
+<!--options-->
+                        <ContentPresenter Grid.Row="2" Content="{Binding SelectedProperty,Mode=TwoWay}" VerticalAlignment="Stretch"  ContentTemplateSelector="{StaticResource BrushTemplateSelector}"/>
+                    </Grid>
+                    </ScrollViewer>
+                </Grid>
+
+                <GridSplitter Grid.Row="1" HorizontalAlignment="Stretch" Height="5" VerticalAlignment="Center" />
+
+                <Grid Grid.Row="2"  Opacity="1"  >
+
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="1*" />
+                        <RowDefinition Height="1*" />
+                        <RowDefinition Height="1*" />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="15" />
+                        <ColumnDefinition Width="1*" />
+                        <ColumnDefinition Width="1*" />
+                        <ColumnDefinition Width="1*" />
+                        <ColumnDefinition Width="1*" />
+                        <ColumnDefinition Width="1*" />
+                        <ColumnDefinition Width="20" />
+                        <ColumnDefinition Width="1*" />
+                        <ColumnDefinition Width="1*" />
+                        <ColumnDefinition Width="1*" />
+                        <ColumnDefinition Width="1*" />
+                        <ColumnDefinition Width="1*" />
+                    </Grid.ColumnDefinitions>
+                    <Grid.Resources>
+                        <Style TargetType="RadioButton"  >
+                            <Setter Property="BorderBrush" Value="Black" />
+                            <Setter Property="BorderThickness" Value="1" />
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="RadioButton">
+                                        <Border  Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Padding="{TemplateBinding Padding}">
+                                            <ContentPresenter Content="{TemplateBinding Content}" />
+                                        </Border>
+                                        <ControlTemplate.Triggers>
+                                            <Trigger Property="IsChecked" Value="True">
+                                                <Setter Property="BorderBrush" Value="{StaticResource AccentBorderColor}" />
+                                                <Setter Property="BorderThickness" Value="1" />
+                                                <Setter Property="Foreground" Value="{StaticResource AccentColor}" />
+
+                                            </Trigger>
+                                            <Trigger Property="IsMouseOver" Value="True">
+                                                <Setter Property="Foreground" Value="{StaticResource SecondaryAccentColor}" />
+                                                <Setter Property="BorderBrush" Value="{StaticResource SecondaryAccentBorderColor}" />
+                                                <Setter Property="BorderThickness" Value="1" />
+                                            </Trigger>
+                                            <Trigger Property="IsEnabled"    Value="False">
+                                                <Setter Property="Background" Value="Gray" />
+                                                <Setter Property="BorderBrush" Value="Gray" />
+                                                <Setter Property="BorderThickness" Value="1" />
+                                            </Trigger>
+                                        </ControlTemplate.Triggers>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                            <Setter Property="Command" Value="{Binding SetBrushColorCommand}" />
+                            <Setter Property="CommandParameter" Value="{Binding Background,RelativeSource={RelativeSource Mode=Self}}" />
+                            <Setter Property="ToolTip" Value="{Binding Background,RelativeSource={RelativeSource Mode=Self}}" />
+                        </Style>
+                    </Grid.Resources>
+
+                    <TextBlock Grid.Row="0" Grid.Column="0"  Width="13" TextWrapping="Wrap" FontSize="16" Margin="2,0,0,0"
+                               HorizontalAlignment="Center" VerticalAlignment="Center" >
+                        <Run FontWeight="Bold" FontSize="12">M</Run>ain
+                    </TextBlock>
+                    <RadioButton Grid.Row="0" Grid.Column="1"   HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="3">
+                        <RadioButton.Background>
+                            <SolidColorBrush Color="{Binding MainColor}"/>
+                        </RadioButton.Background>
+                    </RadioButton>
+                    <RadioButton Grid.Row="0" Grid.Column="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="3">
+                        <RadioButton.Background>
+                            <SolidColorBrush Color="{Binding Color2}"/>
+                        </RadioButton.Background>
+                    </RadioButton>
+                    <RadioButton Grid.Row="0" Grid.Column="3"   HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="3">
+                        <RadioButton.Background>
+                            <SolidColorBrush Color="{Binding Color3}"/>
+                        </RadioButton.Background>
+                    </RadioButton>
+                    <RadioButton Grid.Row="0" Grid.Column="4" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="3">
+                        <RadioButton.Background>
+                            <SolidColorBrush Color="{Binding Color4}"/>
+                        </RadioButton.Background>
+                    </RadioButton>
+                    <RadioButton Grid.Row="0" Grid.Column="5"   HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="3">
+                        <RadioButton.Background>
+                            <SolidColorBrush Color="{Binding Color5}"/>
+                        </RadioButton.Background>
+                    </RadioButton>
+
+                    <TextBlock Grid.Row="2" Grid.Column="0" Width="10" TextWrapping="Wrap" FontSize="12"  Margin="2,0,0,0"
+                               HorizontalAlignment="Center" VerticalAlignment="Center">
+                        <Run FontWeight="Bold" FontSize="12">B</Run>ase
+                    </TextBlock>
+                    <RadioButton Grid.Row="2" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="3" Opacity="0.8">
+                        <RadioButton.Background>
+                            <SolidColorBrush Color="#ffff0000"/>
+                        </RadioButton.Background>
+                    </RadioButton>
+                    <RadioButton Grid.Row="2" Grid.Column="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="3" Opacity="0.8">
+                        <RadioButton.Background>
+                            <SolidColorBrush Color="#ff00ff00"/>
+                        </RadioButton.Background>
+                    </RadioButton>
+                    <RadioButton Grid.Row="2" Grid.Column="3"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="3" Opacity="0.85">
+                        <RadioButton.Background>
+                            <SolidColorBrush Color="#ff0000ff"/>
+                        </RadioButton.Background>
+                    </RadioButton>
+                    <RadioButton Grid.Row="2" Grid.Column="4"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="3">
+                        <RadioButton.Background>
+                            <SolidColorBrush Color="#ffffffff"/>
+                        </RadioButton.Background>
+                    </RadioButton>
+                    <RadioButton Grid.Row="2" Grid.Column="5"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="3">
+                        <RadioButton.Background>
+                            <SolidColorBrush Color="#ff000000"/>
+                        </RadioButton.Background>
+                    </RadioButton>
+
+                    <TextBlock Grid.Row="1" Grid.Column="1"  TextAlignment="Center" TextWrapping="Wrap" FontSize="11"  Margin="2,0,0,5" 
+                               HorizontalAlignment="Center" VerticalAlignment="Center">
+                        <Run>Transparency:</Run>
+                        <LineBreak/>
+                        <Run>0%</Run>
+                    </TextBlock>
+                    <TextBlock Grid.Row="1" Grid.Column="2"  TextAlignment="Center" TextWrapping="Wrap" FontSize="11"  Margin="2,0,0,5" 
+                               HorizontalAlignment="Center" VerticalAlignment="Center">
+           <Run>Transparency:</Run>
+                        <LineBreak/>
+                        <Run>25%</Run></TextBlock>
+                    <TextBlock Grid.Row="1" Grid.Column="3"  TextAlignment="Center" TextWrapping="Wrap" FontSize="11"  Margin="2,0,0,5" 
+                               HorizontalAlignment="Center" VerticalAlignment="Center">
+           <Run>Transparency:</Run>
+                        <LineBreak/>
+                        <Run>50%</Run></TextBlock>
+                    <TextBlock Grid.Row="1" Grid.Column="4" TextAlignment="Center"  TextWrapping="Wrap" FontSize="11"  Margin="2,0,0,5" 
+                               HorizontalAlignment="Center" VerticalAlignment="Center">
+           <Run>Transparency:</Run>
+                        <LineBreak/>
+                        <Run>75%</Run></TextBlock>
+                    <TextBlock Grid.Row="1" Grid.Column="5"  TextAlignment="Center" TextWrapping="Wrap" FontSize="11"  Margin="2,0,0,5" 
+                               HorizontalAlignment="Center" VerticalAlignment="Center">
+           <Run>Transparency:</Run>
+                        <LineBreak/>
+                        <Run>100%</Run></TextBlock>
+                    <RadioButton Grid.Row="1" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="3" >
+                        <RadioButton.Background>
+                            <SolidColorBrush Color="#00ffffff"/>
+                        </RadioButton.Background>
+                    </RadioButton>
+                    <RadioButton Grid.Row="1" Grid.Column="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="3" >
+                        <RadioButton.Background>
+                            <SolidColorBrush Color="#3fffffff"/>
+                        </RadioButton.Background>
+                    </RadioButton>
+                    <RadioButton Grid.Row="1" Grid.Column="3"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="3">
+                        <RadioButton.Background>
+                            <SolidColorBrush Color="#7effffff"/>
+                        </RadioButton.Background>
+                    </RadioButton>
+                    <RadioButton Grid.Row="1" Grid.Column="4"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="3">
+                        <RadioButton.Background>
+                            <SolidColorBrush Color="#bdffffff"/>
+                        </RadioButton.Background>
+                    </RadioButton>
+                    <RadioButton Grid.Row="1" Grid.Column="5"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="3">
+                        <RadioButton.Background>
+                            <SolidColorBrush Color="#ffffffff"/>
+                        </RadioButton.Background>
+                    </RadioButton>
+
+
+
+                    <TextBlock Grid.Row="0" Grid.Column="6" Width="9" TextWrapping="Wrap" FontSize="10"  Margin="10,0,0,0"
+                               HorizontalAlignment="Center" VerticalAlignment="Center">
+                        <Run FontWeight="Bold" FontSize="12">T</Run>int
+                    </TextBlock>
+                    <RadioButton Grid.Row="0" Grid.Column="7" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="3">
+                        <RadioButton.Background>
+                            <SolidColorBrush Color="{Binding Tint2}"/>
+                        </RadioButton.Background>
+                    </RadioButton>
+                    <RadioButton Grid.Row="0" Grid.Column="8" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="3">
+                        <RadioButton.Background>
+                            <SolidColorBrush Color="{Binding Tint3}"/>
+                        </RadioButton.Background>
+                    </RadioButton>
+                    <RadioButton Grid.Row="0" Grid.Column="9"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="3">
+                        <RadioButton.Background>
+                            <SolidColorBrush Color="{Binding Tint4}"/>
+                        </RadioButton.Background>
+                    </RadioButton>
+                    <RadioButton Grid.Row="0" Grid.Column="10"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="3">
+                        <RadioButton.Background>
+                            <SolidColorBrush Color="{Binding Tint5}"/>
+                        </RadioButton.Background>
+                    </RadioButton>
+                    <RadioButton Grid.Row="0" Grid.Column="11"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="3">
+                        <RadioButton.Background>
+                            <SolidColorBrush Color="{Binding Tint6}"/>
+                        </RadioButton.Background>
+                    </RadioButton>
+
+                    <TextBlock Grid.Row="1" Grid.Column="6" Width="9" TextWrapping="Wrap" FontSize="9" Margin="10,0,0,0"
+                               HorizontalAlignment="Center" VerticalAlignment="Center">
+                        <Run FontWeight="Bold" FontSize="12">S</Run>hade
+                    </TextBlock>
+                    <RadioButton Grid.Row="1" Grid.Column="7"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="3">
+                        <RadioButton.Background>
+                            <SolidColorBrush Color="{Binding Shade2}"/>
+                        </RadioButton.Background>
+                    </RadioButton>
+                    <RadioButton Grid.Row="1" Grid.Column="8"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="3">
+                        <RadioButton.Background>
+                            <SolidColorBrush Color="{Binding Shade3}"/>
+                        </RadioButton.Background>
+                    </RadioButton>
+                    <RadioButton Grid.Row="1" Grid.Column="9"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="3">
+                        <RadioButton.Background>
+                            <SolidColorBrush Color="{Binding Shade4}"/>
+                        </RadioButton.Background>
+                    </RadioButton>
+                    <RadioButton Grid.Row="1" Grid.Column="10" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="3">
+                        <RadioButton.Background>
+                            <SolidColorBrush Color="{Binding Shade5}"/>
+                        </RadioButton.Background>
+                    </RadioButton>
+                    <RadioButton Grid.Row="1" Grid.Column="11"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="3">
+                        <RadioButton.Background>
+                            <SolidColorBrush Color="{Binding Shade6}"/>
+                        </RadioButton.Background>
+                    </RadioButton>
+
+                    <TextBlock Grid.Row="2" Grid.Column="6" Width="10" TextWrapping="Wrap" FontSize="10"  Margin="10,0,0,0"
+                               HorizontalAlignment="Center" VerticalAlignment="Center">
+                        <Run FontWeight="Bold" FontSize="12">T</Run>one
+                    </TextBlock>
+                    <RadioButton Grid.Row="2" Grid.Column="7" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="3">
+                        <RadioButton.Background>
+                            <SolidColorBrush Color="{Binding Tone2}"/>
+                        </RadioButton.Background>
+                    </RadioButton>
+                    <RadioButton Grid.Row="2" Grid.Column="8"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="3">
+                        <RadioButton.Background>
+                            <SolidColorBrush Color="{Binding Tone3}"/>
+                        </RadioButton.Background>
+                    </RadioButton>
+                    <RadioButton Grid.Row="2" Grid.Column="9" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="3">
+                        <RadioButton.Background>
+                            <SolidColorBrush Color="{Binding Tone4}"/>
+                        </RadioButton.Background>
+                    </RadioButton>
+                    <RadioButton Grid.Row="2" Grid.Column="10"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="3">
+                        <RadioButton.Background>
+                            <SolidColorBrush Color="{Binding Tone5}"/>
+                        </RadioButton.Background>
+                    </RadioButton>
+                    <RadioButton Grid.Row="2" Grid.Column="11"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="3">
+                        <RadioButton.Background>
+                            <SolidColorBrush Color="{Binding Tone6}"/>
+                        </RadioButton.Background>
+                    </RadioButton>
+                </Grid>
+            </Grid>
+        </Grid>
+
+        <!--<Grid Grid.Row="1" Background="{StaticResource MainBackgroundColor}">
+            <TextBlock Text="{Binding Message}" DataContext="{Binding Path=(utilities:Logger.LastLog)}"  HorizontalAlignment="Stretch" Margin="0,0,40,0"/>
+        </Grid>-->
+    </Grid>
+</Window>

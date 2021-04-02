@@ -1,0 +1,137 @@
+﻿<Grid x:Class="XamlAnalyzer.UserControls.Editor.Editor"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:XamlAnalyzer.UserControls.Editor"
+      xmlns:interactivity ="http://schemas.microsoft.com/expression/2010/interactivity"
+      xmlns:converter="clr-namespace:XamlAnalyzer.Converters"
+      xmlns:behavior="clr-namespace:XamlAnalyzer.Behaviors"
+      xmlns:viewmodel="clr-namespace:XamlAnalyzer.ViewModel" 
+      d:DataContext="{d:DesignInstance Type=viewmodel:XamlEditorViewModel}"
+             mc:Ignorable="d"  
+             d:DesignHeight="450" d:DesignWidth="800">
+    <Grid.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/XamlAnalyzer;component/Resources/Styles/Light/MainTheme.xaml"/>
+            </ResourceDictionary.MergedDictionaries>            
+            <converter:XamlToUIConverter x:Key="XamlToUIConverter"/>
+            <converter:LineCounterConverter x:Key="LineCounterConverter"/>
+   </ResourceDictionary>
+
+    </Grid.Resources>
+
+    <Grid.RowDefinitions>
+        <RowDefinition Height="1*" />
+        <RowDefinition Height="Auto" />
+    </Grid.RowDefinitions>
+
+    <interactivity:Interaction.Behaviors>
+        <behavior:CommitXamlEditorBehavior/>
+    </interactivity:Interaction.Behaviors>
+    
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*" MaxWidth="1000" x:Name="textBox"/>
+            <ColumnDefinition Width="5" />
+            <ColumnDefinition Width="1*" MaxWidth="1000" x:Name="graphical"/>
+        </Grid.ColumnDefinitions>
+
+      
+
+
+        <ScrollViewer Grid.Column="0">
+
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="0" />
+                    <ColumnDefinition Width="1*" />
+                </Grid.ColumnDefinitions>
+
+           
+                <!--<StackPanel>
+            
+        </StackPanel>-->
+        <TextBox HorizontalScrollBarVisibility="Visible" VerticalScrollBarVisibility="Disabled"
+                 x:Name="XamlTextBox" AcceptsReturn="True" AcceptsTab="True"  
+                  FontFamily="Microsoft YaHei UI" Grid.Column="1" 
+                 FontSize="12"  TextChanged="XamlTextBox_TextChanged" 
+                 Background="#ffdddddd" Foreground="#ff333333" 
+                     Text="{Binding XamlFile.Content,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}">
+                    <TextBox.InputBindings>
+                        <KeyBinding Command="{Binding SaveCommand}"  Key="S" Modifiers="Ctrl"/>
+                    </TextBox.InputBindings>
+                </TextBox>
+
+          
+            </Grid>
+        </ScrollViewer>
+        <!--{Binding XamlContent,Converter={StaticResource XamlToUIConverter}}-->
+        <GridSplitter Grid.Column="1" Width="5" VerticalAlignment="Stretch" HorizontalAlignment="Center"/>
+
+        <Border Grid.Column="2" BorderBrush="{StaticResource AccentColor}" BorderThickness="5" Margin="2">
+        <ContentPresenter x:Name="graphicalXaml"   Content="{Binding UI,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" 
+                          HorizontalAlignment="Stretch" VerticalAlignment="Stretch" 
+                          />
+        </Border>
+
+
+    </Grid>
+
+    <Grid Grid.Row="1" >
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+
+
+        <RadioButton x:Name="textRadioButton" Grid.Column="0"  Content="Xaml" IsChecked="True" >
+            <RadioButton.Triggers>
+                <EventTrigger RoutedEvent="RadioButton.Checked" SourceName="textRadioButton">
+                    <BeginStoryboard>
+                        <Storyboard>
+                            <DoubleAnimation Duration="0:0:0.1" To="0" Storyboard.TargetProperty="MaxWidth" Storyboard.TargetName="graphical"/>
+                            <DoubleAnimation Duration="0:0:0.1" To="10000" Storyboard.TargetProperty="MaxWidth" Storyboard.TargetName="textBox"/>
+                        </Storyboard>
+                    </BeginStoryboard>
+                </EventTrigger>
+            </RadioButton.Triggers>
+        </RadioButton>
+        
+        <RadioButton x:Name="splitRadioButton" Grid.Column="1" Content="Image" >
+            <RadioButton.Triggers>
+                <EventTrigger RoutedEvent="RadioButton.Checked" SourceName="splitRadioButton">
+                    <BeginStoryboard>
+                        <Storyboard>
+                            <DoubleAnimation Duration="0:0:0.1" To="10000" Storyboard.TargetProperty="MaxWidth" Storyboard.TargetName="graphical"/>
+                            <DoubleAnimation Duration="0:0:0.1" To="10000" Storyboard.TargetProperty="MaxWidth" Storyboard.TargetName="textBox"/>
+                        </Storyboard>
+                    </BeginStoryboard>
+                </EventTrigger>
+            </RadioButton.Triggers>
+        </RadioButton>
+        
+        <RadioButton x:Name="graphicalRadioButton" Grid.Column="2"  Content="Graphic" >
+            <RadioButton.Triggers>
+                <EventTrigger RoutedEvent="RadioButton.Checked" SourceName="graphicalRadioButton">
+                    <BeginStoryboard>
+                        <Storyboard>
+                            <DoubleAnimation Duration="0:0:0.1" To="10000" Storyboard.TargetProperty="MaxWidth" Storyboard.TargetName="graphical"/>
+                            <DoubleAnimation Duration="0:0:0.1" To="0" Storyboard.TargetProperty="MaxWidth" Storyboard.TargetName="textBox"/>
+                        </Storyboard>
+                    </BeginStoryboard>
+                </EventTrigger>
+            </RadioButton.Triggers>
+        </RadioButton>
+
+
+        <!--<StackPanel Orientation="Horizontal" Grid.Column="3" HorizontalAlignment="Right" Margin="0,0,10,0" Background="DarkOrange">
+            <TextBlock Text="Line:"/>
+            <TextBlock Text="{Binding CaretIndex,Mode=TwoWay,ElementName=XamlTextBox,UpdateSourceTrigger=PropertyChanged}"/>
+        </StackPanel>-->
+    </Grid>
+
+</Grid>

@@ -1,0 +1,31 @@
+﻿<Application x:Class="SP_Color_Wheel.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:SP_Color_Wheel"
+             xmlns:vm="clr-namespace:SP_Color_Wheel.ViewModels" 
+             xmlns:wheel="clr-namespace:SP_Color_Wheel.UserControls.Wheel"
+             xmlns:rgb="clr-namespace:SP_Color_Wheel.UserControls.RGB"
+             StartupUri="Views/MainWindow.xaml"
+             
+             ShutdownMode="OnMainWindowClose">
+    
+    <!--StartupUri="Views/MainWindow.xaml"  /Resources/Fonts/#Ubuntu-->
+    <Application.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/Resources/Styles/Light/MainTheme.xaml"/>
+
+                <ResourceDictionary>
+                    <DataTemplate DataType="{x:Type vm:WheelViewModel}">
+                        <wheel:Wheel IsLoaded="{Binding IsWheelLoaded,Mode=TwoWay}"/>
+                    </DataTemplate>
+                    
+                    <DataTemplate DataType="{x:Type vm:RGBViewModel}">
+                        <rgb:RGBColors/>
+                    </DataTemplate>
+                </ResourceDictionary>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Application.Resources>
+</Application>
+<!--StartupUri="Views/HorizontalColorSlider.xaml"-->

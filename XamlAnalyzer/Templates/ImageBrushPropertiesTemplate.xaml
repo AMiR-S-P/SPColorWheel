@@ -1,0 +1,184 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:XamlAnalyzer.Templates"
+                    xmlns:system="clr-namespace:System;assembly=mscorlib"
+                    xmlns:model="clr-namespace:XamlAnalyzer.Model" 
+                    xmlns:View="clr-namespace:XamlAnalyzer.View">
+
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="/XamlAnalyzer;component/Resources/Styles/Light/TextBlock.xaml"/>
+        <ResourceDictionary Source="/XamlAnalyzer;component/Resources/Styles/Light/CheckBoxes.xaml"/>
+        <ResourceDictionary Source="/XamlAnalyzer;component/Resources/Styles/Light/Buttons.xaml"/>
+    </ResourceDictionary.MergedDictionaries>
+
+    <ObjectDataProvider ObjectType="{x:Type system:Enum}" x:Key="tileMode" MethodName="GetValues">
+        <ObjectDataProvider.MethodParameters>
+            <x:Type TypeName="TileMode"/>
+        </ObjectDataProvider.MethodParameters>
+    </ObjectDataProvider>
+    <ObjectDataProvider ObjectType="{x:Type system:Enum}" x:Key="alignmentX" MethodName="GetValues">
+        <ObjectDataProvider.MethodParameters>
+            <x:Type TypeName="AlignmentX"/>
+        </ObjectDataProvider.MethodParameters>
+    </ObjectDataProvider>
+    <ObjectDataProvider ObjectType="{x:Type system:Enum}" x:Key="alignmentY" MethodName="GetValues">
+        <ObjectDataProvider.MethodParameters>
+            <x:Type TypeName="AlignmentY"/>
+        </ObjectDataProvider.MethodParameters>
+    </ObjectDataProvider>
+
+    <ObjectDataProvider ObjectType="{x:Type system:Enum}" x:Key="stretch" MethodName="GetValues">
+        <ObjectDataProvider.MethodParameters>
+            <x:Type TypeName="Stretch"/>
+        </ObjectDataProvider.MethodParameters>
+    </ObjectDataProvider>
+
+    <ObjectDataProvider ObjectType="{x:Type system:Enum}" x:Key="mappingMode" MethodName="GetValues">
+        <ObjectDataProvider.MethodParameters>
+            <x:Type TypeName="BrushMappingMode"/>
+        </ObjectDataProvider.MethodParameters>
+    </ObjectDataProvider>
+
+    <DataTemplate DataType="{x:Type model:BrushPropertyModel}"  x:Key="ImageBrushPropertiesTemplate" >
+        <StackPanel>
+            <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+
+            <TextBlock  Grid.Row="0" Text="Image Brush Properties" Style="{StaticResource HeaderTextBlockStyle}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+            <CheckBox x:Name="isExpandedCheckBox" HorizontalAlignment="Stretch" Margin="2" Grid.Row="0" Style="{StaticResource expanderCheckBox}"/>
+            <Grid  Grid.Row="1">
+                <Grid.Style>
+                    <Style TargetType="Grid">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding IsChecked,ElementName=isExpandedCheckBox}" Value="true">
+                                <Setter Property="Height" Value="0" />
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Grid.Style>
+      
+                <Grid >
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width=".4*" />
+                        <ColumnDefinition Width=".6*" />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="30" />
+                        <RowDefinition Height="30" />
+                        <RowDefinition Height="30" />
+                        <RowDefinition Height="30" />
+                        <RowDefinition Height="30" />
+                        <RowDefinition Height="30" />
+                        <RowDefinition Height="30" />
+                        <RowDefinition Height="30" />
+                        <RowDefinition Height="30" />
+                        <RowDefinition Height="30" />
+                    </Grid.RowDefinitions>
+                        <Grid Grid.Row="0" Grid.ColumnSpan="2" >
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="1*" />
+                                <RowDefinition Height="1*" />
+                            </Grid.RowDefinitions>
+
+                            <TextBlock Text="Source" VerticalAlignment="Center" Grid.Row="0" Grid.Column="0" Margin="2" />
+                            <Button Content="&#xE712;" FontFamily="segoe mdl2 assets" FontSize="14"  Grid.Row="0"
+                                HorizontalAlignment="Right" Margin="2"   Width="25"
+                                Style="{StaticResource buttonStyle}" ToolTip="Browse Image"
+                                Command="{Binding DataContext.BrowseImageSourceCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type View:XamlEditor}}}"/>
+                            <Border Grid.Row="1" Width="150" Height="150" BorderThickness="2" 
+                                    BorderBrush="#ffff9801" Background="#FFcccccc">
+                                <Image  Source="{Binding Value.ImageSource,Mode=OneWay}"/>
+                            </Border>
+                        </Grid>
+                        <TextBox Text="{Binding Value.ImageSource,Mode=OneWay}" Background="Transparent" BorderBrush="#ffff9801" 
+                             VerticalAlignment="Center" Padding="3"  IsReadOnly="True"
+                             Grid.ColumnSpan="2" Grid.Row="1" Margin="0,0,2,0"/>
+
+                    
+                    <TextBlock Text="Alignment X" Grid.Row="2" Grid.Column="0" Margin="5" ToolTip="Start Point"/>
+                    <ComboBox Grid.Row="2" Grid.Column="1" Margin="2" Grid.ColumnSpan="2" 
+                              ItemsSource="{Binding Source={StaticResource alignmentX}}" 
+                              SelectedItem="{Binding Value.AlignmentX, Mode=TwoWay}"/>
+                    
+                    <TextBlock Text="Alignment Y" Grid.Row="3" Margin="5" Grid.Column="0" ToolTip="End Point"/>
+                    <ComboBox Grid.Row="3" Grid.Column="1" Margin="2" Grid.ColumnSpan="2" 
+                              ItemsSource="{Binding Source={StaticResource alignmentY}}" 
+                              SelectedItem="{Binding Value.AlignmentY, Mode=TwoWay}"/>
+                    
+                    <TextBlock Text="Mapping Point" Grid.Row="4" Margin="5" Grid.Column="0" ToolTip="Mapping Point"/>
+                    <ComboBox Grid.Row="4" Grid.Column="1" Margin="2" Grid.ColumnSpan="2" 
+                              ItemsSource="{Binding Source={StaticResource stretch}}" 
+                              SelectedItem="{Binding Value.Stretch, Mode=TwoWay}"/>
+
+                        <TextBlock Text="Tile Mode" Grid.Row="5" Margin="5" Grid.Column="0" ToolTip="Spread Method"/>
+                    <ComboBox Grid.Row="5" Grid.Column="1" Margin="2" Grid.ColumnSpan="2" 
+                              ItemsSource="{Binding Source={StaticResource tileMode}}" 
+                              SelectedItem="{Binding Value.TileMode, Mode=TwoWay}"/>
+
+                    <TextBlock Text="Viewbox" Grid.Row="6" Margin="5" Grid.Column="0" ToolTip="Mapping Point"/>
+                    <TextBox Grid.Row="6" Grid.Column="1" Margin="2,4" Grid.ColumnSpan="2"
+                             Text="{Binding Value.Viewbox, Mode=TwoWay}"/>
+
+                    <TextBlock Text="Viewbox Unit" Grid.Row="7" Margin="5" Grid.Column="0" ToolTip="Spread Method"/>
+                    <ComboBox Grid.Row="7" Grid.Column="1" Margin="2" Grid.ColumnSpan="2" 
+                              ItemsSource="{Binding Source={StaticResource mappingMode}}" 
+                              SelectedItem="{Binding Value.ViewboxUnits, Mode=TwoWay}"/>
+
+                    <TextBlock Text="Viewport" Grid.Row="8" Margin="5" Grid.Column="0" ToolTip="Opacity"/>
+                    <TextBox Grid.Row="8" Grid.Column="1" Margin="2,4" Grid.ColumnSpan="2"
+                             Text="{Binding Value.Viewport, Mode=TwoWay}"/>
+                    
+                    <TextBlock Text="Viewport Unit" Grid.Row="9" Margin="5" Grid.Column="0" ToolTip="Opacity"/>
+                    <ComboBox Grid.Row="9" Grid.Column="1" Margin="2" Grid.ColumnSpan="2" 
+                              ItemsSource="{Binding Source={StaticResource mappingMode}}" 
+                              SelectedItem="{Binding Value.ViewportUnits, Mode=TwoWay}"/>
+                    
+                    <TextBlock Text="Opacity" Grid.Row="10" Margin="5" Grid.Column="0" ToolTip="Opacity"/>
+                    <TextBox Grid.Row="10" Grid.Column="1" Margin="2,4" Grid.ColumnSpan="2" Text="{Binding Value.Opacity, Mode=TwoWay}"/>
+                </Grid>
+
+            </Grid>
+            </Grid>
+            
+            
+            
+            <!--<Grid  >
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="1*" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <TextBlock  Grid.Row="0" Text="Color" Style="{StaticResource HeaderTextBlockStyle}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+                <CheckBox x:Name="showImageBrushCheckBox" HorizontalAlignment="Stretch" Margin="2" Grid.Row="0" IsChecked="False" Style="{StaticResource expanderCheckBox}"/>
+                <Grid x:Name="content" Grid.Row="1">
+                    <Grid.Style>
+                        <Style TargetType="Grid">
+                            <Style.Triggers>
+                                    <DataTrigger Binding="{Binding IsChecked,ElementName=showImageBrushCheckBox}" Value="true">
+                                    <Setter Property="Height" Value="0" />
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Grid.Style>
+
+
+                        <RadioButton Command="{Binding DataContext.SelectImageBrushCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type View:XamlEditor}}}" 
+                         CommandParameter="{Binding Value}" Margin="2">
+                        <StackPanel>
+                            <StackPanel Orientation="Horizontal">
+                                <Grid Width="30" Height="30" Background="{Binding Value}"/>
+                                <TextBlock Text="{Binding  Value}" VerticalAlignment="Center"/>
+                            </StackPanel>
+                        </StackPanel>
+                    </RadioButton>
+                </Grid>
+            </Grid>-->
+
+       
+        </StackPanel>
+
+    </DataTemplate>
+</ResourceDictionary>

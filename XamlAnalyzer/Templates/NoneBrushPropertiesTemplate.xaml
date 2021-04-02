@@ -1,0 +1,26 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:XamlAnalyzer.Templates"
+                    xmlns:model="clr-namespace:XamlAnalyzer.Model"
+                    xmlns:View="clr-namespace:XamlAnalyzer.View">
+
+
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="/XamlAnalyzer;component/Resources/Styles/Light/TextBlock.xaml"/>
+        <ResourceDictionary Source="/XamlAnalyzer;component/Resources/Styles/Light/CheckBoxes.xaml"/>
+    </ResourceDictionary.MergedDictionaries>
+
+    <DataTemplate DataType="{x:Type model:PropertyModel}"  x:Key="NoneBrushPropertiesTemplate" >
+
+            <Grid >
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width=".4*" />
+                    <ColumnDefinition Width=".6*" />
+                </Grid.ColumnDefinitions>
+                <TextBlock Text="Value" VerticalAlignment="Center" Grid.Column="0" Margin="2,0,0,0"/>
+                <TextBox Text="Null" Background="Transparent" BorderBrush="#ffff9801" 
+                             VerticalAlignment="Center" Padding="3"  IsReadOnly="True"
+                             Grid.Column="1" Margin="0,0,2,0"/>
+            </Grid>
+    </DataTemplate>
+</ResourceDictionary>

@@ -1,0 +1,81 @@
+﻿<UserControl x:Class="SP_Color_Wheel.UserControls.Properties.Wheel.WheelProperties"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:SP_Color_Wheel.UserControls.Properties.Wheel"
+             xmlns:enums="clr-namespace:SP_Color_Wheel.Enums"
+             xmlns:extension="clr-namespace:SP_Color_Wheel.Extensions"
+             xmlns:templateSelector="clr-namespace:SP_Color_Wheel.TemplateSelectors"
+             xmlns:converter="clr-namespace:SP_Color_Wheel.Converters" xmlns:harmonyProperties="clr-namespace:SP_Color_Wheel.UserControls.Properties.Wheel.Harmonies"
+             mc:Ignorable="d" x:Name="wheelProperties"
+             d:DesignHeight="450" d:DesignWidth="800">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/SP_Color_Wheel;component/Resources/Styles/UniversalStyles.Xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        
+        <x:Array x:Key="pointers" Type="{x:Type enums:PointerHarmonyType}"/>
+
+        <templateSelector:ColorHarmonyPropertiesTemplateSelector x:Key="ColorHarmonyPropertiesTemplateSelector" />
+        <converter:HarmonyToEnumConverter x:Key="HarmonyToEnumConverter"/>
+
+
+        <!--<DataTemplate >
+            <DataTemplate.DataType>
+                --><!--<enums:PointerHarmonyType>--><!--
+                    Analogous
+                --><!--</enums:PointerHarmonyType>--><!--
+            </DataTemplate.DataType>
+            <harmonyProperties:AnalogousProperties/>
+        </DataTemplate>-->
+
+        </ResourceDictionary>
+
+    </UserControl.Resources>
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
+        <StackPanel>
+            <Expander Header="Colors In Wheel" IsExpanded="True"  FontFamily="/Resources/Fonts/#Ubuntu" >
+                <StackPanel >
+                    <CheckBox x:Name="redChckBox" Margin="10,10,10,0" Content="Red" IsChecked="{Binding HasRed , Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" />
+                    <CheckBox x:Name="greenChckBox" Margin="10,5,10,0"  Content="Green" IsChecked="{Binding HasGreen , Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" />
+                    <CheckBox x:Name="blueChckBox" Margin="10,5,10,10"  Content="Blue" IsChecked="{Binding HasBlue , Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
+                </StackPanel>
+            </Expander>
+            
+            
+            <Expander Header="Color Harmony" IsExpanded="True">
+                <DockPanel>
+                    <ComboBox DockPanel.Dock="Top" Margin="10,5"  x:Name="pointersComboBox"
+                              SelectedItem="{Binding HarmonyType,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                              SelectedIndex="2">
+                        <enums:PointerHarmonyType >
+                            Single
+                        </enums:PointerHarmonyType>
+                        <enums:PointerHarmonyType >
+                            MonoChromatic
+                        </enums:PointerHarmonyType>
+                        <enums:PointerHarmonyType >
+                            Complementary
+                        </enums:PointerHarmonyType>
+                        <enums:PointerHarmonyType >
+                            Triadic
+                        </enums:PointerHarmonyType>
+                        <enums:PointerHarmonyType >
+                            Analogous
+                        </enums:PointerHarmonyType>
+                        <enums:PointerHarmonyType >
+                            Square
+                        </enums:PointerHarmonyType>
+                    </ComboBox>
+                    
+                    <ContentPresenter x:Name="colorHarmonyProperties" 
+                                      Content="{Binding  SelectedItem,ElementName=pointersComboBox}"
+                                      ContentTemplateSelector="{StaticResource ColorHarmonyPropertiesTemplateSelector}"
+                                      DockPanel.Dock="Bottom" Margin="2,5"  />
+                </DockPanel>
+            </Expander>
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>

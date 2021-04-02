@@ -1,0 +1,68 @@
+﻿<UserControl x:Class="SP_Color_Wheel.UserControls.Preferences.ColorWheelPreference"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:SP_Color_Wheel.UserControls.Preferences"
+             mc:Ignorable="d"
+             d:DesignHeight="450" d:DesignWidth="800">
+    <UserControl.Resources>
+        <BooleanToVisibilityConverter x:Key="b2v"/>
+    </UserControl.Resources>
+    <StackPanel>
+        <TextBlock Text="Color Cards"  Style="{StaticResource headerTextBlockStyle}"/>
+        <TextBlock Text="Background" Style="{StaticResource subHeaderTextBlockStyle}"/>
+
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="1*" />
+                <RowDefinition Height="1*" />
+            </Grid.RowDefinitions>
+            <Grid Grid.Row="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1*" />
+                    <ColumnDefinition Width="1*" />
+                    <ColumnDefinition Width="1*" />
+                    <ColumnDefinition Width="1*" />
+                    <ColumnDefinition Width="1*" />
+                    <ColumnDefinition Width="1*" />
+                    <ColumnDefinition Width="1*" />
+                </Grid.ColumnDefinitions>
+                <RadioButton IsChecked="True" Margin="5" Grid.Column="0" Content="None"/>
+                <!--<RadioButton x:Name="textRadioBtn" Margin="5" Grid.Column="1" Content="Text"/>-->
+                <RadioButton x:Name="ImageRadioBtn" Margin="5" Grid.Column="2" Content="Image"/>
+            </Grid>
+
+            <!--//text coming soon-->
+            <!--<StackPanel  x:Name="textStckPnl" Grid.Row="1" Visibility="{Binding IsChecked,ElementName=textRadioBtn,Converter={StaticResource b2v}}">
+                <TextBlock Text="Enter Your Text:" Margin="10"/>
+                <TextBox  Margin="10,0"/>
+            </StackPanel>-->
+
+            <StackPanel Grid.Row="1" Visibility="{Binding IsChecked,ElementName=ImageRadioBtn,Converter={StaticResource b2v}}">
+                <TextBlock Text="Choose Your Background:" Margin="10"/>
+                <ListView  MaxHeight="250"
+                      Margin="5,0"
+                           SelectedItem="{Binding SelectedImage,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                           ItemsSource="{Binding ImageSources}">
+                    <ListView.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <UniformGrid Columns="4" HorizontalAlignment="Center" VerticalAlignment="Top" IsItemsHost="True" />
+                        </ItemsPanelTemplate>
+                    </ListView.ItemsPanel>
+
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <Border Background="#Ffffffff" BorderThickness="0" Margin="0,5" BorderBrush="{StaticResource SecondaryAccentColor}" Padding="2" CornerRadius="5">
+                                <Border.Effect>
+                                    <DropShadowEffect BlurRadius="15" ShadowDepth="5"  Opacity="0.4"  Color="Black"/>
+                                </Border.Effect>
+                                <Image Source="{Binding .}" Width="130" Height="130" Stretch="Uniform" />
+                            </Border>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>     
+            </StackPanel>
+        </Grid>
+    </StackPanel>
+</UserControl>

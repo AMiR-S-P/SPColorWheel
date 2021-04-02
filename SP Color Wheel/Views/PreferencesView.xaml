@@ -1,0 +1,67 @@
+﻿<Window x:Class="SP_Color_Wheel.Views.PreferencesView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:SP_Color_Wheel.Views"
+        xmlns:vm="clr-namespace:SP_Color_Wheel.ViewModels"
+        xmlns:uc="clr-namespace:SP_Color_Wheel.UserControls.Preferences"
+        MinHeight="450" MinWidth="800" MaxHeight="450" MaxWidth="800"
+        mc:Ignorable="d" WindowStartupLocation="CenterScreen" WindowStyle="ThreeDBorderWindow" ResizeMode="NoResize"
+        Title="PreferencesView" Height="450" Width="800">
+
+    <Window.Resources>
+        <DataTemplate DataType="{x:Type vm:ColorWheelPreferenceViewModel}" >
+            <uc:ColorWheelPreference/>
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type vm:XamlPreferenceViewModel}">
+            <uc:XamlPreference/>
+        </DataTemplate>
+
+
+    </Window.Resources>
+
+    <DockPanel>
+        <Grid DockPanel.Dock="Bottom" Background="{StaticResource BaseBackgroundColor}">
+            <Button Content="OK" HorizontalAlignment="Right" Margin="0,0,75,0" Width="65" Height="25"/>
+            <Button Content="Cancel" HorizontalAlignment="Right" Margin="5" Width="65" Height="25"/>
+        </Grid>
+        <Grid DockPanel.Dock="Left" Width="150">
+            <ListView x:Name="preferencesList"
+                      BorderBrush="{StaticResource AccentColor}" 
+                      ItemsSource="{Binding Preferences}">
+                <ListView.Resources>
+                    <Style TargetType="ListViewItem">
+                        <Setter Property="VerticalAlignment" Value="Stretch" />
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="ListViewItem">
+                                    <Border x:Name="mainBorder" Padding="5" Background="Transparent">
+                                        <TextBlock Text="{Binding Title}"/>
+                                    </Border>
+                                    <ControlTemplate.Triggers>
+                                        <Trigger Property="IsSelected" Value="True">
+                                            <Setter Property="TextElement.Foreground" Value="{StaticResource SecondaryAccentColor}" TargetName="mainBorder"/>
+                                        </Trigger>
+                                        <Trigger Property="IsMouseOver" Value="True">
+                                            <Setter Property="Background" Value="#CcFF8701" TargetName="mainBorder"/>
+                                            <Setter Property="TextElement.Foreground" Value="Black" TargetName="mainBorder"/>
+                                        </Trigger>
+                                    </ControlTemplate.Triggers>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                  
+                    </Style>
+                </ListView.Resources>
+               
+            </ListView>
+        </Grid>
+        <Grid DockPanel.Dock="Top">
+            <ContentPresenter Content="{Binding SelectedItem,ElementName=preferencesList}">
+            </ContentPresenter>
+        </Grid>
+
+   
+    </DockPanel>
+</Window>

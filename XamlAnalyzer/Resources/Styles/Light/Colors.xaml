@@ -1,0 +1,35 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+
+    <SolidColorBrush x:Key="MainBackgroundColor" Color="#FFF5F5F5"/> <!--whitsmoke-->
+    <SolidColorBrush x:Key="SecondaryBackgroundColor" Color="#FFDCDCDC"/>
+
+
+    <SolidColorBrush x:Key="MainBorderColor" Color="#FFACACAC"/>
+
+    <SolidColorBrush x:Key="AccentTransparentColor" Color="#Cc6495ED"      />
+    <SolidColorBrush x:Key="AccentColor"            Color="CornflowerBlue" />
+    <SolidColorBrush x:Key="AccentBorderColor"      Color="#F14965B8"      />
+
+
+
+    <SolidColorBrush x:Key="SecondaryAccentTransparentColor" Color="#CcFF8701"/>
+    <SolidColorBrush x:Key="SecondaryAccentColor" Color="#ffFF8701"/>
+    <SolidColorBrush x:Key="SecondaryAccentBorderColor" Color="#F1FF8701"/>
+    
+    <LinearGradientBrush x:Key="MainHighLightBackgroundColor" StartPoint="0.5,1" EndPoint="0.5,0">
+        <GradientStop Color="#FF777777" Offset="0" />
+        <GradientStop Color="#FFF5F5F5" Offset="1"/>
+    </LinearGradientBrush>
+
+    <LinearGradientBrush x:Key="MainSelectedHighLightBackgroundColor" StartPoint="0.5,1" EndPoint="0.5,0">
+        <GradientStop Color="CornflowerBlue" Offset="0" />
+        <GradientStop Color="#FFF5F5F5" Offset="1"/>
+    </LinearGradientBrush>
+
+    <LinearGradientBrush x:Key="MainMouseOverHighLightBackgroundColor" StartPoint="0.5,1" EndPoint="0.5,0">
+        <GradientStop Color="#9c6495ED" Offset="0" />
+        <GradientStop Color="#FFF5F5F5" Offset="1"/>
+    </LinearGradientBrush>
+</ResourceDictionary>

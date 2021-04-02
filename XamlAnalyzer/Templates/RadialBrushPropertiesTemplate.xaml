@@ -1,0 +1,181 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:XamlAnalyzer.Templates"
+                    xmlns:system="clr-namespace:System;assembly=mscorlib"
+                    xmlns:model="clr-namespace:XamlAnalyzer.Model" 
+                    xmlns:View="clr-namespace:XamlAnalyzer.View">
+
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="/XamlAnalyzer;component/Resources/Styles/Light/TextBlock.xaml"/>
+        <ResourceDictionary Source="/XamlAnalyzer;component/Resources/Styles/Light/CheckBoxes.xaml"/>
+        <ResourceDictionary Source="/XamlAnalyzer;component/Resources/Styles/Light/Buttons.xaml"/>
+    </ResourceDictionary.MergedDictionaries>
+
+    <ObjectDataProvider ObjectType="{x:Type system:Enum}" x:Key="spread" MethodName="GetValues">
+        <ObjectDataProvider.MethodParameters>
+            <x:Type TypeName="GradientSpreadMethod"/>
+        </ObjectDataProvider.MethodParameters>
+    </ObjectDataProvider>
+
+    <ObjectDataProvider ObjectType="{x:Type system:Enum}" x:Key="mappingMode" MethodName="GetValues">
+        <ObjectDataProvider.MethodParameters>
+            <x:Type TypeName="BrushMappingMode"/>
+        </ObjectDataProvider.MethodParameters>
+    </ObjectDataProvider>
+
+    <ObjectDataProvider ObjectType="{x:Type system:Enum}" x:Key="colorInterpolationMode" MethodName="GetValues">
+        <ObjectDataProvider.MethodParameters>
+            <x:Type TypeName="ColorInterpolationMode"/>
+        </ObjectDataProvider.MethodParameters>
+    </ObjectDataProvider>
+    <DataTemplate DataType="{x:Type model:GradientBrushPropertyModel}"  x:Key="RadialBrushPropertiesTemplate" >
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+
+
+            <Grid  Grid.Row="0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="1*" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <TextBlock  Grid.Row="0" Text="Radial Brush Properties" Style="{StaticResource HeaderTextBlockStyle}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+                <CheckBox x:Name="isExpandedCheckBox" HorizontalAlignment="Stretch" Margin="2" Grid.Row="0" Style="{StaticResource expanderCheckBox}"/>
+                <Grid x:Name="content" Grid.Row="1">
+                    <Grid.Style>
+                        <Style TargetType="Grid">
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding IsChecked,ElementName=isExpandedCheckBox}" Value="true">
+                                    <Setter Property="Height" Value="0" />
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Grid.Style>
+                    <Grid >
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="1*" />
+                            <ColumnDefinition Width="1*" />
+                            <ColumnDefinition Width="1*" />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="1*" />
+                            <RowDefinition Height="1*" />
+                            <RowDefinition Height="1*" />
+                            <RowDefinition Height="1*" />
+                            <RowDefinition Height="1*" />
+                            <RowDefinition Height="1*" />
+                            <RowDefinition Height="1*" />
+                            <RowDefinition Height="1*" />
+                        </Grid.RowDefinitions>
+
+                        <TextBlock Text="Gradient Origin" ToolTip="Gradient Origin" Grid.Row="0" Grid.Column="0" Margin="5"/>
+                        <TextBox Grid.Row="0" Grid.Column="1" Margin="5,4" Text="{Binding Value.GradientOrigin, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+
+                        <TextBlock Text="Center" Grid.Row="1" ToolTip="Center"  Grid.Column="0" Margin="5"/>
+                        <TextBox Grid.Row="1" Grid.Column="1" Margin="5,4" Text="{Binding Value.Center, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+
+                        <TextBlock Text="Radius X" Grid.Row="2" ToolTip="Radius X"  Margin="5" Grid.Column="0"/>
+                        <TextBox Grid.Row="2" Grid.Column="1" Margin="5,4" Text="{Binding Value.RadiusX, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                        <TextBlock Text="Radius Y" Grid.Row="3" ToolTip="Radius Y"  Margin="5" Grid.Column="0"/>
+                        <TextBox Grid.Row="3" Grid.Column="1" Margin="5,4" Text="{Binding Value.RadiusY, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+
+
+
+                        <TextBlock Text="Mapping Point" ToolTip="Mapping Point"  Grid.Row="4" Margin="5" Grid.Column="0"/>
+                        <ComboBox Grid.Row="4" Grid.Column="1" Margin="5" Grid.ColumnSpan="2" 
+                              ItemsSource="{Binding Source={StaticResource mappingMode}}" 
+                              SelectedItem="{Binding Value.MappingMode, Mode=TwoWay}"/>
+
+                        <TextBlock Text="Spread Method" ToolTip="Spread Method"  Grid.Row="5" Margin="5" Grid.Column="0"/>
+                        <ComboBox Grid.Row="5" Grid.Column="1" Margin="5" Grid.ColumnSpan="2" 
+                              ItemsSource="{Binding Source={StaticResource spread}}" 
+                              SelectedItem="{Binding Value.SpreadMethod, Mode=TwoWay}"/>
+
+                        <TextBlock Text="Color Interpolation Mode" ToolTip="Color Interpolation Mode"  Grid.Row="6" Margin="5" Grid.Column="0"/>
+                        <ComboBox Grid.Row="6" Grid.Column="1" Margin="5" Grid.ColumnSpan="2" 
+                              ItemsSource="{Binding Source={StaticResource colorInterpolationMode}}" 
+                              SelectedItem="{Binding Value.ColorInterpolationMode, Mode=TwoWay}"/>
+
+                        <TextBlock Text="Opacity" Grid.Row="7" ToolTip="Opacity"  Margin="5" Grid.Column="0"/>
+                        <TextBox Grid.Row="7" Grid.Column="1" Margin="5,4" Grid.ColumnSpan="2" Text="{Binding Value.Opacity, Mode=TwoWay}"/>
+                    </Grid>
+
+                </Grid>
+            </Grid>
+            <Grid  Grid.Row="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="1*" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <TextBlock Text="Gradient Stops" Grid.Row="0" Style="{StaticResource HeaderTextBlockStyle}" VerticalAlignment="Stretch"/>
+                <CheckBox x:Name="showGSCheckBox" HorizontalAlignment="Stretch" Margin="2" Grid.Row="0" Style="{StaticResource expanderCheckBox}"/>
+                <Button Content="&#xE710;" Margin="0" FontFamily="segoe mdl2 assets" FontSize="13" Grid.Row="0" HorizontalAlignment="Left" Width="25" Style="{StaticResource buttonStyle}" Height="25" Padding="0"
+                        Command="{Binding DataContext.AddGradientStopCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type View:XamlEditor}}}"
+                        CommandParameter="{Binding .}"/>
+                <Grid Grid.Row="1">
+                    <Grid.Style>
+                        <Style TargetType="Grid">
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding IsChecked,ElementName=showGSCheckBox}" Value="true">
+                                    <Setter Property="Height" Value="0" />
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Grid.Style>
+                    <ItemsControl x:Name="gradients"  ItemsSource="{Binding GradientStops,Mode=TwoWay}" DataContext="{Binding Value}">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate DataType="{x:Type GradientStop}">
+                                <RadioButton GroupName="Colors" x:Name="rb" 
+                                         Command="{Binding DataContext.SelectGradientStopBrushCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type View:XamlEditor}}}"
+                                         CommandParameter="{Binding .}">
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="30" />
+                                            <ColumnDefinition Width="1*" />
+                                            <ColumnDefinition Width="30" />
+                                        </Grid.ColumnDefinitions>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="*" />
+                                            <RowDefinition Height="Auto" />
+                                        </Grid.RowDefinitions>
+
+                                        <Grid Grid.Row="0" Grid.Column="0" Height="30">
+                                            <Grid.Background>
+                                                <SolidColorBrush Color="{Binding Color}"/>
+                                            </Grid.Background>
+                                        </Grid>
+                                        <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding Color}" VerticalAlignment="Center"/>
+                                        <Button Command="{Binding DataContext.DeleteGradientStopCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type View:XamlEditor}}}"
+                                                CommandParameter="{Binding .}"
+                                                Content="-"  Grid.Row="0" Grid.Column="2" Margin="5"
+                                            Style="{StaticResource buttonStyle}" Padding="0"/>
+                                        <Grid Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" Margin="15"
+                                          x:Name="propertiesGrid" Visibility="Collapsed">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="1*" />
+                                                <ColumnDefinition Width="1*" />
+                                            </Grid.ColumnDefinitions>
+
+                                            <TextBlock Text="Offset" Grid.Column="0"/>
+                                            <TextBox Text="{Binding Offset,Mode=TwoWay}" Grid.Column="1"/>
+                                        </Grid >
+                                    </Grid>
+                                </RadioButton>
+
+                                <DataTemplate.Triggers>
+                                    <DataTrigger Binding="{Binding IsChecked,ElementName=rb}" Value="True">
+                                        <Setter Property="Visibility"   Value="Visible"  TargetName="propertiesGrid"/>
+                                    </DataTrigger>
+                                </DataTemplate.Triggers>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </Grid>
+            </Grid>
+
+        </Grid>
+    </DataTemplate>
+
+</ResourceDictionary>

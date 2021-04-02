@@ -1,0 +1,42 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="/XamlAnalyzer;component/Resources/Styles/Light/Colors.xaml"/>
+    </ResourceDictionary.MergedDictionaries>
+
+
+    <Style TargetType="TextBlock" x:Key="HeaderTextBlockStyle">
+        <Setter Property="Foreground" Value="Black" />
+        <Setter Property="FontSize" Value="14" />
+        <Setter Property="HorizontalAlignment" Value="Stretch" />
+        <Setter Property="TextAlignment" Value="Center" />
+        <Setter Property="Background" Value="#ffff9701" />
+    </Style>
+
+
+
+
+    <Style TargetType="TextBlock" x:Key="ErrorTextBlock">
+        <Setter Property="FontFamily" Value="Segoe mdl2 assets"/>
+        <Setter Property="FontSize" Value="20" />
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding HasNoError}" Value="True" >
+                <Setter Property="Text" Value="&#xE8FB;" />
+                <Setter Property="Foreground" Value="Green" />
+                <Setter Property="ToolTip" Value="Has no error." />
+            </DataTrigger>
+            <DataTrigger Binding="{Binding HasNoError}" Value="False" >
+                <Setter Property="Text" Value="&#xE711;" />
+                <Setter Property="Foreground" Value="Red" />
+                <Setter Property="ToolTip" Value="Has some errors." />
+            </DataTrigger>
+            <DataTrigger Binding="{Binding HasNoError}" Value="{x:Null}" >
+                <Setter Property="Text" Value="&#xE730;" />
+                <Setter Property="Foreground" Value="Yellow" />
+                <Setter Property="ToolTip" Value="Unchecked (Press check button)" />
+            </DataTrigger>
+        </Style.Triggers>
+    </Style>
+
+</ResourceDictionary>

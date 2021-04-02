@@ -1,0 +1,57 @@
+﻿<Border x:Class="SP_Color_Wheel.UserControls.Common.ColorCard"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+        xmlns:local="clr-namespace:SP_Color_Wheel.UserControls.Common"
+        mc:Ignorable="d" 
+        d:DesignHeight="100" d:DesignWidth="100" 
+        x:Name="colorPreviewer"> <!--BorderThickness="2" BorderBrush="{StaticResource AccentColor}"-->
+    <Border.Resources>
+        <Style TargetType="TextBox" x:Key="colorCodeTxtBx" BasedOn="{StaticResource colorControllerTxtBoxStyle}">
+            <Setter Property="Margin" Value="0" />
+        </Style>
+    </Border.Resources>
+    <Grid>
+        
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="20"/>
+            </Grid.RowDefinitions>
+
+            <Image x:Name="backgroundImage" Visibility="Hidden" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
+                   Stretch="Uniform" Grid.Column="0"
+                   Source="/Resources/Icons/SPColorWheel_128x128.png"/>
+
+            <Grid Grid.Row="0" Grid.RowSpan="1" x:Name="colorGrid" >
+                <Grid.Background>
+                    <SolidColorBrush Color="{Binding CurrentColor,Mode=TwoWay,ElementName=colorPreviewer}" />
+                </Grid.Background>
+
+                <Grid.ContextMenu>
+                    <ContextMenu x:Name="contextMenu" >
+                        <MenuItem x:Name="showBackgroundMI" Header="Show Background" IsCheckable="True"/>
+                    </ContextMenu>
+                </Grid.ContextMenu>
+            </Grid>
+            <TextBox x:Name="colorCodeTxtBox" Style="{StaticResource colorCodeTxtBx}"
+                     Text="{Binding CurrentColor,Mode=OneWay,ElementName=colorPreviewer}" 
+                     Grid.Row="1"  VerticalContentAlignment="Center" IsReadOnly="True" 
+                     />
+        </Grid>
+
+        <TextBlock x:Name="nameTxtBlock" Text="{Binding CardName,ElementName=colorPreviewer}" Foreground="{StaticResource BaseTextColor}"
+                   HorizontalAlignment="Left" VerticalAlignment="Top" Width="60" Margin="5,0" 
+                   TextWrapping="Wrap"/>
+
+        <StackPanel Orientation="Horizontal" VerticalAlignment="Top" HorizontalAlignment="Right" Background="Transparent" Margin="2">
+            <ToggleButton x:Name="lockBtn" Style="{StaticResource ImageToggleButtonStyle}"
+                          IsChecked="{Binding IsLocked,ElementName=colorPreviewer}"
+                          HorizontalAlignment="Center" VerticalAlignment="Center" Width="20" Height="20">
+                <Image Source="/SP_Color_Wheel;component/Resources/Icons/lock_128x128.png" Stretch="Fill" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+            </ToggleButton>
+
+        </StackPanel>
+    </Grid>
+</Border>

@@ -1,0 +1,171 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:XamlAnalyzer.Resources.Styles.Light"
+                    xmlns:model="clr-namespace:XamlAnalyzer.Model"
+                    xmlns:interactivity="http://schemas.microsoft.com/expression/2010/interactivity">
+
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="/XamlAnalyzer;component/Resources/Styles/Light/Colors.xaml"/>
+    </ResourceDictionary.MergedDictionaries>
+
+
+
+    <Style TargetType="TreeView" x:Key="baseTreeViewStyle">
+        <Setter Property="BorderBrush" Value="{StaticResource AccentBorderColor}" />
+    </Style>
+
+
+    <Style TargetType="TreeViewItem" x:Shared="True" x:Key="baseTreeViewItemStyle">
+        <Style.Resources>
+            <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" Color="CornflowerBlue" />
+            <SolidColorBrush x:Key="{x:Static SystemColors.InactiveSelectionHighlightBrushKey}" Color="#Cc6495ED" />
+            <SolidColorBrush x:Key="{x:Static SystemColors.HighlightTextBrushKey}" Color="Black" />
+            <SolidColorBrush x:Key="{x:Static SystemColors.ControlTextBrushKey}" Color="Black" />
+        </Style.Resources>
+        <Style.Triggers>
+            <Trigger Property="IsSelected" Value="True">
+                <Setter Property="TextElement.Foreground" Value="WhiteSmoke" />
+                <Setter Property="Background" Value="{StaticResource AccentColor}" />
+            </Trigger>
+
+        </Style.Triggers>
+    </Style>
+
+
+    <Style TargetType="TreeView" x:Key="ResourceTreeViewStyle" BasedOn="{StaticResource baseTreeViewStyle}">
+        <Setter Property="ItemTemplate">
+            <Setter.Value >
+                <HierarchicalDataTemplate DataType="{x:Type model:ResourceFileModel}"  
+                              ItemsSource="{Binding Resources}">
+                    <HierarchicalDataTemplate.ItemTemplate>
+                        <HierarchicalDataTemplate>
+                            <Grid Background="Transparent">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="30" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <Image Source="/XamlAnalyzer;component/Resources/Icons/tagIcon2.png" Grid.Column="0" Margin="7" Stretch="Fill"/>
+                                <TextBlock Text="{Binding .}" Grid.Column="1" VerticalAlignment="Center" FontSize="9"/>
+
+                            </Grid>
+                        </HierarchicalDataTemplate>
+                    </HierarchicalDataTemplate.ItemTemplate>
+                    <Grid Background="Transparent" >
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="30" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <Image Source="/XamlAnalyzer;component/Resources/Icons/resourceDictionaryIcon.png" Grid.Column="0" Margin="3" Stretch="Fill"/>
+                        <TextBlock Text="{Binding Name}" Grid.Column="1" VerticalAlignment="Top" Margin="0,0,10,0"/>
+                        <!--<Image x:Name="isUseImage" Source="/XamlAnalyzer;component/Resources/Icons/tagIcon2.png" 
+                               Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Bottom" 
+                               Width="10" Height="10" Stretch="Fill" Margin="3"/>-->
+                        <TextBlock Text="" x:Name="isUseImage" FontFamily="Segoe MDL2 Assets" Background="#00000000"  
+                                   Grid.Column="1"  FontSize="12" FontWeight="Bold" Margin="0,0,0,2"
+                                   HorizontalAlignment="Left" VerticalAlignment="Bottom" />
+
+
+                    </Grid>
+
+                    <HierarchicalDataTemplate.Triggers>
+                        <DataTrigger Binding="{Binding IsUsing}" Value="False">
+                            <Setter Property="Text" Value="&#xE711;" TargetName="isUseImage" />
+                            <Setter Property="Foreground" Value="Red" TargetName="isUseImage" />
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding IsUsing}" Value="True">
+                            <Setter Property="Text" Value="&#xE8FB;"  TargetName="isUseImage" />
+                            <Setter Property="Foreground" Value="Green" TargetName="isUseImage" />
+                        </DataTrigger>
+                    </HierarchicalDataTemplate.Triggers>
+                </HierarchicalDataTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+
+    <Style TargetType="TreeView" x:Key="AssemblyTreeViewStyle" BasedOn="{StaticResource baseTreeViewStyle}">
+        <Setter Property="ItemTemplate">
+            <Setter.Value>
+                <HierarchicalDataTemplate DataType="{x:Type model:AssemblyFileModel}"
+                              ItemsSource="{Binding ClassNames}">
+                    <HierarchicalDataTemplate.ItemTemplate>
+                        <HierarchicalDataTemplate>
+                            <Grid Background="Transparent">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="30" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <Image Source="/XamlAnalyzer;component/Resources/Icons/classIcon2.png" Grid.Column="0" Margin="7" Stretch="Fill"/>
+                                <TextBlock Text="{Binding .}" Grid.Column="1" VerticalAlignment="Center" Margin="0,0,10,0"  FontSize="9"/>
+                            </Grid>
+                        </HierarchicalDataTemplate>
+                    </HierarchicalDataTemplate.ItemTemplate>
+                    <Grid Background="Transparent" >
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="30" />
+                            <ColumnDefinition Width="1*" />
+                        </Grid.ColumnDefinitions>
+                        <Image Source="/XamlAnalyzer;component/Resources/Icons/dllIcon.png" Grid.Column="0" Margin="3" Stretch="Fill"/>
+                        <TextBlock Text="{Binding Name}" Grid.Column="1" VerticalAlignment="Center" Margin="0,0,10,0"/>
+                    </Grid>
+                </HierarchicalDataTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style TargetType="TreeView" x:Key="ControlsTreeViewStyle" BasedOn="{StaticResource baseTreeViewStyle}">
+        <Setter Property="ItemTemplate">
+            <Setter.Value>
+                <HierarchicalDataTemplate DataType="{x:Type model:ControlModel}" 
+                             ItemsSource="{Binding Children}" ><!--ItemsSource="{Binding BrushProperties}"-->
+                    <TextBlock Text="{Binding Name}"/>
+                </HierarchicalDataTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!--<HierarchicalDataTemplate DataType="{x:Type model:ControlModel}" 
+                             ItemsSource="{Binding Children}" >
+        --><!--ItemsSource="{Binding BrushProperties}"--><!--
+        <HierarchicalDataTemplate.ItemTemplate>
+            <HierarchicalDataTemplate ItemsSource="{Binding Children}">
+                <Grid x:Name="childGrid">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="30" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <Image Source="/XamlAnalyzer;component/Resources/Icons/classIcon2.png" Grid.Column="0" Margin="7" Stretch="Fill"/>
+                    <TextBlock Text="{Binding Property.Name}" Grid.Column="1" VerticalAlignment="Center" Margin="0,0,10,0"  FontSize="9"/>
+                </Grid>
+                <HierarchicalDataTemplate.Triggers>
+                    <Trigger Property="IsMouseOver" Value="True">
+                        <Setter Property="TextElement.Foreground" Value="Black"  TargetName="childGrid"/>
+                        <Setter Property="Background" Value="{StaticResource SecondaryAccentTransparentColor}"   TargetName="childGrid"/>
+                    </Trigger>
+                </HierarchicalDataTemplate.Triggers>
+            </HierarchicalDataTemplate>
+        </HierarchicalDataTemplate.ItemTemplate>
+
+        <Grid x:Name="parentGrid" VerticalAlignment="Center" Margin="0,2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="30" />
+                <ColumnDefinition Width="1*" />
+            </Grid.ColumnDefinitions>
+            <Image Source="/XamlAnalyzer;component/Resources/Icons/dllIcon.png" Grid.Column="0" Margin="3" Stretch="Fill"/>
+            <StackPanel Grid.Column="1" Background="Transparent" VerticalAlignment="Center">
+                <TextBlock Text="{Binding ClassName}" Grid.Column="1" VerticalAlignment="Center" />
+                <TextBlock x:Name="nameTextBox" Text="{Binding Name}" Grid.Column="1" Opacity="0.6"/>
+            </StackPanel>
+        </Grid>
+        <HierarchicalDataTemplate.Triggers>
+            <DataTrigger Binding="{Binding Name}" Value="">
+                <Setter Property="Height" Value="0" TargetName="nameTextBox" />
+            </DataTrigger>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="TextElement.Foreground" Value="Black"  TargetName="parentGrid"/>
+                <Setter Property="Background" Value="{StaticResource SecondaryAccentTransparentColor}"   TargetName="parentGrid"/>
+            </Trigger>
+        </HierarchicalDataTemplate.Triggers>
+    </HierarchicalDataTemplate>-->
+
+</ResourceDictionary>

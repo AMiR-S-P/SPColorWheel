@@ -1,0 +1,101 @@
+﻿<UserControl x:Class="SP_Color_Wheel.UserControls.RGB.RGBController"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:SP_Color_Wheel.UserControls.RGB" 
+             xmlns:common="clr-namespace:SP_Color_Wheel.UserControls.Common"
+             xmlns:validation="clr-namespace:SP_Color_Wheel.ValidationRules" 
+             mc:Ignorable="d" BorderBrush="{StaticResource SecondaryAccentColor}" BorderThickness="1" 
+             d:DesignHeight="450" d:DesignWidth="800" MinHeight="120" MinWidth="100"  
+             x:Name="rgbController">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="35"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <TextBlock Text="{Binding Title,ElementName=rgbController}"  Style="{DynamicResource headerTextBlockStyle}"
+                   HorizontalAlignment="Stretch" TextAlignment="Center"  FontSize="14"
+                   Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2"/>
+        
+        <common:HorizontalColorSlider x:Name="red" Grid.Column="0" Grid.Row="1" Minimum="0" Maximum="255" Value="{Binding Red,ElementName=rgbController,Mode=TwoWay}" Color="#AAFF0000" >
+            <common:HorizontalColorSlider.Background>
+                <LinearGradientBrush EndPoint="1,0" StartPoint="0,1" MappingMode="RelativeToBoundingBox">
+                    <GradientStop Color="White"/>
+                    <GradientStop Color="#aaff0000" Offset="1"/>
+                </LinearGradientBrush>
+            </common:HorizontalColorSlider.Background>
+        </common:HorizontalColorSlider>
+
+        <common:HorizontalColorSlider  x:Name="green" Grid.Column="0" Grid.Row="2" Minimum="0" Maximum="255" Value="{Binding Green,ElementName=rgbController,Mode=TwoWay}" Color="#dA20ff20">
+            <common:HorizontalColorSlider.Background>
+                <LinearGradientBrush EndPoint="1,0" StartPoint="0,1" MappingMode="RelativeToBoundingBox">
+                    <GradientStop Color="White"/>
+                    <GradientStop Color="#8a00ff00" Offset="1"/>
+                </LinearGradientBrush>
+            </common:HorizontalColorSlider.Background>
+        </common:HorizontalColorSlider>
+
+        <common:HorizontalColorSlider  x:Name="blue" Grid.Column="0" Grid.Row="3" Minimum="0" Maximum="255" Value="{Binding Blue,ElementName=rgbController,Mode=TwoWay}" Color="#AA0000ff">
+            <common:HorizontalColorSlider.Background>
+                <LinearGradientBrush EndPoint="1,0" StartPoint="0,1" MappingMode="RelativeToBoundingBox">
+                    <GradientStop Color="White"/>
+                    <GradientStop Color="#aa0000ff" Offset="1"/>
+                </LinearGradientBrush>
+            </common:HorizontalColorSlider.Background>
+        </common:HorizontalColorSlider>
+
+        <common:HorizontalColorSlider  x:Name="alpha" Grid.Column="0" Grid.Row="4" Minimum="0" Maximum="255" Value="{Binding Alpha,ElementName=rgbController,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" Color="#AF222222">
+            <common:HorizontalColorSlider.Background>
+                <LinearGradientBrush EndPoint="1,0" StartPoint="0,1" MappingMode="RelativeToBoundingBox">
+                    <GradientStop Color="White"/>
+                    <GradientStop Color="#aa000000" Offset="1"/>
+                </LinearGradientBrush>
+            </common:HorizontalColorSlider.Background>
+        </common:HorizontalColorSlider>
+
+        <TextBox  Grid.Column="1" Grid.Row="1" TextAlignment="Center" HorizontalAlignment="Stretch" Margin="1"   FontSize="15" VerticalAlignment="Stretch">
+            <TextBox.Text>
+                <Binding Path="Value" Source="{x:Reference red}" UpdateSourceTrigger="PropertyChanged">
+                    <Binding.ValidationRules>
+                        <validation:RangeRule Min="0" Max="255"/>
+                    </Binding.ValidationRules>
+                </Binding>
+            </TextBox.Text>
+        </TextBox>
+        <TextBox  Grid.Column="1" Grid.Row="2" TextAlignment="Center" HorizontalAlignment="Stretch" Margin="1"   FontSize="15" VerticalAlignment="Stretch">
+            <TextBox.Text>
+                <Binding Path="Value" Source="{x:Reference green}" UpdateSourceTrigger="PropertyChanged">
+                    <Binding.ValidationRules>
+                        <validation:RangeRule Min="0" Max="255"/>
+                    </Binding.ValidationRules>
+                </Binding>
+            </TextBox.Text>
+        </TextBox>
+        <TextBox  Grid.Column="1" Grid.Row="3" TextAlignment="Center" HorizontalAlignment="Stretch" Margin="1"  FontSize="15" VerticalAlignment="Stretch">
+            <TextBox.Text>
+                <Binding Path="Value" Source="{x:Reference blue}" UpdateSourceTrigger="PropertyChanged">
+                    <Binding.ValidationRules>
+                        <validation:RangeRule Min="0" Max="255"/>
+                    </Binding.ValidationRules>
+                </Binding>
+            </TextBox.Text>
+        </TextBox>
+        <TextBox  Grid.Column="1" Grid.Row="4" TextAlignment="Center" HorizontalAlignment="Stretch" Margin="1" FontSize="15" VerticalAlignment="Stretch">
+            <TextBox.Text>
+                <Binding Path="Value" Source="{x:Reference alpha}" UpdateSourceTrigger="PropertyChanged">
+                    <Binding.ValidationRules>
+                        <validation:RangeRule Min="0" Max="255"/>
+                    </Binding.ValidationRules>
+                </Binding>
+            </TextBox.Text>
+        </TextBox>
+    </Grid>
+</UserControl>

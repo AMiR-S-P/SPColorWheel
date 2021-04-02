@@ -1,0 +1,90 @@
+﻿<UserControl x:Class="SP_Color_Wheel.UserControls.Navigator"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:SP_Color_Wheel.UserControls"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/SP_Color_Wheel;component/Resources/Styles/Light/ColorSelectorStyles.Xaml" />
+            </ResourceDictionary.MergedDictionaries>
+
+        </ResourceDictionary>
+
+
+    </UserControl.Resources>
+    <Grid >
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="40" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+
+
+        <ListBox  x:Name="header" Grid.Column="0"
+                  ItemsSource="{Binding Selectors,Mode=OneWay}"     
+                  Style="{StaticResource colorSelectorStyle}"
+                  SelectedItem="{Binding CurrentSelector,Mode=TwoWay}" 
+                  Focusable="False" SelectedIndex="0"
+                  HorizontalAlignment="Left" 
+                  VerticalAlignment="Top">
+            <ListBox.Resources>
+         
+
+
+
+
+            </ListBox.Resources>
+            <ListBox.ItemsPanel >
+                <ItemsPanelTemplate >
+                    <VirtualizingStackPanel Orientation="Vertical" />
+                </ItemsPanelTemplate>
+            </ListBox.ItemsPanel>
+            <ListBox.Triggers>
+                <EventTrigger RoutedEvent="Loaded" SourceName="header">
+                    <BeginStoryboard Name="helpStoryboard">
+                        <Storyboard   BeginTime="0:0:0.01" RepeatBehavior="Forever" AutoReverse="True">
+                            <ColorAnimation Duration="0:0:.8" From="LightGray" To="DarkGray" 
+                                                Storyboard.TargetName="header" Storyboard.TargetProperty="(ListBox.Background).(Color)"/>
+                        </Storyboard>
+                    </BeginStoryboard>
+                </EventTrigger>
+                <EventTrigger RoutedEvent="ListBox.SelectionChanged" SourceName="header">
+                    <StopStoryboard BeginStoryboardName="helpStoryboard" />
+                </EventTrigger>
+            </ListBox.Triggers>
+        </ListBox>
+        
+        <ContentControl x:Name="cSContent" Grid.Column="1" Content="{Binding CurrentSelector,Mode=TwoWay}"     Margin="0" />
+
+
+        <!--<Border x:Name="bracketBorder" Background="Transparent"   Grid.Column="1" Height="60" Width="150" VerticalAlignment="Top" HorizontalAlignment="Left" >
+                <Border.Resources>
+                    <Style TargetType="Border">
+                        <Style.Triggers>
+                        <DataTrigger Binding="{Binding SelectedItem,ElementName=header}" Value="{x:Null}" >
+                            <Setter Property="Height" Value="200"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Border.Resources>
+                <Border.Triggers>
+                    <EventTrigger RoutedEvent="Loaded" SourceName="bracketBorder">
+                        <BeginStoryboard >
+                            <Storyboard  BeginTime="0:0:0.01" RepeatBehavior="Forever" AutoReverse="True">
+                                <ColorAnimation Duration="0:0:.8" From="LightGray" To="DarkGray" 
+                                                Storyboard.TargetName="bracketBorder" Storyboard.TargetProperty="(Panel.Background).(Color)"/>
+                            </Storyboard>
+                        </BeginStoryboard>
+                    </EventTrigger>
+                </Border.Triggers>
+                <Border.OpacityMask>
+                    <ImageBrush ImageSource="/Resources/Images/bracket.png"/>
+                </Border.OpacityMask>
+            </Border>-->
+
+
+    </Grid>
+</UserControl>

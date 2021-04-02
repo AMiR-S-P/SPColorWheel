@@ -1,0 +1,47 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Library</OutputType>
+    <TargetFramework>net5.0-windows</TargetFramework>
+    <UseWPF>true</UseWPF>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Resources\Icons\classIcon2.png" />
+    <None Remove="Resources\Icons\dllIcon.png" />
+    <None Remove="Resources\Icons\resourceDictionaryIcon.png" />
+    <None Remove="Resources\Icons\tagIcon.png" />
+    <None Remove="Resources\Icons\tagIcon2.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Resources\Styles\Dark\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AvalonEdit" Version="6.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="System.Windows.Interactivity">
+      <HintPath>..\SP Color Wheel\bin\Debug\net5.0-windows\System.Windows.Interactivity.dll</HintPath>
+      <Private>true</Private>
+    </Reference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Resources\Icons\classIcon2.png" />
+    <Resource Include="Resources\Icons\dllIcon.png" />
+    <Resource Include="Resources\Icons\resourceDictionaryIcon.png" />
+    <Resource Include="Resources\Icons\tagIcon.png" />
+    <Resource Include="Resources\Icons\tagIcon2.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Page Update="Templates\NoneBrushPropertiesTemplate.xaml">
+      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+      <SubType>Designer</SubType>
+    </Page>
+  </ItemGroup>
+
+</Project>

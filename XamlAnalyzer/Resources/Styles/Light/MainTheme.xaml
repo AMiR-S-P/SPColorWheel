@@ -1,0 +1,24 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="/XamlAnalyzer;component/Resources/Styles/UniversalStyles.xaml"/>
+        <ResourceDictionary Source="/XamlAnalyzer;component/Resources/Styles/Light/RadioButton.xaml"/>
+        <ResourceDictionary Source="/XamlAnalyzer;component/Resources/Styles/Light/TreeViewItem.xaml"/>
+        <ResourceDictionary Source="/XamlAnalyzer;component/Resources/Styles/Light/CheckBoxes.xaml"/>
+        <ResourceDictionary Source="/XamlAnalyzer;component/Resources/Styles/Light/Textblock.xaml"/>
+        <ResourceDictionary Source="/XamlAnalyzer;component/Resources/Styles/Light/Buttons.xaml"/>
+        <ResourceDictionary Source="/XamlAnalyzer;component/Resources/Styles/Light/MenuItem.xaml"/>
+    </ResourceDictionary.MergedDictionaries>
+
+    <!--/XamlAnalyzer;component-->
+    <!--<Style TargetType="RadioButton">
+        <Setter Property="Background" Value="Red" />
+    </Style>
+    <Style TargetType="TextBlock">
+        <Setter Property="Foreground" Value="Red" />
+    </Style>
+    <Style TargetType="GridSplitter" >
+        <Setter Property="Background" Value="Red" />
+    </Style>-->
+</ResourceDictionary>

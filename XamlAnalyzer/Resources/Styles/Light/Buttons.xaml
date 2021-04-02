@@ -1,0 +1,90 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:cc="clr-namespace:XamlAnalyzer.CustomControls">
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="/XamlAnalyzer;component/Resources/Styles/Light/Colors.xaml"/>
+    </ResourceDictionary.MergedDictionaries>
+
+
+    <Style TargetType="Button" x:Key="buttonStyle">
+        <Setter Property="Background" Value="{StaticResource SecondaryBackgroundColor}" />
+        <Setter Property="BorderThickness" Value="2" />
+        <Setter Property="BorderBrush" Value="Transparent" />
+        <Setter Property="Template" >
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Border BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            Background="{TemplateBinding Background}"
+                            CornerRadius="1" Padding="{TemplateBinding Padding}">
+                        <ContentPresenter Content="{TemplateBinding Content}" VerticalAlignment="Center" Margin="{TemplateBinding Padding}" TextBlock.TextAlignment="Center"/>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="TextElement.Foreground" Value="{StaticResource SecondaryAccentBorderColor}" />
+                        </Trigger>
+
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter Property="Foreground" Value="{StaticResource AccentColor}" />
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter Property="Background" Value="Gray" />
+                            <Setter Property="BorderBrush" Value="Gray" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+
+    </Style>
+
+
+    <Style TargetType="cc:CheckButton" x:Key="checkButtonStyle">
+        <Setter Property="Background" Value="{StaticResource SecondaryBackgroundColor}" />
+        <Setter Property="BorderThickness" Value="2" />
+        <Setter Property="Template" >
+            <Setter.Value>
+                <ControlTemplate TargetType="cc:CheckButton">
+                    <Border BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            Background="{TemplateBinding Background}"
+                            CornerRadius="1"
+                            Width="{TemplateBinding Width}"
+                            Height="{TemplateBinding Height}">
+                        <StackPanel Orientation="Horizontal" Background="Transparent" Margin="5">
+                            <TextBlock Text="{TemplateBinding Content}" VerticalAlignment="Center"/>
+                            <TextBlock x:Name="checkTxtBlock" Text="&#xF78C;"
+                                       FontFamily="Segoe mdl2 assets"
+                                       VerticalAlignment="Center" 
+                                       FontSize="16"
+                                       Margin="5,0,0,0"/>
+                        </StackPanel>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsChecked" Value="True" >
+                            <Setter Property="Text" Value="&#xF78C;" TargetName="checkTxtBlock"/>
+                            <Setter Property="Foreground" Value="Green" TargetName="checkTxtBlock"/>
+                        </Trigger>
+                        <Trigger Property="IsChecked" Value="False" >
+                            <Setter Property="Text" Value="&#xF78A;" TargetName="checkTxtBlock"/>
+                            <Setter Property="Foreground" Value="Red" TargetName="checkTxtBlock"/>
+                        </Trigger>
+
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="TextElement.Foreground" Value="{StaticResource SecondaryAccentBorderColor}" />
+                        </Trigger>
+
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter Property="Foreground" Value="{StaticResource AccentColor}" />
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter Property="Background" Value="DarkGray" />
+                            <Setter Property="BorderBrush" Value="Gray" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+
+    </Style>
+</ResourceDictionary>
