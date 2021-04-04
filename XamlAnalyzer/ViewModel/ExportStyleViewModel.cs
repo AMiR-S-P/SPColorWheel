@@ -48,18 +48,10 @@ namespace XamlAnalyzer.ViewModel
         public AsyncRelayCommand<object> SelectAllCommand { get; set; }
         public AsyncRelayCommand<object> UnselectAllCommand { get; set; }
         public AsyncRelayCommand<object> InvertSelectionCommand { get; set; }
-        public ExportStyleViewModel(IEnumerable<ControlModel> controls)
+        public ExportStyleViewModel(ControlModel controls)
         {
-            foreach (var c in controls)
-            {
-                UIControls.Add(new ExportControlModel()
-                {
-                    BrushProperties = c.BrushProperties,
-                    ClassName = c.ClassName,
-                    Element = c.Element,
-                    Name = c.Name
-                });
-            }
+            FillUIControls(controls);
+
 
             ExportCommand = new AsyncRelayCommand<object>(OnExport);
             SelectAllCommand = new AsyncRelayCommand<object>(OnSelectAll);
@@ -68,21 +60,45 @@ namespace XamlAnalyzer.ViewModel
         }
 
 
+
+        private void FillUIControls(ControlModel control)
+        {
+            
+            foreach (var c in control.Children)
+            {
+                UIControls.Add(new ExportControlModel()
+                {
+                    BrushProperties = c.BrushProperties,
+                    ClassName = c.ClassName,
+                    Element = c.Element,
+                    Name = c.Name
+                });
+                FillUIControls(c);
+            }
+        }
         private async Task OnExport(object arg)
         {
-            ExportXaml exportXaml = new ExportXaml(UIControls.Where(x => x.IsMarked == true),MustGenerateKey);
-            await exportXaml.CreateResourceDictionary();
-
-            using (SaveFileDialog sfd = new SaveFileDialog())
+            try
             {
-                sfd.Filter = "Xaml Files *.xaml|*.xaml|All Files *.txt|*.txt";
-                
-                if(sfd.ShowDialog()== DialogResult.OK)
+                ExportXaml exportXaml = new ExportXaml(UIControls.Where(x => x.IsMarked == true), MustGenerateKey);
+                await exportXaml.CreateResourceDictionary();
+
+                using (SaveFileDialog sfd = new SaveFileDialog())
                 {
-                    await exportXaml.SaveToFile(sfd.FileName);
+                    sfd.Filter = "Xaml Files *.xaml|*.xaml|All Files *.txt|*.txt";
+
+                    if (sfd.ShowDialog() == DialogResult.OK)
+                    {
+                        await exportXaml.SaveToFile(sfd.FileName);
+                    }
                 }
+                IsExported = true;
+
             }
-            IsExported = false;
+            catch (Exception ex)
+            {
+                IsExported = false;
+            }
         }
 
         private Task OnSelectAll(object arg)

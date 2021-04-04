@@ -24,31 +24,45 @@ namespace XamlAnalyzer.ViewModel
 {
     public partial class XamlEditorViewModel : BaseDependencyViewModel
     {
-        private string xamlContent;
-        private bool isCommited;
         private FrameworkElement uI;
-        private XamlFileModel xaml;
+        private Window windowUI;
+
+        private ControlModel uIControl = new ControlModel();
+
         SPXamlParser xamlParser;
         PropertyModel brush;
+
         private PropertyModel selectedProperty;
         private object selectedBrush;
+        private ControlModel selectedControl;
+        
         int objectCounter = 0;
         List<string> allNames = new List<string>();
-        private Window windowUI;
-        private ControlModel uIControl=new ControlModel();
+
         private bool isExported;
 
-        public ObservableCollection<ControlModel> UIControls { get; set; } = new ObservableCollection<ControlModel>();
+        //public ObservableCollection<ControlModel> UIControls { get; set; } = new ObservableCollection<ControlModel>();
         public ControlModel UIControl
         {
-            get => uIControl; set { uIControl = value; OnPropertyChanged(); }
+            get => uIControl; set { uIControl = value; OnPropertyChanged();  }
         }
-        public XamlFileModel XamlFile { get => xaml; set { xaml = value; OnPropertyChanged(); } }
+
+        public ControlModel SelectedControl
+        {
+            get => selectedControl;
+            set
+            {
+                selectedControl = value;
+                OnPropertyChanged();
+                ExportCommand.OnCanExecuteChanged();
+            }
+        }
         public SPXamlParser XamlParser
         {
             get => xamlParser; set
             {
-                xamlParser = value; OnPropertyChanged();
+                xamlParser = value; 
+                OnPropertyChanged();
                 if (value != null)
                 {
                     Task.Run(async () =>
@@ -67,19 +81,22 @@ namespace XamlAnalyzer.ViewModel
         }
         public bool IsExported { get => isExported; set { isExported = value; OnPropertyChanged(); } }
 
-        public bool IsCommited { get => isCommited; set { isCommited = value; OnPropertyChanged(); } }
+        //public bool IsCommited { get => isCommited; set { isCommited = value; OnPropertyChanged(); } }
         public FrameworkElement UI { get => uI; set { uI = value; OnPropertyChanged(); } }
         public Window WindowUI { get => windowUI; set { windowUI?.Close(); windowUI = value; OnPropertyChanged(); } }
+
         public object SelectedBrush
         {
             get => selectedBrush; set
             {
                 selectedBrush = value;
                 OnPropertyChanged();
+                IsExported = false;
                 SetBrushColorCommand.OnCanExecuteChanged();
             }
         }
         public PropertyModel Brush { get => brush; set { brush = value; OnPropertyChanged(); } }
+
         //PropertyModel of UIElement eg Background ,Foreground
         public PropertyModel SelectedProperty
         {
@@ -101,20 +118,8 @@ namespace XamlAnalyzer.ViewModel
         }
         public XamlEditorViewModel()
         {
-            //XamlFile = xamlFile;
-            XamlFile.ContentChanged += async (s, e) =>
-            {
-                await UpdateUI();
-            };
             initCommands();
         }
-
-        public XamlEditorViewModel(XamlFileModel xamlFile)
-        {
-            //XamlFile = xamlFile;
-            initCommands();
-        }
-
 
         private async Task UpdateUI()
         {
@@ -122,10 +127,8 @@ namespace XamlAnalyzer.ViewModel
             {
                 WindowUI = null;
                 UI = null;
-                UIControls.Clear();
                 objectCounter = 0;
                 allNames.Clear();
-                //xamlParser.LoadXaml(XamlFile.Content);
 
                 //check resources
                 var resources = await xamlParser.GetRootResourceTag();
@@ -142,29 +145,29 @@ namespace XamlAnalyzer.ViewModel
                 }
 
                 //check assemblies
-                var attributes = xamlParser.Document.ChildNodes[0].Attributes;
-                foreach (XmlAttribute a in attributes)
-                {
-                    try
-                    {
-                        Regex regex = new Regex(@"xmlns:([^=]+)=""clr-namespace:([^;]+);assembly=([^""]+)""");
-                        Match match = regex.Match(a.OuterXml);
+                //var attributes = xamlParser.Document.ChildNodes[0].Attributes;
+                //foreach (XmlAttribute a in attributes)
+                //{
+                //    try
+                //    {
+                //        Regex regex = new Regex(@"xmlns:([^=]+)=""clr-namespace:([^;]+);assembly=([^""]+)""");
+                //        Match match = regex.Match(a.OuterXml);
 
-                        if (match.Success)
-                        {
-                            var name = match.Groups[3].Value;
-                            //if (ImportedAssemblies.Any(x => x.Name.ToLower() == name.ToLower()))
-                            //{
-                            //    //Assembly.LoadFile(ImportedAssemblies.FirstOrDefault(x => x.Name == match.Groups[3].Value.ToLower()).Path);
-                            //    //assemblyLoad.LoadFromAssemblyPath(ImportedAssemblies.FirstOrDefault(x => x.Name.ToLower() == name.ToLower()).Path); ;
-                            //}
-                        }
-                    }
-                    catch (Exception ex)
-                    {
-                        await Logger.LogAsync(LogLevel.Error, ex.Message);
-                    }
-                }
+                //        if (match.Success)
+                //        {
+                //            var name = match.Groups[3].Value;
+                //            //if (ImportedAssemblies.Any(x => x.Name.ToLower() == name.ToLower()))
+                //            //{
+                //            //    //Assembly.LoadFile(ImportedAssemblies.FirstOrDefault(x => x.Name == match.Groups[3].Value.ToLower()).Path);
+                //            //    //assemblyLoad.LoadFromAssemblyPath(ImportedAssemblies.FirstOrDefault(x => x.Name.ToLower() == name.ToLower()).Path); ;
+                //            //}
+                //        }
+                //    }
+                //    catch (Exception ex)
+                //    {
+                //        await Logger.LogAsync(LogLevel.Error, ex.Message);
+                //    }
+                //}
 
                 ParserContext parserContext = new ParserContext();
                 parserContext.XamlTypeMapper = new XamlTypeMapper(new string[] { });
@@ -174,7 +177,7 @@ namespace XamlAnalyzer.ViewModel
                 xamlUI.Loaded += async (s, e) =>
                  {
                      //await GetAllElementNames(UI);
-                    UIControl.Children.Add(await FillUIControls(xamlUI));
+                     UIControl.Children.Add(await FillUIControls(xamlUI));
 
                  };
                 if (xamlUI is Window)
@@ -273,7 +276,7 @@ namespace XamlAnalyzer.ViewModel
                         //Value = p.GetValue(c)
                     });
                 }
-                UIControls.Add(control);
+                //UIControls.Add(control);
 
                 var cc = VisualTreeHelper.GetChildrenCount(element);
                 for (int i = 0; i < cc; i++)

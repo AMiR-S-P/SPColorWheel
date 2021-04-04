@@ -9,6 +9,8 @@
   <ItemGroup>
     <None Remove="Resources\Icons\classIcon2.png" />
     <None Remove="Resources\Icons\dllIcon.png" />
+    <None Remove="Resources\Icons\exportAll_128x128.png" />
+    <None Remove="Resources\Icons\exportSelected_128x128.png" />
     <None Remove="Resources\Icons\resourceDictionaryIcon.png" />
     <None Remove="Resources\Icons\tagIcon.png" />
     <None Remove="Resources\Icons\tagIcon2.png" />
@@ -32,6 +34,8 @@
   <ItemGroup>
     <Resource Include="Resources\Icons\classIcon2.png" />
     <Resource Include="Resources\Icons\dllIcon.png" />
+    <Resource Include="Resources\Icons\exportAll_128x128.png" />
+    <Resource Include="Resources\Icons\exportSelected_128x128.png" />
     <Resource Include="Resources\Icons\resourceDictionaryIcon.png" />
     <Resource Include="Resources\Icons\tagIcon.png" />
     <Resource Include="Resources\Icons\tagIcon2.png" />

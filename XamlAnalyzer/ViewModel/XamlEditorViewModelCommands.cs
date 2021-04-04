@@ -24,10 +24,6 @@ namespace XamlAnalyzer.ViewModel
 {
     public partial class XamlEditorViewModel
     {
-        public RelayCommand<Window> LogCommand { get; set; }
-
-
-        public AsyncRelayCommand<object> SaveCommand { set; get; }
         public AsyncRelayCommand<object> SelectPropertyCommand { get; set; }
 
         public AsyncRelayCommand<SolidColorBrush> SelectSolidBrushCommand { get; set; }
@@ -46,11 +42,11 @@ namespace XamlAnalyzer.ViewModel
 
         public AsyncRelayCommand<Window> EditXamlCommand { get; set; }
         public AsyncRelayCommand<Window> ExportCommand { get; set; }
+        public AsyncRelayCommand<Window> ExportAllCommand { get; set; }
         public AsyncRelayCommand<object> BrowseImageSourceCommand { get; set; }
         public AsyncRelayCommand<Window> ExitCommand { get; set; }
         private void initCommands()
         {
-            LogCommand = new RelayCommand<Window>(OnLogCommand);
             SelectPropertyCommand = new AsyncRelayCommand<object>(OnSelectProperty);
 
             SelectSolidBrushCommand = new AsyncRelayCommand<SolidColorBrush>(OnSelectSolidBrush);
@@ -69,9 +65,18 @@ namespace XamlAnalyzer.ViewModel
             SelectImageBrushCommand = new AsyncRelayCommand<ImageBrush>(OnSelectImageBrush);
 
             EditXamlCommand = new AsyncRelayCommand<Window>(OnEditXaml);
-            ExportCommand = new AsyncRelayCommand<Window>(OnExport);
+            ExportCommand = new AsyncRelayCommand<Window>(OnExport,CanExport);
+            ExportAllCommand = new AsyncRelayCommand<Window>(OnAllExport);
+
             BrowseImageSourceCommand = new AsyncRelayCommand<object>(OnBrowseImageSource);
             ExitCommand = new AsyncRelayCommand<Window>(OnExit);
+        }
+
+
+
+        private bool CanExport(Window arg)
+        {
+            return SelectedControl != null;
         }
 
         private Task OnExit(Window arg)
@@ -135,12 +140,23 @@ namespace XamlAnalyzer.ViewModel
         private Task OnExport(Window arg)
         {
             WindowsServices windowsService = new WindowsServices();
-            ExportStyleViewModel viewModel = new ExportStyleViewModel(UIControls);
+            var control = new ControlModel();
+            control.Children.Add(SelectedControl);
+            ExportStyleViewModel viewModel = new ExportStyleViewModel(control);
             windowsService.ShowDialog(typeof(ExportStyleView), viewModel, arg);
             IsExported = viewModel.IsExported;
             return Task.CompletedTask;
         }
+        private Task OnAllExport(Window arg)
+        {
+            WindowsServices windowsService = new WindowsServices();
+            ExportStyleViewModel viewModel = new ExportStyleViewModel(UIControl);
+            windowsService.ShowDialog(typeof(ExportStyleView), viewModel, arg);
+            IsExported = viewModel.IsExported;
 
+
+            return Task.CompletedTask;
+        }
         private Task OnEditXaml(Window arg)
         {
             if (CanCloseWindow())
@@ -159,7 +175,7 @@ namespace XamlAnalyzer.ViewModel
         {
             if ((UI != null || WindowUI != null) && IsExported ==false)
             {
-                var dialogResult = MessageBox.Show("All your changes will be lost.\nDiscard Changes ?", "Style Editor", MessageBoxButtons.YesNo);
+                var dialogResult = MessageBox.Show("All your changes will be lost.\nDiscard Changes ?", "Style Editor", MessageBoxButtons.YesNo,icon:MessageBoxIcon.Warning);
                 if (dialogResult == DialogResult.No)
                 {
                     return false;
@@ -205,13 +221,13 @@ namespace XamlAnalyzer.ViewModel
                 System.Windows.Data.BindingOperations.ClearBinding(gradientStop, GradientStop.ColorProperty);
                 System.Windows.Data.BindingOperations.SetBinding(gradientStop, GradientStop.ColorProperty, new System.Windows.Data.Binding("Color") { Source = arg });
             }
-
+            IsExported = false;
             return Task.CompletedTask;
         }
 
         private Task OnSetBackgroundToImage(PropertyModel arg)
         {
-            var element = UIControls.Where(x => x.Name == (SelectedProperty.Owner as FrameworkElement).Name).FirstOrDefault().
+            var element = SelectedControl.
                       BrushProperties.Where(x => x.DependencyProperty == SelectedProperty.DependencyProperty).FirstOrDefault();
 
             element.SetOwnerProperty(new ImageBrush());
@@ -225,7 +241,7 @@ namespace XamlAnalyzer.ViewModel
 
         private Task OnSetBackgroundToLinear(PropertyModel arg)
         {
-            var element = UIControls.Where(x => x.Name == (SelectedProperty.Owner as FrameworkElement).Name).FirstOrDefault().
+            var element = SelectedControl.
                           BrushProperties.Where(x => x.DependencyProperty == SelectedProperty.DependencyProperty).FirstOrDefault();
 
             element.SetOwnerProperty(new LinearGradientBrush());
@@ -239,7 +255,7 @@ namespace XamlAnalyzer.ViewModel
 
         private Task OnSetBackgroundToNone(PropertyModel arg)
         {
-            var element = UIControls.Where(x => x.Name == (SelectedProperty.Owner as FrameworkElement).Name).FirstOrDefault().
+            var element = SelectedControl.
                                       BrushProperties.Where(x => x.DependencyProperty == SelectedProperty.DependencyProperty).FirstOrDefault();
 
             element.SetOwnerProperty(null);
@@ -253,7 +269,7 @@ namespace XamlAnalyzer.ViewModel
 
         private Task OnSetBackgroundToRadial(PropertyModel arg)
         {
-            var element = UIControls.Where(x => x.Name == (SelectedProperty.Owner as FrameworkElement).Name).FirstOrDefault().
+            var element = SelectedControl.
                               BrushProperties.Where(x => x.DependencyProperty == SelectedProperty.DependencyProperty).FirstOrDefault();
 
             element.SetOwnerProperty(new RadialGradientBrush());
@@ -267,7 +283,7 @@ namespace XamlAnalyzer.ViewModel
 
         private Task OnSetBackgroundToSolid(PropertyModel arg)
         {
-            var element = UIControls.Where(x => x.Name == (SelectedProperty.Owner as FrameworkElement).Name).FirstOrDefault().
+            var element = SelectedControl.
                               BrushProperties.Where(x => x.DependencyProperty == SelectedProperty.DependencyProperty).FirstOrDefault();
 
             element.SetOwnerProperty(new SolidColorBrush());
@@ -301,12 +317,6 @@ namespace XamlAnalyzer.ViewModel
         private bool CanSelectBrush(object arg)
         {
             return SelectedProperty != null;
-        }
-
-        private void OnLogCommand(Window obj)
-        {
-            WindowsServices windowsServices = new WindowsServices();
-            windowsServices.ShowWindows(typeof(LogsWindow), null, obj);
         }
     }
 }

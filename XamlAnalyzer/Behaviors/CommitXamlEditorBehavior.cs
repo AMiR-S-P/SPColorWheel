@@ -29,7 +29,7 @@ namespace XamlAnalyzer.Behaviors
             if(e.Key== System.Windows.Input.Key.S && Keyboard.IsKeyDown(Key.LeftCtrl))
             {
                 //AssociatedObject.XamlTextBox.GetBindingExpression(TextBox.TextProperty)?.UpdateSource();
-                (AssociatedObject.DataContext as XamlEditorViewModel).IsCommited = true;
+                //(AssociatedObject.DataContext as XamlEditorViewModel).IsCommited = true;
             }
         }
     }

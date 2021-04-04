@@ -96,7 +96,6 @@ namespace XamlAnalyzer.ViewModel
             ExitCommand = new AsyncRelayCommand<Window>(OnExit);
 
             CheckForErrorCommand = new AsyncRelayCommand<object>(OnCheckForError);
-            WindowsClosingCommand = new AsyncRelayCommand<object>(OnWindowsClosing);
             DeleteResourceFileCommand = new AsyncRelayCommand<ResourceFileModel>(OnDeleteResourceFile);
             IncludeResourceCommand = new AsyncRelayCommand<ResourceFileModel>(OnIncludeResource);
             AddResourceFileCommand = new AsyncRelayCommand<object>(OnAddResourceFile);
@@ -142,10 +141,6 @@ namespace XamlAnalyzer.ViewModel
             }
         }
 
-        private async Task OnWindowsClosing(object arg)
-        {
-
-        }
 
         private Task OnCheckForError(object arg)
         {

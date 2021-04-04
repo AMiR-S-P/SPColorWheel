@@ -28,6 +28,11 @@
 
     </Window.Resources>
 
+    <Window.InputBindings>
+        <KeyBinding Command="{Binding OpenXamlEditorCommand}" 
+                    CommandParameter="{Binding ElementName=mainWindow}" 
+                    Gesture="Ctrl+W"/>
+    </Window.InputBindings>
     <DockPanel>
 
  

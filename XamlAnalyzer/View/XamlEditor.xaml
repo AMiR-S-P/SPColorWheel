@@ -41,7 +41,7 @@
     </Window.Resources>
     
     <Window.InputBindings>
-        <KeyBinding Command="{Binding ExportCommand}" Key="E"  Modifiers="Ctrl"/>
+        <KeyBinding Command="{Binding ExportCommand}" Key="E"  Modifiers="Shift+Ctrl"/>
         <KeyBinding Command="{Binding EditXamlCommand}" Key="D"  Modifiers="Ctrl"/>
     </Window.InputBindings>
     
@@ -76,8 +76,12 @@
                             <MenuItem Header="_File" Padding="10">
                                 <MenuItem Header="_Export Styles" Command="{Binding ExportCommand}" InputGestureText="Ctrl+E">
                                     <MenuItem.Icon>
-                                        <TextBlock Text="&#xEDE1;" FontFamily="segoe mdl2 assets"  FontSize="16" HorizontalAlignment="Stretch"
-                                                   TextAlignment="Center" />
+                                        <Image Source="/XamlAnalyzer;component/Resources/Icons/exportSelected_128x128.png"/>
+                                    </MenuItem.Icon>
+                                </MenuItem>
+                                <MenuItem Header="_Export All Styles" Command="{Binding ExportAllCommand}" InputGestureText="Ctrl+Shift+E">
+                                    <MenuItem.Icon>
+                                        <Image Source="/XamlAnalyzer;component/Resources/Icons/exportAll_128x128.png"/>
                                     </MenuItem.Icon>
                                 </MenuItem>
                                 <Separator />
@@ -96,9 +100,14 @@
                             </MenuItem>
                         </Menu>
                         <StackPanel Orientation="Horizontal" Grid.Column="1">
-                            <Button Content="&#xEDE1;" ToolTip="Export" Width="40"
-                                    Command="{Binding ExportCommand}"
-                                    FontFamily="Segoe MDL2 Assets" FontSize="18"/>
+                            <Button   ToolTip="Export" Width="30" Margin="5"
+                                    Command="{Binding ExportCommand}">
+                                <Image Source="/XamlAnalyzer;component/Resources/Icons/exportSelected_128x128.png" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+                            </Button>
+                            <Button Width="30" ToolTip="Export All"  Margin="5"
+                                    Command="{Binding ExportAllCommand}">
+                                <Image Source="/XamlAnalyzer;component/Resources/Icons/exportAll_128x128.png" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+                            </Button>
                         </StackPanel>
                     </Grid>
                     
@@ -110,9 +119,14 @@
                             <RowDefinition Height="1*" />
                         </Grid.RowDefinitions>
                         <TextBlock Text="Controls" Grid.Row="0" Style="{StaticResource headerTextBlockStyle}"/>
-                        <TreeView x:Name="uITreeView" Grid.Row="1"  ItemsSource="{Binding UIControl.Children}" Style="{StaticResource ControlsTreeViewStyle}" >
-                            
+                        <TreeView x:Name="uITreeView" Grid.Row="1"  
+                                  ItemsSource="{Binding UIControl.Children}" 
+                                  Style="{StaticResource ControlsTreeViewStyle}" >
+                            <interactivity:Interaction.Behaviors>
+                                <behaviors:SelecteControlTreeViewBehavior/>
+                            </interactivity:Interaction.Behaviors>
                         </TreeView>
+                        
                         <TextBlock Text="Properties" Grid.Row="2" Style="{StaticResource headerTextBlockStyle}"/>
                         <ListView x:Name="brushPropertiesListView" Grid.Row="3" HorizontalContentAlignment="Center" ItemsSource="{Binding SelectedValue.BrushProperties, ElementName=uITreeView}" >
                             <interactivity:Interaction.Triggers>

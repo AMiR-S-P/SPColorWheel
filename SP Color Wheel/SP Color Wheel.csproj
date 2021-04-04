@@ -29,7 +29,9 @@
     <None Remove="Resources\Icons\rgb_128x128.png" />
     <None Remove="Resources\Icons\SPColorWheel_128x128.png" />
     <None Remove="Resources\Icons\unlock_128x128.png" />
-    <None Remove="Resources\Images\bracket.png" />
+    <None Remove="Resources\Images\GitHub.png" />
+    <None Remove="Resources\Images\google.png" />
+    <None Remove="Resources\Images\linkedin.png" />
   </ItemGroup>
 
   <ItemGroup>
@@ -84,7 +86,9 @@
     <Resource Include="Resources\Icons\rgb_128x128.png" />
     <Resource Include="Resources\Icons\SPColorWheel_128x128.png" />
     <Resource Include="Resources\Icons\unlock_128x128.png" />
-    <Resource Include="Resources\Images\bracket.png" />
+    <Resource Include="Resources\Images\gitHub.png" />
+    <Resource Include="Resources\Images\google.png" />
+    <Resource Include="Resources\Images\linkedin.png" />
     <Resource Include="Resources\Styles\Light\MainTheme.xaml" />
   </ItemGroup>
 
