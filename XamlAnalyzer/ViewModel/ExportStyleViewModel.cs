@@ -10,7 +10,6 @@ using System.Windows.Forms;
 using System.Xml;
 using XamlAnalyzer.Commands;
 using XamlAnalyzer.Model;
-using XamlAnalyzer.Services;
 using XamlAnalyzer.Utilities;
 
 namespace XamlAnalyzer.ViewModel

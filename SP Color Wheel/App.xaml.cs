@@ -13,8 +13,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Markup;
-using XamlAnalyzer.Services;
-
+using SPCWCore.Services;
 namespace SP_Color_Wheel
 {
     /// <summary>
@@ -48,8 +47,8 @@ namespace SP_Color_Wheel
                 $"{e.Exception.Message}{Environment.NewLine}{Environment.NewLine}" +
                 $"INNER:{Environment.NewLine}{e.Exception.InnerException?.ToString()}{Environment.NewLine}" +
                 $"INNER MESSAGE:{Environment.NewLine}{e.Exception.InnerException?.Message }");
-            WindowsServices windowServices = new WindowsServices();
-            windowServices.ShowDialog(typeof(ErrorReportView), errorReport, null);
+            WindowsService windowServices = new WindowsService(typeof(ErrorReportView), errorReport);
+            windowServices.ShowDialog( null);
             Application.Current.Shutdown(10);
 
             e.Handled = true;

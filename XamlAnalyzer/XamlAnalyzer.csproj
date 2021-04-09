@@ -17,11 +17,21 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Interfaces\" />
+    <Folder Include="Parsers\" />
     <Folder Include="Resources\Styles\Dark\" />
+    <Folder Include="Services\" />
+    <Folder Include="UserControls\" />
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="AvalonEdit" Version="6.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\SPCWCore\SPCWCore.csproj">
+      <Private>true</Private>
+    </ProjectReference>
   </ItemGroup>
 
   <ItemGroup>

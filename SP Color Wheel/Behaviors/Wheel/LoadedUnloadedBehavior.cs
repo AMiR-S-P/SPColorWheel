@@ -96,7 +96,7 @@ namespace SP_Color_Wheel.Behaviors.Wheel
                 Margin = new System.Windows.Thickness(0, -8, 5, 2),
 
             };
-
+            mainSlider.chainButton.Visibility = Visibility.Hidden;
             LinearGradientBrush linearGradientBrush = new LinearGradientBrush();
             GradientStop offset0 = new GradientStop(Color.FromArgb(255, 0, 0, 0), 1);
             GradientStop offset05 = new GradientStop(Color.FromArgb(255, 127, 127, 127), 0.5);

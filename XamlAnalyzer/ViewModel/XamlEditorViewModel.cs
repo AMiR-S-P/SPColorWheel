@@ -16,7 +16,6 @@ using System.Windows.Media;
 using System.Xml;
 using XamlAnalyzer.Commands;
 using XamlAnalyzer.Model;
-using XamlAnalyzer.Services;
 using XamlAnalyzer.Utilities;
 using XamlAnalyzer.View;
 
@@ -107,7 +106,7 @@ namespace XamlAnalyzer.ViewModel
                 {
                     SelectedBrush = selectedProperty.Value;
                 }
-                Brush = null;
+                //Brush = null;
                 SetBackgroundToImageCommand.OnCanExecuteChanged();
                 SetBackgroundToLinearCommand.OnCanExecuteChanged();
                 SetBackgroundToNoneCommand.OnCanExecuteChanged();
@@ -120,7 +119,13 @@ namespace XamlAnalyzer.ViewModel
         {
             initCommands();
         }
-
+        public void ResetVM()
+        {
+            UIControl = new ControlModel();
+            SelectedBrush = null;
+            SelectedControl = null;
+            SelectedProperty = null;
+        }
         private async Task UpdateUI()
         {
             try

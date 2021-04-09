@@ -9,6 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Xml;
+using System.Xml.Schema;
 using XamlAnalyzer.Model;
 
 namespace XamlAnalyzer.Utilities
@@ -28,7 +29,7 @@ namespace XamlAnalyzer.Utilities
 
 
         public string Xaml { get => (string)GetValue(XamlProperty); private set => SetValue(XamlProperty, value); }
-        public XmlDocument Document { get; private set; } = new XmlDocument();
+        public XmlDocument Document { get; private set; } 
 
         public ObservableCollection<ResourceFileModel> ImportedResources { get; set; } = new ObservableCollection<ResourceFileModel>();
         public ObservableCollection<AssemblyFileModel> ImportedAssemblies { set; get; } = new ObservableCollection<AssemblyFileModel>();
@@ -46,6 +47,10 @@ namespace XamlAnalyzer.Utilities
         /// <param name="xaml">xaml to parse</param>
         public SPXamlParser(string xaml)
         {
+            Document = new XmlDocument();
+            XmlSchema xmlSchema = new XmlSchema();
+            xmlSchema.Namespaces.Add("xmlns", XMLNS);
+            Document.Schemas.Add(xmlSchema);
             LoadXaml(xaml);
             InitEvents();
         }
@@ -114,8 +119,10 @@ namespace XamlAnalyzer.Utilities
         {
             try
             {
-                Xaml = xaml;
-                Document.LoadXml(Xaml);
+                Document.LoadXml(xaml);
+                ((XmlElement)Document.ChildNodes[0]).SetAttribute("xmlns", XMLNS);
+                Xaml = Document.InnerXml;
+                FormatXaml();
             }
             catch (Exception ex)
             {
@@ -149,7 +156,10 @@ namespace XamlAnalyzer.Utilities
                 {
                     try
                     {
-                        LoadXaml(Xaml);
+                        Document.LoadXml(Xaml);
+                        //((XmlElement)Document.ChildNodes[0]).SetAttribute("xmlns", XMLNS);
+                        Xaml = Document.InnerXml;
+                        //LoadXaml(Xaml);
 
                         //ms.WriteAsync(Encoding.UTF8.GetBytes(Xaml), 0, xaml.Length);
                         Document.WriteContentTo(xmlW);
@@ -157,7 +167,8 @@ namespace XamlAnalyzer.Utilities
                         ms.Position = 0;
 
                         var formatedXaml = await new StreamReader(ms).ReadToEndAsync();
-                        LoadXaml(formatedXaml);
+                        Xaml = formatedXaml;
+                        //LoadXaml(formatedXaml);
                     }
                     catch (Exception ex)
                     {

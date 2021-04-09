@@ -1,8 +1,8 @@
 ﻿using SP_Color_Wheel.Commands;
 using SP_Color_Wheel.Interfaces;
-using SP_Color_Wheel.UserControls;
-using SP_Color_Wheel.UserControls.RGB;
 using SP_Color_Wheel.Views;
+using SPCWCore.Interfaces;
+using SPCWCore.Services;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -14,7 +14,6 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Data;
 using XamlAnalyzer.Model;
-using XamlAnalyzer.Services;
 using XamlAnalyzer.View;
 using XamlAnalyzer.ViewModel;
 
@@ -22,7 +21,9 @@ namespace SP_Color_Wheel.ViewModels
 {
     public class MainWindowVM : BaseViewModel
     {
-        XamlEditorViewModel xamlEditorViewModel = new XamlEditorViewModel();
+        List<XamlAnalyzer.ViewModel.XamlEditorViewModel> ViewModels = new List<XamlAnalyzer.ViewModel.XamlEditorViewModel>();
+
+        //XamlEditorViewModel xamlEditorViewModel = new XamlEditorViewModel();
 
         private IColorSelector currentSelector;
         private ObservableCollection<IColorSelector> selectors = new ObservableCollection<IColorSelector>();
@@ -32,11 +33,18 @@ namespace SP_Color_Wheel.ViewModels
         {
             get => currentSelector; set
             {
+
                 ((ISettingsHelper)currentSelector)?.SaveSettings();//save settings before change DC
                 currentSelector = value;
                 OpenXamlEditorCommand.OnCanExecuteChanged();
-                ClearSelectorBindings();
-                SetSelectorBindings();
+
+                //foreach viewmodel set binding and clear binding here
+                foreach(var vm in ViewModels)
+                {
+                    ClearSelectorBindings(vm);
+                    SetSelectorBindings(vm);
+                }
+
 
                 OnPropertyChanged();
             }
@@ -62,6 +70,7 @@ namespace SP_Color_Wheel.ViewModels
 
         public AsyncRelayCommand<Window> OpenXamlEditorCommand { get; set; }
         public AsyncRelayCommand<object> AboutCommand { get; set; }
+        public AsyncRelayCommand<Window> ExitCommand { get; set; }
         public MainWindowVM()
         {
             Selectors.Add(new WheelViewModel());
@@ -69,10 +78,17 @@ namespace SP_Color_Wheel.ViewModels
 
             OpenXamlEditorCommand = new AsyncRelayCommand<Window>(OnOpenXamlEditor);
             AboutCommand = new AsyncRelayCommand<object>(OnAbout);
+            ExitCommand = new AsyncRelayCommand<Window>(OnExit);
         }
 
+        private Task OnExit(Window arg)
+        {
+            new WindowsService(arg).CloseWindow();
 
-        void ClearSelectorBindings()
+            return Task.CompletedTask;
+        }
+
+        void ClearSelectorBindings(XamlEditorViewModel xamlEditorViewModel)
         {
             BindingOperations.ClearBinding(xamlEditorViewModel, XamlEditorViewModel.MainColorProperty);
             BindingOperations.ClearBinding(xamlEditorViewModel, XamlEditorViewModel.Color2Property);
@@ -98,49 +114,66 @@ namespace SP_Color_Wheel.ViewModels
             BindingOperations.ClearBinding(xamlEditorViewModel, XamlEditorViewModel.Shade4Property);
             BindingOperations.ClearBinding(xamlEditorViewModel, XamlEditorViewModel.Shade5Property);
             BindingOperations.ClearBinding(xamlEditorViewModel, XamlEditorViewModel.Shade6Property);
-        
+
         }
 
-        void SetSelectorBindings()
+        void SetSelectorBindings(XamlEditorViewModel xamlEditorViewModel)
         {
-            BindingOperations.SetBinding(xamlEditorViewModel, XamlEditorViewModel.MainColorProperty, new Binding("MainColor") { Source = CurrentSelector });
-            BindingOperations.SetBinding(xamlEditorViewModel, XamlEditorViewModel.Color2Property, new Binding("Color2") { Source = CurrentSelector });
-            BindingOperations.SetBinding(xamlEditorViewModel, XamlEditorViewModel.Color3Property, new Binding("Color3") { Source = CurrentSelector });
-            BindingOperations.SetBinding(xamlEditorViewModel, XamlEditorViewModel.Color4Property, new Binding("Color4") { Source = CurrentSelector });
-            BindingOperations.SetBinding(xamlEditorViewModel, XamlEditorViewModel.Color5Property, new Binding("Color5") { Source = CurrentSelector });
+            if (CurrentSelector != null)
+            {
+                BindingOperations.SetBinding(xamlEditorViewModel, XamlEditorViewModel.MainColorProperty, new Binding("MainColor") { Source = CurrentSelector });
+                BindingOperations.SetBinding(xamlEditorViewModel, XamlEditorViewModel.Color2Property, new Binding("Color2") { Source = CurrentSelector });
+                BindingOperations.SetBinding(xamlEditorViewModel, XamlEditorViewModel.Color3Property, new Binding("Color3") { Source = CurrentSelector });
+                BindingOperations.SetBinding(xamlEditorViewModel, XamlEditorViewModel.Color4Property, new Binding("Color4") { Source = CurrentSelector });
+                BindingOperations.SetBinding(xamlEditorViewModel, XamlEditorViewModel.Color5Property, new Binding("Color5") { Source = CurrentSelector });
 
-            BindingOperations.SetBinding(xamlEditorViewModel, XamlEditorViewModel.Tint2Property, new Binding("Tint2") { Source = CurrentSelector.MainColorTint });
-            BindingOperations.SetBinding(xamlEditorViewModel, XamlEditorViewModel.Tint3Property, new Binding("Tint3") { Source = CurrentSelector.MainColorTint });
-            BindingOperations.SetBinding(xamlEditorViewModel, XamlEditorViewModel.Tint4Property, new Binding("Tint4") { Source = CurrentSelector.MainColorTint });
-            BindingOperations.SetBinding(xamlEditorViewModel, XamlEditorViewModel.Tint5Property, new Binding("Tint5") { Source = CurrentSelector.MainColorTint });
-            BindingOperations.SetBinding(xamlEditorViewModel, XamlEditorViewModel.Tint6Property, new Binding("Tint6") { Source = CurrentSelector.MainColorTint });
+                BindingOperations.SetBinding(xamlEditorViewModel, XamlEditorViewModel.Tint2Property, new Binding("Tint2") { Source = CurrentSelector.MainColorTint });
+                BindingOperations.SetBinding(xamlEditorViewModel, XamlEditorViewModel.Tint3Property, new Binding("Tint3") { Source = CurrentSelector.MainColorTint });
+                BindingOperations.SetBinding(xamlEditorViewModel, XamlEditorViewModel.Tint4Property, new Binding("Tint4") { Source = CurrentSelector.MainColorTint });
+                BindingOperations.SetBinding(xamlEditorViewModel, XamlEditorViewModel.Tint5Property, new Binding("Tint5") { Source = CurrentSelector.MainColorTint });
+                BindingOperations.SetBinding(xamlEditorViewModel, XamlEditorViewModel.Tint6Property, new Binding("Tint6") { Source = CurrentSelector.MainColorTint });
 
-            BindingOperations.SetBinding(xamlEditorViewModel, XamlEditorViewModel.Tone2Property, new Binding("Tone2") { Source = CurrentSelector.MainColorTone });
-            BindingOperations.SetBinding(xamlEditorViewModel, XamlEditorViewModel.Tone3Property, new Binding("Tone3") { Source = CurrentSelector.MainColorTone });
-            BindingOperations.SetBinding(xamlEditorViewModel, XamlEditorViewModel.Tone4Property, new Binding("Tone4") { Source = CurrentSelector.MainColorTone });
-            BindingOperations.SetBinding(xamlEditorViewModel, XamlEditorViewModel.Tone5Property, new Binding("Tone5") { Source = CurrentSelector.MainColorTone });
-            BindingOperations.SetBinding(xamlEditorViewModel, XamlEditorViewModel.Tone6Property, new Binding("Tone6") { Source = CurrentSelector.MainColorTone });
+                BindingOperations.SetBinding(xamlEditorViewModel, XamlEditorViewModel.Tone2Property, new Binding("Tone2") { Source = CurrentSelector.MainColorTone });
+                BindingOperations.SetBinding(xamlEditorViewModel, XamlEditorViewModel.Tone3Property, new Binding("Tone3") { Source = CurrentSelector.MainColorTone });
+                BindingOperations.SetBinding(xamlEditorViewModel, XamlEditorViewModel.Tone4Property, new Binding("Tone4") { Source = CurrentSelector.MainColorTone });
+                BindingOperations.SetBinding(xamlEditorViewModel, XamlEditorViewModel.Tone5Property, new Binding("Tone5") { Source = CurrentSelector.MainColorTone });
+                BindingOperations.SetBinding(xamlEditorViewModel, XamlEditorViewModel.Tone6Property, new Binding("Tone6") { Source = CurrentSelector.MainColorTone });
 
-            BindingOperations.SetBinding(xamlEditorViewModel, XamlEditorViewModel.Shade2Property, new Binding("Shade2") { Source = CurrentSelector.MainColorShade });
-            BindingOperations.SetBinding(xamlEditorViewModel, XamlEditorViewModel.Shade3Property, new Binding("Shade3") { Source = CurrentSelector.MainColorShade });
-            BindingOperations.SetBinding(xamlEditorViewModel, XamlEditorViewModel.Shade4Property, new Binding("Shade4") { Source = CurrentSelector.MainColorShade });
-            BindingOperations.SetBinding(xamlEditorViewModel, XamlEditorViewModel.Shade5Property, new Binding("Shade5") { Source = CurrentSelector.MainColorShade });
-            BindingOperations.SetBinding(xamlEditorViewModel, XamlEditorViewModel.Shade6Property, new Binding("Shade6") { Source = CurrentSelector.MainColorShade });
+                BindingOperations.SetBinding(xamlEditorViewModel, XamlEditorViewModel.Shade2Property, new Binding("Shade2") { Source = CurrentSelector.MainColorShade });
+                BindingOperations.SetBinding(xamlEditorViewModel, XamlEditorViewModel.Shade3Property, new Binding("Shade3") { Source = CurrentSelector.MainColorShade });
+                BindingOperations.SetBinding(xamlEditorViewModel, XamlEditorViewModel.Shade4Property, new Binding("Shade4") { Source = CurrentSelector.MainColorShade });
+                BindingOperations.SetBinding(xamlEditorViewModel, XamlEditorViewModel.Shade5Property, new Binding("Shade5") { Source = CurrentSelector.MainColorShade });
+                BindingOperations.SetBinding(xamlEditorViewModel, XamlEditorViewModel.Shade6Property, new Binding("Shade6") { Source = CurrentSelector.MainColorShade });
+            }
         }
         private Task OnAbout(object arg)
         {
-            WindowsServices windowsServices = new WindowsServices();
             AboutViewModel aboutViewModel = new AboutViewModel();
-            windowsServices.ShowDialog(typeof(AboutView), aboutViewModel, null);
+            WindowsService windowsServices = new WindowsService(typeof(AboutView), aboutViewModel);
+            windowsServices.ShowDialog( null);
             return Task.CompletedTask;
         }
 
 
         private Task OnOpenXamlEditor(Window arg)
         {
-            xamlEditorViewModel = new XamlEditorViewModel();
-            XamlAnalyzer.Services.WindowsServices services = new XamlAnalyzer.Services.WindowsServices();
-            services.ShowWindows(typeof(XamlEditor), xamlEditorViewModel, arg);
+            //xamlEditorViewModel.ResetVM();
+            var xamlEditorViewModel = new XamlEditorViewModel();
+            WindowsService services = new WindowsService(typeof(XamlEditor), xamlEditorViewModel);
+
+
+            services.Window.DataContext = xamlEditorViewModel;
+            services.Window.Loaded += (s, e) =>
+            {
+                ViewModels.Add(xamlEditorViewModel);
+                SetSelectorBindings(xamlEditorViewModel);
+            };
+            services.Window.Unloaded += (s, e) =>
+            {
+                ViewModels.Remove(xamlEditorViewModel);
+                ClearSelectorBindings(xamlEditorViewModel);
+            };
+            services.ShowWindows(arg);
 
             return Task.CompletedTask;
         }

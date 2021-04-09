@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -23,7 +24,7 @@ namespace XamlAnalyzer.View
     public partial class XamlEditor : Window
     {
         public XamlEditor()
-        {
+        {            
             InitializeComponent();
             Closing += XamlEditor_Closing;
         }

@@ -1,5 +1,6 @@
 ﻿using ICSharpCode.AvalonEdit.Document;
 using ICSharpCode.AvalonEdit.Highlighting;
+using SPCWCore.Services;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -16,7 +17,6 @@ using System.Windows.Markup;
 using System.Xml;
 using XamlAnalyzer.Commands;
 using XamlAnalyzer.Model;
-using XamlAnalyzer.Services;
 using XamlAnalyzer.Utilities;
 using MessageBox = System.Windows.Forms.MessageBox;
 
@@ -122,7 +122,7 @@ namespace XamlAnalyzer.ViewModel
         }
         private Task OnExit(Window arg)
         {
-            new WindowsServices().CloseWindow(arg);
+            new WindowsService(arg).CloseWindow();
             return Task.CompletedTask;
         }
 
@@ -146,8 +146,16 @@ namespace XamlAnalyzer.ViewModel
         {
             try
             {
+                //var ss = AssemblyLoadContext.Default.Assemblies.Where(x=>x.ManifestModule.Name == "WindowsBase.dll").FirstOrDefault() ;
+                //XamlParser.AddAssemblyFile(new AssemblyFileModel()
+                //{
+                //    Name = "WindowsBase",
+                //    Path = ss.Location
+                //});
+
                 bool lastSave = IsSaved;
                 XamlParser.LoadXaml(Document.Text);
+
                 ParserContext parserContext = new ParserContext();
                 parserContext.XamlTypeMapper = new XamlTypeMapper(new string[] { });
                 XamlParser.ReloadAssembelies();

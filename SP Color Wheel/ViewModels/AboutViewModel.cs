@@ -1,4 +1,5 @@
 ﻿using SP_Color_Wheel.Commands;
+using SPCWCore.Services;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -8,7 +9,6 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
-using XamlAnalyzer.Services;
 
 namespace SP_Color_Wheel.ViewModels
 {
@@ -55,8 +55,8 @@ namespace SP_Color_Wheel.ViewModels
 
         private Task OnOk(Window arg)
         {
-            WindowsServices windowsServices = new WindowsServices();
-            windowsServices.CloseWindow(arg);
+            WindowsService windowsServices = new WindowsService(arg);
+            windowsServices.CloseWindow();
 
             return Task.CompletedTask;
         }

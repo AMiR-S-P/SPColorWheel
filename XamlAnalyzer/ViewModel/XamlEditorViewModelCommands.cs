@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SPCWCore.Services;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
@@ -13,9 +14,7 @@ using System.Windows.Forms;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using XamlAnalyzer.Commands;
-using XamlAnalyzer.Interfaces;
 using XamlAnalyzer.Model;
-using XamlAnalyzer.Services;
 using XamlAnalyzer.Utilities;
 using XamlAnalyzer.View;
 using MessageBox = System.Windows.Forms.MessageBox;
@@ -83,7 +82,7 @@ namespace XamlAnalyzer.ViewModel
         {
             if (CanCloseWindow())
             {
-                new WindowsServices().CloseWindow(arg);
+                new WindowsService(arg).CloseWindow();
             }
             return Task.CompletedTask;
         }
@@ -139,19 +138,19 @@ namespace XamlAnalyzer.ViewModel
 
         private Task OnExport(Window arg)
         {
-            WindowsServices windowsService = new WindowsServices();
             var control = new ControlModel();
             control.Children.Add(SelectedControl);
             ExportStyleViewModel viewModel = new ExportStyleViewModel(control);
-            windowsService.ShowDialog(typeof(ExportStyleView), viewModel, arg);
+            WindowsService windowsService = new WindowsService(typeof(ExportStyleView), viewModel);
+            windowsService.ShowDialog( arg);
             IsExported = viewModel.IsExported;
             return Task.CompletedTask;
         }
         private Task OnAllExport(Window arg)
         {
-            WindowsServices windowsService = new WindowsServices();
             ExportStyleViewModel viewModel = new ExportStyleViewModel(UIControl);
-            windowsService.ShowDialog(typeof(ExportStyleView), viewModel, arg);
+            WindowsService windowsService = new WindowsService(typeof(ExportStyleView), viewModel);
+            windowsService.ShowDialog( arg);
             IsExported = viewModel.IsExported;
 
 
@@ -162,9 +161,9 @@ namespace XamlAnalyzer.ViewModel
             if (CanCloseWindow())
             {
                 UIControl = new ControlModel();
-                WindowsServices windowsService = new WindowsServices();
                 EditXamlViewModel viewModel = new EditXamlViewModel(XamlParser);
-                windowsService.ShowDialog(typeof(EditXamlView), viewModel, arg);
+                WindowsService windowsService = new WindowsService(typeof(EditXamlView), viewModel);
+                windowsService.ShowDialog( arg);
               
                 XamlParser = viewModel.XamlParser;
             }
@@ -210,18 +209,20 @@ namespace XamlAnalyzer.ViewModel
 
         private Task OnSetBrushCommand(SolidColorBrush arg)
         {
-
-            if (SelectedBrush.GetType() == typeof(SolidColorBrush))
+            if (SelectedProperty != null)
             {
-                SelectedProperty.SetProperty(arg);
+                if (SelectedBrush.GetType() == typeof(SolidColorBrush))
+                {
+                    SelectedProperty.SetProperty(arg);
+                }
+                else if (SelectedBrush.GetType() == typeof(GradientStop))
+                {
+                    GradientStop gradientStop = (SelectedProperty.Value as GradientBrush).GradientStops.FirstOrDefault(x => x == (SelectedBrush as GradientStop));
+                    System.Windows.Data.BindingOperations.ClearBinding(gradientStop, GradientStop.ColorProperty);
+                    System.Windows.Data.BindingOperations.SetBinding(gradientStop, GradientStop.ColorProperty, new System.Windows.Data.Binding("Color") { Source = arg });
+                }
+                IsExported = false;
             }
-            else if (SelectedBrush.GetType() == typeof(GradientStop))
-            {
-                GradientStop gradientStop = (SelectedProperty.Value as GradientBrush).GradientStops.FirstOrDefault(x => x == (SelectedBrush as GradientStop));
-                System.Windows.Data.BindingOperations.ClearBinding(gradientStop, GradientStop.ColorProperty);
-                System.Windows.Data.BindingOperations.SetBinding(gradientStop, GradientStop.ColorProperty, new System.Windows.Data.Binding("Color") { Source = arg });
-            }
-            IsExported = false;
             return Task.CompletedTask;
         }
 
@@ -309,10 +310,10 @@ namespace XamlAnalyzer.ViewModel
             {
                 //fake task 
             });
-            if (arg is PropertyModel)
-            {
+            //if (arg is PropertyModel)
+            //{
                 SelectedProperty = arg as PropertyModel;
-            }
+            //}
         }
         private bool CanSelectBrush(object arg)
         {

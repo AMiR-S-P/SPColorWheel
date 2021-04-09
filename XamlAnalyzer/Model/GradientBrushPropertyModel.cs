@@ -9,14 +9,14 @@ using System.Windows.Media;
 
 namespace XamlAnalyzer.Model
 {
-    public class GradientBrushPropertyModel:PropertyModel
+    public class GradientBrushPropertyModel : PropertyModel
     {
-        public ObservableCollection<GradientStop> GradientStops { set;get; } = new ObservableCollection<GradientStop>();
+        public ObservableCollection<GradientStop> GradientStops { set; get; } = new ObservableCollection<GradientStop>();
 
-        public GradientBrushPropertyModel(DependencyObject owner):base(owner)
+        public GradientBrushPropertyModel(DependencyObject owner) : base(owner)
         {
         }
 
-  
+
     }
 }

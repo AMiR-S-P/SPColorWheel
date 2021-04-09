@@ -4,7 +4,6 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:XamlAnalyzer.View" 
-        xmlns:editor="clr-namespace:XamlAnalyzer.UserControls.Editor"
         xmlns:vm="clr-namespace:XamlAnalyzer.ViewModel"
         xmlns:utilities="clr-namespace:XamlAnalyzer.Utilities"
         xmlns:interactivity="http://schemas.microsoft.com/expression/2010/interactivity"
@@ -14,7 +13,7 @@
         xmlns:converter="clr-namespace:XamlAnalyzer.Converters"
         d:DataContext="{d:DesignInstance Type=vm:XamlEditorViewModel}"
         mc:Ignorable="d" x:Name="xamlEditor"  WindowStartupLocation="CenterScreen"
-        Title="Xaml Editor" Height="600" Width="1000" MinHeight="600" MinWidth="1000">
+        Title="WFP Xaml Color" Height="600" Width="1000" MinHeight="600" MinWidth="1000">
 
    
     <Window.Resources>
@@ -128,13 +127,17 @@
                         </TreeView>
                         
                         <TextBlock Text="Properties" Grid.Row="2" Style="{StaticResource headerTextBlockStyle}"/>
-                        <ListView x:Name="brushPropertiesListView" Grid.Row="3" HorizontalContentAlignment="Center" ItemsSource="{Binding SelectedValue.BrushProperties, ElementName=uITreeView}" >
+                        <ListView x:Name="brushPropertiesListView" Grid.Row="3" HorizontalContentAlignment="Center" 
+                                  ItemsSource="{Binding SelectedValue.BrushProperties, ElementName=uITreeView}" SelectionMode="Single">
                             <interactivity:Interaction.Triggers>
                                 <interactivity:EventTrigger EventName="SelectionChanged" SourceName="brushPropertiesListView">
                                     <interactivity:InvokeCommandAction Command="{Binding SelectPropertyCommand}"
                                                                        CommandParameter="{Binding SelectedValue,Mode=OneWay,ElementName=brushPropertiesListView}"/>
                                 </interactivity:EventTrigger>
                             </interactivity:Interaction.Triggers>
+                            <interactivity:Interaction.Behaviors>
+                                <behaviors:DeselectBrushPropertyBehavior/>
+                            </interactivity:Interaction.Behaviors>
                             <ListView.ItemsPanel>
                                 <ItemsPanelTemplate>
                                     <UniformGrid  HorizontalAlignment="Stretch" VerticalAlignment="Top"/>

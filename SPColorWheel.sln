@@ -7,7 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SP Color Wheel", "SP Color 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "XamlAnalyzer", "XamlAnalyzer\XamlAnalyzer.csproj", "{B4CE05B0-FC58-4D66-97FC-8F6C614121F8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XamlTest", "XamlTest\XamlTest.csproj", "{922F14F1-FFBD-491B-BE46-6F9B643E39D8}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SPCWCore", "SPCWCore\SPCWCore.csproj", "{8A55ACC5-8162-4A85-ABBF-FDB38E371024}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -23,10 +23,10 @@ Global
 		{B4CE05B0-FC58-4D66-97FC-8F6C614121F8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B4CE05B0-FC58-4D66-97FC-8F6C614121F8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B4CE05B0-FC58-4D66-97FC-8F6C614121F8}.Release|Any CPU.Build.0 = Release|Any CPU
-		{922F14F1-FFBD-491B-BE46-6F9B643E39D8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{922F14F1-FFBD-491B-BE46-6F9B643E39D8}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{922F14F1-FFBD-491B-BE46-6F9B643E39D8}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{922F14F1-FFBD-491B-BE46-6F9B643E39D8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8A55ACC5-8162-4A85-ABBF-FDB38E371024}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8A55ACC5-8162-4A85-ABBF-FDB38E371024}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8A55ACC5-8162-4A85-ABBF-FDB38E371024}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8A55ACC5-8162-4A85-ABBF-FDB38E371024}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

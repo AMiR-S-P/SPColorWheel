@@ -9,7 +9,7 @@
         xmlns:local="clr-namespace:XamlAnalyzer.View"
         xmlns:cc="clr-namespace:XamlAnalyzer.CustomControls"
         mc:Ignorable="d" WindowStartupLocation="CenterScreen"
-        Title="EditXamlView" MinHeight="450" MinWidth="800">
+        Title="Edit WPF Xaml" MinHeight="450" MinWidth="800">
 
     <interactivity:Interaction.Behaviors>
         <behaviors:EditXamlCloseBehavior/>

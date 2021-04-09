@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SP_Color_Wheel.EventArguments;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -25,11 +26,11 @@ namespace SP_Color_Wheel.UserControls.Common
         private bool isLocked;
         private bool isLockable;
         private string cardName;
-        object tempDataContext;
+        static object tempDataContext;
         string tempColor;
 
         public static readonly DependencyProperty CurrentColorProperty =
-            DependencyProperty.Register("CurrentColor", typeof(Color), typeof(ColorCard), new PropertyMetadata(Colors.Transparent/*,CurrentColorChanged*/));
+            DependencyProperty.Register("CurrentColor", typeof(Color), typeof(ColorCard), new PropertyMetadata(Colors.Transparent, CurrentColorChanged));
 
         private static void CurrentColorChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
@@ -44,36 +45,38 @@ namespace SP_Color_Wheel.UserControls.Common
         public Color CurrentColor
         {
             get { return (Color)GetValue(CurrentColorProperty); }
-            set { SetValue(CurrentColorProperty, value); }
+            set
+            {
+                SetValue(CurrentColorProperty, value);
+            }
         }
         public string ColorCode
         {
             get => CurrentColor.ToString();
             private set
             {
-                CurrentColor = (Color)ColorConverter.ConvertFromString(value?.ToString());
+
+                SetValue( CurrentColorProperty , (Color)ColorConverter.ConvertFromString(value?.ToString()));
                 OnPropertyChanged();
+
             }
         }
         public string CardName { get => cardName; set { cardName = value; OnPropertyChanged(); } }
+
+        public event EventHandler<IsLockedChanged> IsLockedChanged;
+
+        public void OnIsLockedChanged(bool value)
+        {
+            IsLockedChanged?.Invoke(this, new EventArguments.IsLockedChanged(value));
+        }
         public bool IsLocked
         {
             get => isLocked;
             set
             {
                 isLocked = value;
+                OnIsLockedChanged(value);
                 OnPropertyChanged();
-                if (value)
-                {
-                    tempDataContext = DataContext;
-                    tempColor = ColorCode;
-                    DataContext = null;
-                    ColorCode = tempColor;
-                }
-                else
-                {
-                    DataContext = tempDataContext;
-                }
             }
         }
         public bool IsLockable
@@ -117,6 +120,11 @@ namespace SP_Color_Wheel.UserControls.Common
         void OnPropertyChanged([CallerMemberName] string propertName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertName));
+        }
+
+        public void ChangeColorCode(string code)
+        {
+            ColorCode = code;
         }
         public ColorCard()
         {

@@ -40,6 +40,7 @@
 
   <ItemGroup>
     <Folder Include="EventHandlers\" />
+    <Folder Include="Services\" />
   </ItemGroup>
 
   <ItemGroup>
@@ -47,7 +48,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\XamlAnalyzer\XamlAnalyzer.csproj" />
+    <ProjectReference Include="..\SPCWCore\SPCWCore.csproj" />
+    <ProjectReference Include="..\XamlAnalyzer\XamlAnalyzer.csproj">
+      <Private>true</Private>
+    </ProjectReference>
   </ItemGroup>
 
   <ItemGroup>

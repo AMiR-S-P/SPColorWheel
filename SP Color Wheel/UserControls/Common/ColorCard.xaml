@@ -36,7 +36,7 @@
                 </Grid.ContextMenu>
             </Grid>
             <TextBox x:Name="colorCodeTxtBox" Style="{StaticResource colorCodeTxtBx}"
-                     Text="{Binding CurrentColor,Mode=OneWay,ElementName=colorPreviewer}" 
+                     Text="{Binding  CurrentColor,Mode=OneWay,ElementName=colorPreviewer}" 
                      Grid.Row="1"  VerticalContentAlignment="Center" IsReadOnly="True" 
                      />
         </Grid>
