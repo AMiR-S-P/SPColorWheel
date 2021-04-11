@@ -44,6 +44,15 @@ namespace XamlAnalyzer.ViewModel
         public AsyncRelayCommand<Window> ExportAllCommand { get; set; }
         public AsyncRelayCommand<object> BrowseImageSourceCommand { get; set; }
         public AsyncRelayCommand<Window> ExitCommand { get; set; }
+
+        public AsyncRelayCommand<string> SampleCommand { get; set; }
+        public AsyncRelayCommand<ControlModel> ApplyStyleToAllCommand { get; set; }
+        public AsyncRelayCommand<ControlModel> ApplyStyleToSubCommand { get; set; }
+
+        public AsyncRelayCommand<PropertyModel> ApplyBrushToAllCommand { get; set; }
+        public AsyncRelayCommand<PropertyModel> ApplyBrushToSubCommand { get; set; }
+
+        public AsyncRelayCommand<object> RefreshUICommand { set; get; }
         private void initCommands()
         {
             SelectPropertyCommand = new AsyncRelayCommand<object>(OnSelectProperty);
@@ -64,14 +73,115 @@ namespace XamlAnalyzer.ViewModel
             SelectImageBrushCommand = new AsyncRelayCommand<ImageBrush>(OnSelectImageBrush);
 
             EditXamlCommand = new AsyncRelayCommand<Window>(OnEditXaml);
-            ExportCommand = new AsyncRelayCommand<Window>(OnExport,CanExport);
+            ExportCommand = new AsyncRelayCommand<Window>(OnExport, CanExport);
             ExportAllCommand = new AsyncRelayCommand<Window>(OnAllExport);
 
             BrowseImageSourceCommand = new AsyncRelayCommand<object>(OnBrowseImageSource);
             ExitCommand = new AsyncRelayCommand<Window>(OnExit);
+
+            SampleCommand = new AsyncRelayCommand<string>(OnSample);
+            ApplyStyleToAllCommand = new AsyncRelayCommand<ControlModel>(OnApplyStyleToAll);
+            ApplyStyleToSubCommand = new AsyncRelayCommand<ControlModel>(OnApplyStyleToSub);
+
+            ApplyBrushToAllCommand = new AsyncRelayCommand<PropertyModel>(OnApplyBrushToAll);
+            ApplyBrushToSubCommand = new AsyncRelayCommand<PropertyModel>(OnApplyBrushToSub);
+
+            RefreshUICommand = new AsyncRelayCommand<object>(OnRefreshUI,CanRefreshUI);
         }
 
+        private bool CanRefreshUI(object arg)
+        {
+            return UI != null || WindowUI != null;
+        }
 
+        private async Task OnRefreshUI(object arg)
+        {
+            await UpdateUI();
+        }
+
+        private async Task OnApplyBrushToSub(PropertyModel arg)
+        {
+            await ApplyBrushToAll(SelectedControl, SelectedControl, arg);
+        }
+
+        private async Task OnApplyBrushToAll(PropertyModel arg)
+        {
+            await ApplyBrushToAll(UIControl,SelectedControl, arg);
+        }
+        async Task ApplyBrushToAll(ControlModel control,ControlModel baseControl,PropertyModel value)
+        {
+            foreach (var c in control.Children)
+            {
+                if (c.Element.GetType() == baseControl.Element.GetType())
+                {
+                    c.BrushProperties.FirstOrDefault(x=>x.Property.Name == value.Property.Name).SetProperty(value.Value);
+                    
+                }
+                await ApplyBrushToAll(c, baseControl,value);
+            }
+        }
+        private async Task OnApplyStyleToSub(object arg)
+        {
+            await ApplyStyleToAll(SelectedControl, SelectedControl);
+
+        }
+
+        private async Task OnApplyStyleToAll(object arg)
+        {
+            await ApplyStyleToAll(UIControl, SelectedControl);
+        }
+        async Task ApplyStyleToAll(ControlModel controlModel,ControlModel baseControl)
+        {
+            foreach (var c in controlModel.Children)
+            {
+                if (c.Element.GetType() == baseControl.Element.GetType())
+                {
+                    foreach (var p in c.BrushProperties)
+                    {
+                        p.SetProperty(baseControl.BrushProperties.FirstOrDefault(x => x.Property.Name == p.Property.Name).Value);
+                    }
+                }
+                await ApplyStyleToAll(c, baseControl) ;
+            }
+        }
+        private async Task OnSample(string arg)
+        {
+            Uri uri=new Uri("Samples/Calculator.xaml", UriKind.RelativeOrAbsolute);
+
+            switch (arg)
+            {
+                case "Calculator":
+                    {
+                        uri = new Uri("pack://application:,,,/XamlAnalyzer;component/Samples/Calculator.txt", UriKind.RelativeOrAbsolute);
+                        break;
+                    }
+                case "Sign in form":
+                    {
+                        uri = new Uri("pack://application:,,,/Samples/Calculator.xaml", UriKind.RelativeOrAbsolute);
+                        break;
+                    }
+                case "Shapse":
+                    {
+                        uri = new Uri("pack://application:,,,/Samples/Calculator.xaml", UriKind.RelativeOrAbsolute);
+                        break;
+                    }
+            }
+            if (CanCloseWindow())
+            {
+
+                try
+                {
+                    var content = await new StreamReader(System.Windows.Application.GetResourceStream(uri).Stream).ReadToEndAsync();
+                    SPXamlParser xamlParser = new SPXamlParser(content);
+                    xamlParser.LoadXaml(content);
+                    XamlParser = xamlParser;
+                }
+                catch (Exception ex)
+                {
+
+                }
+            }
+        }
 
         private bool CanExport(Window arg)
         {
@@ -142,7 +252,7 @@ namespace XamlAnalyzer.ViewModel
             control.Children.Add(SelectedControl);
             ExportStyleViewModel viewModel = new ExportStyleViewModel(control);
             WindowsService windowsService = new WindowsService(typeof(ExportStyleView), viewModel);
-            windowsService.ShowDialog( arg);
+            windowsService.ShowDialog(arg);
             IsExported = viewModel.IsExported;
             return Task.CompletedTask;
         }
@@ -150,7 +260,7 @@ namespace XamlAnalyzer.ViewModel
         {
             ExportStyleViewModel viewModel = new ExportStyleViewModel(UIControl);
             WindowsService windowsService = new WindowsService(typeof(ExportStyleView), viewModel);
-            windowsService.ShowDialog( arg);
+            windowsService.ShowDialog(arg);
             IsExported = viewModel.IsExported;
 
 
@@ -163,8 +273,8 @@ namespace XamlAnalyzer.ViewModel
                 UIControl = new ControlModel();
                 EditXamlViewModel viewModel = new EditXamlViewModel(XamlParser);
                 WindowsService windowsService = new WindowsService(typeof(EditXamlView), viewModel);
-                windowsService.ShowDialog( arg);
-              
+                windowsService.ShowDialog(arg);
+
                 XamlParser = viewModel.XamlParser;
             }
             return Task.CompletedTask;
@@ -172,9 +282,9 @@ namespace XamlAnalyzer.ViewModel
         }
         public bool CanCloseWindow()
         {
-            if ((UI != null || WindowUI != null) && IsExported ==false)
+            if ((UI != null || WindowUI != null) && IsExported == false)
             {
-                var dialogResult = MessageBox.Show("All your changes will be lost.\nDiscard Changes ?", "Style Editor", MessageBoxButtons.YesNo,icon:MessageBoxIcon.Warning);
+                var dialogResult = MessageBox.Show("All your changes will be lost.\nDiscard Changes ?", "Style Editor", MessageBoxButtons.YesNo, icon: MessageBoxIcon.Warning);
                 if (dialogResult == DialogResult.No)
                 {
                     return false;
@@ -312,7 +422,7 @@ namespace XamlAnalyzer.ViewModel
             });
             //if (arg is PropertyModel)
             //{
-                SelectedProperty = arg as PropertyModel;
+            SelectedProperty = arg as PropertyModel;
             //}
         }
         private bool CanSelectBrush(object arg)

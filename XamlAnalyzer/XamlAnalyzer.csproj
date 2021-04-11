@@ -11,9 +11,11 @@
     <None Remove="Resources\Icons\dllIcon.png" />
     <None Remove="Resources\Icons\exportAll_128x128.png" />
     <None Remove="Resources\Icons\exportSelected_128x128.png" />
+    <None Remove="Resources\Icons\refresh_128x128.png" />
     <None Remove="Resources\Icons\resourceDictionaryIcon.png" />
     <None Remove="Resources\Icons\tagIcon.png" />
     <None Remove="Resources\Icons\tagIcon2.png" />
+    <None Remove="Samples\Calculator.txt" />
   </ItemGroup>
 
   <ItemGroup>
@@ -46,9 +48,11 @@
     <Resource Include="Resources\Icons\dllIcon.png" />
     <Resource Include="Resources\Icons\exportAll_128x128.png" />
     <Resource Include="Resources\Icons\exportSelected_128x128.png" />
+    <Resource Include="Resources\Icons\refresh_128x128.png" />
     <Resource Include="Resources\Icons\resourceDictionaryIcon.png" />
     <Resource Include="Resources\Icons\tagIcon.png" />
     <Resource Include="Resources\Icons\tagIcon2.png" />
+    <Resource Include="Samples\Calculator.txt" />
   </ItemGroup>
 
   <ItemGroup>

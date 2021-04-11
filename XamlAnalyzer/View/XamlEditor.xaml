@@ -51,7 +51,7 @@
         </Grid.RowDefinitions>
         <Grid Grid.Row="0">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width=".2*" MinWidth="165" MaxWidth="400" />
+                <ColumnDefinition Width=".2*" MinWidth="205" MaxWidth="400" />
                 <ColumnDefinition Width="5" />
                 <ColumnDefinition Width=".8*" />
             </Grid.ColumnDefinitions>
@@ -93,19 +93,30 @@
                                     </MenuItem.Icon>
                                 </MenuItem>
                             </MenuItem>
-                            <MenuItem Header="_View">
+                            <MenuItem Header="_Edit">
                                 <MenuItem Header="_Edit Xaml" Command="{Binding EditXamlCommand}"  InputGestureText="Ctrl+D"/>
 
                             </MenuItem>
+                            <MenuItem Header="_Help">
+                                <MenuItem Header="Samples">
+                                    <MenuItem Header="Calculator" Command="{Binding SampleCommand}" CommandParameter="Calculator"/>
+                                    <MenuItem Header="Sign in form"  Command="{Binding SampleCommand}" CommandParameter="Sign in form"/>
+                                    <MenuItem Header="Shapes"  Command="{Binding SampleCommand}" CommandParameter="Shapes"/>
+                                </MenuItem>
+                            </MenuItem>
                         </Menu>
                         <StackPanel Orientation="Horizontal" Grid.Column="1">
-                            <Button   ToolTip="Export" Width="30" Margin="5"
+                            <Button   ToolTip="Export" Width="25" Height="25" Margin="0"
                                     Command="{Binding ExportCommand}">
                                 <Image Source="/XamlAnalyzer;component/Resources/Icons/exportSelected_128x128.png" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
                             </Button>
-                            <Button Width="30" ToolTip="Export All"  Margin="5"
+                            <Button  ToolTip="Export All" Width="25" Height="25" Margin="0"
                                     Command="{Binding ExportAllCommand}">
                                 <Image Source="/XamlAnalyzer;component/Resources/Icons/exportAll_128x128.png" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+                            </Button>
+                            <Button  ToolTip="Refresh UI" Width="25" Height="25" Margin="0"
+                                    Command="{Binding RefreshUICommand}">
+                                <Image Source="/XamlAnalyzer;component/Resources/Icons/refresh_128x128.png" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
                             </Button>
                         </StackPanel>
                     </Grid>
@@ -145,7 +156,39 @@
                             </ListView.ItemsPanel>
                             <ListView.ItemTemplate>
                                 <DataTemplate DataType="{x:Type model:PropertyModel}">
-                                    <Border  VerticalAlignment="Center" HorizontalAlignment="Center">
+                                    <Border  VerticalAlignment="Center" HorizontalAlignment="Center" Tag="{Binding DataContext,RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=Window}}">
+                                        <Border.ContextMenu>
+                                            <ContextMenu>
+                                                <MenuItem Command="{Binding PlacementTarget.Tag.ApplyBrushToAllCommand,RelativeSource={RelativeSource AncestorType=ContextMenu,Mode=FindAncestor}}"
+                                                          CommandParameter="{Binding .}">
+                                                    <MenuItem.Header>
+                                                        <TextBlock>
+                                                            <Run Text="Apply"/>
+                                                            <Run Text="{Binding Property.Name,Mode=OneWay}"/>
+                                                            <Run Text="value to all ("/>
+                                                            <Run Text="{Binding Owner.DependencyObjectType.Name,Mode=OneWay}"/>
+                                                            <Run Text=">"/>
+                                                             <Run Text="{Binding Property.Name,Mode=OneWay}"/>                 
+                                                            <Run Text=")"/>
+                                                        </TextBlock>
+                                                    </MenuItem.Header>
+                                                </MenuItem>
+                                                <MenuItem Command="{Binding PlacementTarget.Tag.ApplyBrushToSubCommand,RelativeSource={RelativeSource AncestorType=ContextMenu,Mode=FindAncestor}}" 
+                                                          CommandParameter="{Binding .}">
+                                                    <MenuItem.Header>
+                                                        <TextBlock>
+                                                            <Run Text="Apply"/>
+                                                            <Run Text="{Binding Property.Name,Mode=OneWay}"/>
+                                                            <Run Text="value to all child ("/>
+                                                            <Run Text="{Binding Owner.DependencyObjectType.Name,Mode=OneWay}"/>                 
+                                                            <Run Text=">"/> 
+                                                            <Run Text="{Binding Property.Name ,Mode=OneWay}"/>                 
+                                                            <Run Text=")"/>
+                                                        </TextBlock>
+                                                    </MenuItem.Header>
+                                                </MenuItem>
+                                            </ContextMenu>
+                                        </Border.ContextMenu>
                                         <Grid>
                                             <Grid.RowDefinitions>
                                                 <RowDefinition Height="1*" />

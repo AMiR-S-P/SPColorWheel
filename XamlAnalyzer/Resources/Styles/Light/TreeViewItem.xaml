@@ -117,8 +117,37 @@
         <Setter Property="ItemTemplate">
             <Setter.Value>
                 <HierarchicalDataTemplate DataType="{x:Type model:ControlModel}" 
-                             ItemsSource="{Binding Children}" ><!--ItemsSource="{Binding BrushProperties}"-->
-                    <TextBlock Text="{Binding Name}"/>
+                             ItemsSource="{Binding Children}" >
+                    <!--ItemsSource="{Binding BrushProperties}"-->
+                    <Border x:Name="border" Tag="{Binding DataContext,RelativeSource={RelativeSource AncestorType=Window,Mode=FindAncestor}}">
+                        <TextBlock Text="{Binding Name}"/>
+                        <Border.ContextMenu>
+                            <ContextMenu x:Name="contextMenu" >
+                                         <!--Tag="{Binding DataContext,RelativeSource={RelativeSource AncestorType=Window,Mode=FindAncestor}}"-->
+                                <MenuItem Command="{Binding PlacementTarget.Tag.ApplyStyleToAllCommand,RelativeSource={RelativeSource AncestorType=ContextMenu,Mode=FindAncestor}}">
+                                    <MenuItem.Header>
+                                        <TextBlock> 
+                                            <Run Text="Apply"/>
+                                            <Run Text="to all"/>
+                                            <Run Text="{Binding ClassName}"/>
+                                            <Run Text="(s)"/>
+                                        </TextBlock>
+                                    </MenuItem.Header>
+                                </MenuItem>
+                                <MenuItem  Command="{Binding PlacementTarget.Tag.ApplyStyleToSubCommand,RelativeSource={RelativeSource AncestorType=ContextMenu,Mode=FindAncestor}}">
+                                    <MenuItem.Header>
+                                        <TextBlock> 
+                                            <Run Text="Apply"/>
+                                            <Run Text="to all "/>
+                                            <Run Text="{Binding ClassName}"/>
+                                            <Run Text="(s) of "/>
+                                            <Run Text="{Binding Name}"/>
+                                        </TextBlock>
+                                    </MenuItem.Header>
+                                </MenuItem>
+                            </ContextMenu>
+                        </Border.ContextMenu>
+                    </Border>
                 </HierarchicalDataTemplate>
             </Setter.Value>
         </Setter>
@@ -126,7 +155,9 @@
 
     <!--<HierarchicalDataTemplate DataType="{x:Type model:ControlModel}" 
                              ItemsSource="{Binding Children}" >
-        --><!--ItemsSource="{Binding BrushProperties}"--><!--
+        -->
+    <!--ItemsSource="{Binding BrushProperties}"-->
+    <!--
         <HierarchicalDataTemplate.ItemTemplate>
             <HierarchicalDataTemplate ItemsSource="{Binding Children}">
                 <Grid x:Name="childGrid">

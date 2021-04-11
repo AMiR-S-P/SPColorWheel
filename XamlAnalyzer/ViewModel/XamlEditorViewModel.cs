@@ -43,7 +43,7 @@ namespace XamlAnalyzer.ViewModel
         //public ObservableCollection<ControlModel> UIControls { get; set; } = new ObservableCollection<ControlModel>();
         public ControlModel UIControl
         {
-            get => uIControl; set { uIControl = value; OnPropertyChanged();  }
+            get => uIControl; set { uIControl = value; OnPropertyChanged();   }
         }
 
         public ControlModel SelectedControl
@@ -58,7 +58,8 @@ namespace XamlAnalyzer.ViewModel
         }
         public SPXamlParser XamlParser
         {
-            get => xamlParser; set
+            get => xamlParser; 
+            set
             {
                 xamlParser = value; 
                 OnPropertyChanged();
@@ -81,8 +82,10 @@ namespace XamlAnalyzer.ViewModel
         public bool IsExported { get => isExported; set { isExported = value; OnPropertyChanged(); } }
 
         //public bool IsCommited { get => isCommited; set { isCommited = value; OnPropertyChanged(); } }
-        public FrameworkElement UI { get => uI; set { uI = value; OnPropertyChanged(); } }
-        public Window WindowUI { get => windowUI; set { windowUI?.Close(); windowUI = value; OnPropertyChanged(); } }
+
+       
+        public FrameworkElement UI { get => uI; set { uI = value; OnPropertyChanged(); RefreshUICommand.OnCanExecuteChanged(); } }
+        public Window WindowUI { get => windowUI; set { windowUI?.Close(); windowUI = value; OnPropertyChanged(); RefreshUICommand.OnCanExecuteChanged(); } }
 
         public object SelectedBrush
         {

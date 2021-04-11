@@ -59,6 +59,10 @@ namespace XamlAnalyzer.Commands
                     _isExecuting = true;
                     await _ExecuteMethod((T)parameter).ConfigureAwait(false);
                 }
+                catch(Exception ex)
+                {
+
+                }
                 finally
                 {
                     _isExecuting = false;
