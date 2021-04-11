@@ -4,6 +4,10 @@
     <OutputType>Library</OutputType>
     <TargetFramework>net5.0-windows</TargetFramework>
     <UseWPF>true</UseWPF>
+    <AssemblyVersion>2.1.10.46</AssemblyVersion>
+    <Authors>Amir Setvati Paydar</Authors>
+    <Version>2.1.10.4</Version>
+    <Description>AmirSetvatiPaydar@Gmail.com</Description>
   </PropertyGroup>
 
   <ItemGroup>

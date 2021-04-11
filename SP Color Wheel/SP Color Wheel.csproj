@@ -9,6 +9,12 @@
     <SignAssembly>true</SignAssembly>
     <AssemblyOriginatorKeyFile>SPColorWheelKey.pfx</AssemblyOriginatorKeyFile>
     <ApplicationIcon>SPColorWheel_128x128.ico</ApplicationIcon>
+    <AssemblyVersion>3.5.15.53</AssemblyVersion>
+    <Authors>Amir Setvati Paydar</Authors>
+    <Company />
+    <Product>SP Color Wheel</Product>
+    <Version>3.5.15.53</Version>
+    <Description>AmirSetvatiPaydar@Gmail.com</Description>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='//Debug|AnyCPU'">
