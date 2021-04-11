@@ -86,7 +86,7 @@ namespace XamlAnalyzer.ViewModel
             ApplyBrushToAllCommand = new AsyncRelayCommand<PropertyModel>(OnApplyBrushToAll);
             ApplyBrushToSubCommand = new AsyncRelayCommand<PropertyModel>(OnApplyBrushToSub);
 
-            RefreshUICommand = new AsyncRelayCommand<object>(OnRefreshUI,CanRefreshUI);
+            RefreshUICommand = new AsyncRelayCommand<object>(OnRefreshUI);
         }
 
         private bool CanRefreshUI(object arg)
@@ -96,7 +96,10 @@ namespace XamlAnalyzer.ViewModel
 
         private async Task OnRefreshUI(object arg)
         {
-            await UpdateUI();
+            if (UI != null || WindowUI != null)
+            {
+                await UpdateUI();
+            }
         }
 
         private async Task OnApplyBrushToSub(PropertyModel arg)

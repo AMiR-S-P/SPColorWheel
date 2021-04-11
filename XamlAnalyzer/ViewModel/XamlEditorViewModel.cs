@@ -34,7 +34,7 @@ namespace XamlAnalyzer.ViewModel
         private PropertyModel selectedProperty;
         private object selectedBrush;
         private ControlModel selectedControl;
-        
+
         int objectCounter = 0;
         List<string> allNames = new List<string>();
 
@@ -43,7 +43,10 @@ namespace XamlAnalyzer.ViewModel
         //public ObservableCollection<ControlModel> UIControls { get; set; } = new ObservableCollection<ControlModel>();
         public ControlModel UIControl
         {
-            get => uIControl; set { uIControl = value; OnPropertyChanged();   }
+            get => uIControl; set
+            {
+                uIControl = value; OnPropertyChanged(); 
+            }
         }
 
         public ControlModel SelectedControl
@@ -58,7 +61,7 @@ namespace XamlAnalyzer.ViewModel
         }
         public SPXamlParser XamlParser
         {
-            get => xamlParser; 
+            get => xamlParser;
             set
             {
                 xamlParser = value;
@@ -83,9 +86,9 @@ namespace XamlAnalyzer.ViewModel
 
         //public bool IsCommited { get => isCommited; set { isCommited = value; OnPropertyChanged(); } }
 
-       
-        public FrameworkElement UI { get => uI; set { uI = value; OnPropertyChanged(); RefreshUICommand.OnCanExecuteChanged(); } }
-        public Window WindowUI { get => windowUI; set { windowUI?.Close(); windowUI = value; OnPropertyChanged(); RefreshUICommand.OnCanExecuteChanged(); } }
+
+        public FrameworkElement UI { get => uI; set { uI = value; OnPropertyChanged();  } }
+        public Window WindowUI { get => windowUI; set { windowUI?.Close(); windowUI = value; OnPropertyChanged(); } }
 
         public object SelectedBrush
         {
