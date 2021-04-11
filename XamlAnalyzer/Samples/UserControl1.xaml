@@ -1,0 +1,20 @@
+﻿<UserControl x:Class="XamlAnalyzer.Samples.UserControl1"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:XamlAnalyzer.Samples"
+             mc:Ignorable="d" Background="CornflowerBlue">
+    <Grid HorizontalAlignment="Center" VerticalAlignment="Center">
+        <Canvas Width="250" Height="150">
+            <Rectangle RadiusX="5" RadiusY="5" Width="81" Height="49" Fill="Coral" Canvas.Left="43" Canvas.Top="28"/>
+
+            <Ellipse Width="51" Height="33" Fill="Green" Canvas.Left="24" Canvas.Top="17"/>
+
+            <Line X1="0" Y1="1" X2="50" Y2="50" StrokeThickness="2" Stroke="Black"  StrokeEndLineCap="Round" Canvas.Left="99" Canvas.Top="17"/>
+
+            <Path Stroke="White" Data="M.5,0 1,1 0,1Z" StrokeThickness="2" Height="56" Stretch="Fill" Width="67" Canvas.Left="171" Canvas.Top="69"/>
+        </Canvas>
+    </Grid>
+
+</UserControl>

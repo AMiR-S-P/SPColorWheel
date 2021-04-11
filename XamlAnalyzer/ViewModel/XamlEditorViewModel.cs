@@ -61,7 +61,7 @@ namespace XamlAnalyzer.ViewModel
             get => xamlParser; 
             set
             {
-                xamlParser = value; 
+                xamlParser = value;
                 OnPropertyChanged();
                 if (value != null)
                 {
@@ -133,6 +133,7 @@ namespace XamlAnalyzer.ViewModel
         {
             try
             {
+                UIControl.Children.Clear();
                 WindowUI = null;
                 UI = null;
                 objectCounter = 0;

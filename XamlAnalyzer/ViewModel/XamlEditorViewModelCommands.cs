@@ -146,7 +146,7 @@ namespace XamlAnalyzer.ViewModel
         }
         private async Task OnSample(string arg)
         {
-            Uri uri=new Uri("Samples/Calculator.xaml", UriKind.RelativeOrAbsolute);
+            Uri uri=new Uri("Samples/Calculator.txt", UriKind.RelativeOrAbsolute);
 
             switch (arg)
             {
@@ -157,12 +157,12 @@ namespace XamlAnalyzer.ViewModel
                     }
                 case "Sign in form":
                     {
-                        uri = new Uri("pack://application:,,,/Samples/Calculator.xaml", UriKind.RelativeOrAbsolute);
+                        uri = new Uri("pack://application:,,,/XamlAnalyzer;component/Samples/SignInForm.txt", UriKind.RelativeOrAbsolute);
                         break;
                     }
-                case "Shapse":
+                case "Shapes":
                     {
-                        uri = new Uri("pack://application:,,,/Samples/Calculator.xaml", UriKind.RelativeOrAbsolute);
+                        uri = new Uri("pack://application:,,,/XamlAnalyzer;component/Samples/Shapes.txt", UriKind.RelativeOrAbsolute);
                         break;
                     }
             }

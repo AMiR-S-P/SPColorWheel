@@ -5,7 +5,7 @@
              xmlns:local="clr-namespace:XamlAnalyzer.Samples"
              mc:Ignorable="d" >
     <Grid>
-        <Grid HorizontalAlignment="Center" Background="WhiteSmoke">
+        <Grid VerticalAlignment="Center" HorizontalAlignment="Center" Background="WhiteSmoke">
             <Grid.RowDefinitions>
                 <RowDefinition Height="80" />
                 <RowDefinition Height="1*" />

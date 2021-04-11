@@ -1,0 +1,29 @@
+﻿<UserControl xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:XamlAnalyzer.Samples"
+             mc:Ignorable="d" Background="CornflowerBlue">
+    <StackPanel  VerticalAlignment="Center" HorizontalAlignment="Center">
+        <TextBlock Text="Email" Margin="10,2"/>
+        <TextBox Margin="10,2" Width="150"/>
+        <TextBlock Text="Password" Margin="10,2"/>
+        <TextBox Margin="10,2" Width="150"/>
+        <CheckBox Content="Keep me signed in." Style="{x:Null}" Margin="10,2"/>
+        <Separator/>
+        <TextBlock Margin="10,2">
+            <Hyperlink Foreground="Green">
+                Forget password?
+            </Hyperlink>
+        </TextBlock>
+        <Grid >
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*" />
+                <ColumnDefinition Width="1*" />
+            </Grid.ColumnDefinitions>
+            <Button Grid.Column="0" Content="Sign in" Margin="10,2"/>
+            <Button Grid.Column="1" Content="Sign Up" Margin="10,2"/>
+
+        </Grid >
+    </StackPanel>
+</UserControl>
