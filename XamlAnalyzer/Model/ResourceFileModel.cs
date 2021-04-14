@@ -21,7 +21,7 @@ namespace XamlAnalyzer.Model
 
         public bool IsUsing { get => isUsing; set { isUsing = value; OnPropertyChanged(); } }
         public string Source { get { return $"pack://siteoforigin:,,,/Workplace/{Name}"; } }
-        public string Tag { get { return $"<ResourceDictionary Source=\"pack://siteoforigin:,,,/Workplace/{Name}\" />"; } }
+        public string Tag { get { return $"<ResourceDictionary Source=\"File:///{FilePath}\" />"; } }
 
         //public override bool Equals(object obj)
         //{

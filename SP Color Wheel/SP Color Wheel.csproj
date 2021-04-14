@@ -5,9 +5,9 @@
     <TargetFramework>net5.0-windows</TargetFramework>
     <RootNamespace>SP_Color_Wheel</RootNamespace>
     <UseWPF>true</UseWPF>
-    <AssemblyName>SP_Color_Wheel</AssemblyName>
+    <AssemblyName>SP Color Wheel</AssemblyName>
     <SignAssembly>true</SignAssembly>
-    <AssemblyOriginatorKeyFile>SPColorWheelKey.pfx</AssemblyOriginatorKeyFile>
+    <AssemblyOriginatorKeyFile>SPCWKey.pfx</AssemblyOriginatorKeyFile>
     <ApplicationIcon>SPColorWheel_128x128.ico</ApplicationIcon>
     <AssemblyVersion>3.5.15.53</AssemblyVersion>
     <Authors>Amir Setvati Paydar</Authors>
@@ -15,6 +15,10 @@
     <Product>SP Color Wheel</Product>
     <Version>3.5.15.53</Version>
     <Description>AmirSetvatiPaydar@Gmail.com</Description>
+    <StartupObject></StartupObject>
+    <PackageLicenseFile>New Text Document.txt</PackageLicenseFile>
+    <PackageIcon>SPColorWheel_128x128.png</PackageIcon>
+    <NeutralLanguage>en-US</NeutralLanguage>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='//Debug|AnyCPU'">
@@ -38,6 +42,14 @@
     <None Remove="Resources\Images\GitHub.png" />
     <None Remove="Resources\Images\google.png" />
     <None Remove="Resources\Images\linkedin.png" />
+    <None Include="C:\Users\AMiRSP\Desktop\New Text Document.txt">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
+    <None Include="C:\Users\AMiRSP\Desktop\SPColorWheel\SPColorWheel_128x128.png">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
   </ItemGroup>
 
   <ItemGroup>
@@ -62,7 +74,8 @@
 
   <ItemGroup>
     <Reference Include="System.Windows.Interactivity">
-      <HintPath>C:\Users\AMiRSP\Documents\Visual Studio 2019\Projects\SPGraph\SPGraph\bin\//Debug\System.Windows.Interactivity.dll</HintPath>
+      <HintPath>C:\Users\AMiRSP\Desktop\System.Windows.Interactivity.dll</HintPath>
+      <Private>true</Private>
     </Reference>
   </ItemGroup>
 

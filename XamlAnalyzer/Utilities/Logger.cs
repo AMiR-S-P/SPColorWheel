@@ -51,7 +51,6 @@ namespace XamlAnalyzer.Utilities
         }
 
         public static event EventHandler<PropertyChangedEventArgs> StaticPropertyChanged = delegate { };
-        public event PropertyChangedEventHandler PropertyChanged;
 
         static public ObservableCollection<Log> Logs { get; set; } = new ObservableCollection<Log>();
         static public Log LastLog { get => lastLog; set { 

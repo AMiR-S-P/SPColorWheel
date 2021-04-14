@@ -29,7 +29,7 @@ namespace XamlAnalyzer.Utilities
 
 
         public string Xaml { get => (string)GetValue(XamlProperty); private set => SetValue(XamlProperty, value); }
-        public XmlDocument Document { get; private set; } 
+        public XmlDocument Document { get; private set; }
 
         public ObservableCollection<ResourceFileModel> ImportedResources { get; set; } = new ObservableCollection<ResourceFileModel>();
         public ObservableCollection<AssemblyFileModel> ImportedAssemblies { set; get; } = new ObservableCollection<AssemblyFileModel>();
@@ -51,7 +51,10 @@ namespace XamlAnalyzer.Utilities
             XmlSchema xmlSchema = new XmlSchema();
             xmlSchema.Namespaces.Add("xmlns", XMLNS);
             Document.Schemas.Add(xmlSchema);
-            LoadXaml(xaml);
+            Task.Run(async () =>
+            {
+                await LoadXaml(xaml);
+            });
             InitEvents();
         }
 
@@ -86,26 +89,27 @@ namespace XamlAnalyzer.Utilities
             {
                 if (e.Action == System.Collections.Specialized.NotifyCollectionChangedAction.Add)
                 {
-                    var Loadedassembly = assemblyLoad.LoadFromAssemblyPath((e.NewItems[0] as AssemblyFileModel).Path);
-                    foreach (var c in Loadedassembly.GetTypes())
-                    {
-                        (e.NewItems[0] as AssemblyFileModel).ClassNames.Add(c.FullName);
-                    }
+                    //var Loadedassembly = assemblyLoad.LoadFromAssemblyPath((e.NewItems[0] as AssemblyFileModel).Path);
+                    //foreach (var c in Loadedassembly.GetTypes())
+                    //{
+                    //    (e.NewItems[0] as AssemblyFileModel).ClassNames.Add(c.FullName);
+                    //}
+                    await ReloadAssembelies();
                 }
-                else if (e.Action == System.Collections.Specialized.NotifyCollectionChangedAction.Add)
+                else if (e.Action == System.Collections.Specialized.NotifyCollectionChangedAction.Remove)
                 {
                     //assemblyLoad.Assemblies.
                     //assemblyLoad.Unload();
-
+                    await ReloadAssembelies();
                 }
 
             };
         }
-        public void ResetXamlParser()
+        public async Task ResetXamlParser()
         {
             try
             {
-                LoadXaml("");
+                await LoadXaml("");
                 ImportedResources.Clear();
                 ImportedAssemblies.Clear();
                 assemblyLoad.Unload();
@@ -115,14 +119,14 @@ namespace XamlAnalyzer.Utilities
 
             }
         }
-        public void LoadXaml(string xaml)
+        public async Task LoadXaml(string xaml)
         {
             try
             {
                 Document.LoadXml(xaml);
                 ((XmlElement)Document.ChildNodes[0]).SetAttribute("xmlns", XMLNS);
                 Xaml = Document.InnerXml;
-                FormatXaml();
+                await FormatXaml();
             }
             catch (Exception ex)
             {
@@ -142,9 +146,14 @@ namespace XamlAnalyzer.Utilities
         }
         public Task ReloadAssembelies()
         {
-            foreach (var s in ImportedAssemblies)
+            assemblyLoad = new AssemblyLoadContext("XamlEditor", true);
+            foreach (var assembly in ImportedAssemblies)
             {
-                assemblyLoad.LoadFromAssemblyPath(s.Path);
+                var Loadedassembly = assemblyLoad.LoadFromAssemblyPath(assembly.Path);
+                foreach (var c in Loadedassembly.GetTypes())
+                {
+                    assembly.ClassNames.Add(c.FullName);
+                }
             }
             return Task.CompletedTask;
         }
@@ -220,7 +229,7 @@ namespace XamlAnalyzer.Utilities
                 ResourceFileModel resourceFileModel = new ResourceFileModel()
                 {
                     Content = Encoding.UTF8.GetString(bytes),
-                    FilePath = path.Substring(path.LastIndexOf('.') + 1),
+                    FilePath = path,
                     Name = path.Substring(path.LastIndexOf('\\') + 1)
                 };
                 var resource = ImportedResources.Where(x => x.Source == resourceFileModel.Source).FirstOrDefault();
@@ -258,7 +267,12 @@ namespace XamlAnalyzer.Utilities
             }
 
         }
+        public Task RemoveAssembly(AssemblyFileModel assembly)
+        {
+            ImportedAssemblies.Remove(assembly);
 
+            return Task.CompletedTask;
+        }
         public Task AddAssemblyFile(AssemblyFileModel assembly)
         {
             ImportedAssemblies.Add(assembly);
@@ -342,7 +356,7 @@ namespace XamlAnalyzer.Utilities
             });
         }
 
-        public Task RemoveResourceDictionaryFromRootMerged(string tag)
+        public async Task RemoveResourceDictionaryFromRootMerged(string tag)
         {
 
             foreach (XmlNode node in Document.ChildNodes[0].ChildNodes)
@@ -372,17 +386,15 @@ namespace XamlAnalyzer.Utilities
                                         }
                                     }
 
-                                    LoadXaml(Document.InnerXml);
-                                    return Task.CompletedTask;
-                                }
+                                    await LoadXaml(Document.InnerXml);
+                                 }
                             }
                         }
                     }
                 }
             }
-            LoadXaml(Document.InnerXml);
-            return Task.CompletedTask;
-        }
+           await LoadXaml(Document.InnerXml);
+         }
 
         public async Task<string> GetRootResourceAttribute()
         {
@@ -409,7 +421,7 @@ namespace XamlAnalyzer.Utilities
             });
         }
 
-        public Task AddResourceDictionaryTagToRootResource()
+        public async Task AddResourceDictionaryTagToRootResource()
         {
 
             try
@@ -438,11 +450,10 @@ namespace XamlAnalyzer.Utilities
             catch (Exception ex)
             {
             }
-            LoadXaml(Document.InnerXml);
-            return Task.CompletedTask;
-
+            await LoadXaml(Document.InnerXml);
+ 
         }
-        public Task AddMergedDictionaryTagToRootResourceDictionary()
+        public async Task AddMergedDictionaryTagToRootResourceDictionary()
         {
             try
             {
@@ -473,11 +484,10 @@ namespace XamlAnalyzer.Utilities
             catch (Exception ex)
             {
             }
-            LoadXaml(Document.InnerXml);
-            return Task.CompletedTask;
-
+            await LoadXaml(Document.InnerXml);
+ 
         }
-        public Task AddContentToMergedDictionaryTagOfRootResourceDictionary(string content)
+        public async Task AddContentToMergedDictionaryTagOfRootResourceDictionary(string content)
         {
 
             try
@@ -511,10 +521,9 @@ namespace XamlAnalyzer.Utilities
             catch (Exception ex)
             {
             }
-            LoadXaml(Document.InnerXml);
-            return Task.CompletedTask;
-        }
-        public Task AddResourceTagToRoot()
+            await LoadXaml(Document.InnerXml);
+         }
+        public async Task AddResourceTagToRoot()
         {
             try
             {
@@ -527,9 +536,8 @@ namespace XamlAnalyzer.Utilities
             catch (Exception ex)
             {
             }
-            LoadXaml(Document.InnerXml);
-            return Task.CompletedTask;
-
+            await LoadXaml(Document.InnerXml);
+ 
         }
     }
 }

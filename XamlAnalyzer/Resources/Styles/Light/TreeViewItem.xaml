@@ -1,6 +1,7 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:local="clr-namespace:XamlAnalyzer.Resources.Styles.Light"
+                    xmlns:view="clr-namespace:XamlAnalyzer.View"
                     xmlns:model="clr-namespace:XamlAnalyzer.Model"
                     xmlns:interactivity="http://schemas.microsoft.com/expression/2010/interactivity">
 
@@ -44,24 +45,36 @@
                                     <ColumnDefinition Width="30" />
                                     <ColumnDefinition Width="*" />
                                 </Grid.ColumnDefinitions>
-                                <Image Source="/XamlAnalyzer;component/Resources/Icons/tagIcon2.png" Grid.Column="0" Margin="7" Stretch="Fill"/>
+                                <Image Source="/XamlAnalyzer;component/Resources/Icons/tag_128x128.png" Grid.Column="0" Margin="7" Stretch="Fill"/>
                                 <TextBlock Text="{Binding .}" Grid.Column="1" VerticalAlignment="Center" FontSize="9"/>
 
                             </Grid>
                         </HierarchicalDataTemplate>
                     </HierarchicalDataTemplate.ItemTemplate>
-                    <Grid Background="Transparent" >
+                    <Grid Background="Transparent" Tag="{Binding DataContext, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type view:EditXamlView}}}">
+                        <Grid.ContextMenu>
+                            <ContextMenu DataContext="{Binding PlacementTarget.Tag ,RelativeSource={RelativeSource Self}}"
+                                         Tag="{Binding PlacementTarget.DataContext ,RelativeSource={RelativeSource Self}}">
+                                <MenuItem Header="Include" IsCheckable="True" 
+                                                              Command="{Binding IncludeResourceCommand}"
+                                                              CommandParameter="{Binding Tag,RelativeSource={RelativeSource AncestorType={x:Type ContextMenu}}}"
+                                                              IsChecked="{Binding Tag.IsUsing,Mode=TwoWay,RelativeSource={RelativeSource AncestorType={x:Type ContextMenu}}}"/>
+                                <MenuItem Header="Delete"
+                                                              Command="{Binding DeleteResourceFileCommand}"
+                                                              CommandParameter="{Binding Tag,RelativeSource={RelativeSource AncestorType={x:Type ContextMenu}}}"/>
+                            </ContextMenu>
+                        </Grid.ContextMenu>
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="30" />
+                            <ColumnDefinition Width="20" />
                             <ColumnDefinition Width="*" />
                         </Grid.ColumnDefinitions>
-                        <Image Source="/XamlAnalyzer;component/Resources/Icons/resourceDictionaryIcon.png" Grid.Column="0" Margin="3" Stretch="Fill"/>
-                        <TextBlock Text="{Binding Name}" Grid.Column="1" VerticalAlignment="Top" Margin="0,0,10,0"/>
+                        <Image Source="/XamlAnalyzer;component/Resources/Icons/xamlIcon.png" Grid.Column="0" Margin="1" Stretch="Fill"/>
+                        <TextBlock Text="{Binding Name}" Grid.Column="1" VerticalAlignment="Center" Margin="0,0,0,0"/>
                         <!--<Image x:Name="isUseImage" Source="/XamlAnalyzer;component/Resources/Icons/tagIcon2.png" 
                                Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Bottom" 
                                Width="10" Height="10" Stretch="Fill" Margin="3"/>-->
                         <TextBlock Text="" x:Name="isUseImage" FontFamily="Segoe MDL2 Assets" Background="#00000000"  
-                                   Grid.Column="1"  FontSize="12" FontWeight="Bold" Margin="0,0,0,2"
+                                   Grid.Column="0"  FontSize="12" FontWeight="Bold" Margin="0,0,0,2"
                                    HorizontalAlignment="Left" VerticalAlignment="Bottom" />
 
 
@@ -95,17 +108,25 @@
                                     <ColumnDefinition Width="30" />
                                     <ColumnDefinition Width="*" />
                                 </Grid.ColumnDefinitions>
-                                <Image Source="/XamlAnalyzer;component/Resources/Icons/classIcon2.png" Grid.Column="0" Margin="7" Stretch="Fill"/>
+                                <Image Source="/XamlAnalyzer;component/Resources/Icons/class_128x128.png" Grid.Column="0" Margin="7" Stretch="Fill"/>
                                 <TextBlock Text="{Binding .}" Grid.Column="1" VerticalAlignment="Center" Margin="0,0,10,0"  FontSize="9"/>
                             </Grid>
                         </HierarchicalDataTemplate>
                     </HierarchicalDataTemplate.ItemTemplate>
-                    <Grid Background="Transparent" >
+                    <Grid Background="Transparent" Tag="{Binding DataContext, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type view:EditXamlView}}}">
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="30" />
+                            <ColumnDefinition Width="0" />
                             <ColumnDefinition Width="1*" />
                         </Grid.ColumnDefinitions>
-                        <Image Source="/XamlAnalyzer;component/Resources/Icons/dllIcon.png" Grid.Column="0" Margin="3" Stretch="Fill"/>
+                        <Grid.ContextMenu>
+                            <ContextMenu DataContext="{Binding PlacementTarget.Tag ,RelativeSource={RelativeSource Self}}"
+                                         Tag="{Binding PlacementTarget.DataContext ,RelativeSource={RelativeSource Self}}">  
+                                <MenuItem Header="Delete"
+                                          Command="{Binding DeleteAssemblyFileCommand}"
+                                          CommandParameter="{Binding Tag,RelativeSource={RelativeSource AncestorType={x:Type ContextMenu}}}"/>
+                            </ContextMenu>
+                        </Grid.ContextMenu>
+                        <Image Source="/XamlAnalyzer;component/Resources/Icons/libraryIcon.png" Grid.Column="0" Margin="3" Stretch="Fill"/>
                         <TextBlock Text="{Binding Name}" Grid.Column="1" VerticalAlignment="Center" Margin="0,0,10,0"/>
                     </Grid>
                 </HierarchicalDataTemplate>
@@ -153,50 +174,5 @@
         </Setter>
     </Style>
 
-    <!--<HierarchicalDataTemplate DataType="{x:Type model:ControlModel}" 
-                             ItemsSource="{Binding Children}" >
-        -->
-    <!--ItemsSource="{Binding BrushProperties}"-->
-    <!--
-        <HierarchicalDataTemplate.ItemTemplate>
-            <HierarchicalDataTemplate ItemsSource="{Binding Children}">
-                <Grid x:Name="childGrid">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="30" />
-                        <ColumnDefinition Width="*" />
-                    </Grid.ColumnDefinitions>
-                    <Image Source="/XamlAnalyzer;component/Resources/Icons/classIcon2.png" Grid.Column="0" Margin="7" Stretch="Fill"/>
-                    <TextBlock Text="{Binding Property.Name}" Grid.Column="1" VerticalAlignment="Center" Margin="0,0,10,0"  FontSize="9"/>
-                </Grid>
-                <HierarchicalDataTemplate.Triggers>
-                    <Trigger Property="IsMouseOver" Value="True">
-                        <Setter Property="TextElement.Foreground" Value="Black"  TargetName="childGrid"/>
-                        <Setter Property="Background" Value="{StaticResource SecondaryAccentTransparentColor}"   TargetName="childGrid"/>
-                    </Trigger>
-                </HierarchicalDataTemplate.Triggers>
-            </HierarchicalDataTemplate>
-        </HierarchicalDataTemplate.ItemTemplate>
-
-        <Grid x:Name="parentGrid" VerticalAlignment="Center" Margin="0,2">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="30" />
-                <ColumnDefinition Width="1*" />
-            </Grid.ColumnDefinitions>
-            <Image Source="/XamlAnalyzer;component/Resources/Icons/dllIcon.png" Grid.Column="0" Margin="3" Stretch="Fill"/>
-            <StackPanel Grid.Column="1" Background="Transparent" VerticalAlignment="Center">
-                <TextBlock Text="{Binding ClassName}" Grid.Column="1" VerticalAlignment="Center" />
-                <TextBlock x:Name="nameTextBox" Text="{Binding Name}" Grid.Column="1" Opacity="0.6"/>
-            </StackPanel>
-        </Grid>
-        <HierarchicalDataTemplate.Triggers>
-            <DataTrigger Binding="{Binding Name}" Value="">
-                <Setter Property="Height" Value="0" TargetName="nameTextBox" />
-            </DataTrigger>
-            <Trigger Property="IsMouseOver" Value="True">
-                <Setter Property="TextElement.Foreground" Value="Black"  TargetName="parentGrid"/>
-                <Setter Property="Background" Value="{StaticResource SecondaryAccentTransparentColor}"   TargetName="parentGrid"/>
-            </Trigger>
-        </HierarchicalDataTemplate.Triggers>
-    </HierarchicalDataTemplate>-->
-
+    
 </ResourceDictionary>

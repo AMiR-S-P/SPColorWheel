@@ -2,16 +2,16 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
     <ResourceDictionary.MergedDictionaries>
-        <ResourceDictionary Source="/SP_Color_Wheel;component/Resources/Styles/UniversalStyles.xaml" />
-        <ResourceDictionary Source="/SP_Color_Wheel;component/Resources/Styles/Light/CheckBoxStyle.xaml" />
-        <ResourceDictionary Source="/SP_Color_Wheel;component/Resources/Styles/Light/ExpanderStyle.xaml" />
-        <ResourceDictionary  Source="/SP_Color_Wheel;component/Resources/Styles/Light/ListViewStyle.xaml"/>
-        <ResourceDictionary  Source="/SP_Color_Wheel;component/Resources/Styles/Light/ColorSelectorStyles.xaml"/>
-        <ResourceDictionary  Source="/SP_Color_Wheel;component/Resources/Styles/Light/ColorSliderStyle.xaml"/>
-        <ResourceDictionary  Source="/SP_Color_Wheel;component/Resources/Styles/Light/TextBoxStyle.xaml"/>
-        <ResourceDictionary  Source="/SP_Color_Wheel;component/Resources/Styles/Light/TextBlockStyle.xaml"/>
-        <ResourceDictionary  Source="/SP_Color_Wheel;component/Resources/Styles/Light/ToggleButtonStyle.xaml"/>
-        <ResourceDictionary  Source="/SP_Color_Wheel;component/Resources/Styles/Light/MenuAndItemStyle.xaml"/>
+        <ResourceDictionary  Source="/SP Color Wheel;component/Resources/Styles/UniversalStyles.xaml" />
+        <ResourceDictionary  Source="/SP Color Wheel;component/Resources/Styles/Light/CheckBoxStyle.xaml" />
+        <ResourceDictionary  Source="/SP Color Wheel;component/Resources/Styles/Light/ExpanderStyle.xaml" />
+        <ResourceDictionary  Source="/SP Color Wheel;component/Resources/Styles/Light/ListViewStyle.xaml"/>
+        <ResourceDictionary  Source="/SP Color Wheel;component/Resources/Styles/Light/ColorSelectorStyles.xaml"/>
+        <ResourceDictionary  Source="/SP Color Wheel;component/Resources/Styles/Light/ColorSliderStyle.xaml"/>
+        <ResourceDictionary  Source="/SP Color Wheel;component/Resources/Styles/Light/TextBoxStyle.xaml"/>
+        <ResourceDictionary  Source="/SP Color Wheel;component/Resources/Styles/Light/TextBlockStyle.xaml"/>
+        <ResourceDictionary  Source="/SP Color Wheel;component/Resources/Styles/Light/ToggleButtonStyle.xaml"/>
+        <ResourceDictionary  Source="/SP Color Wheel;component/Resources/Styles/Light/MenuAndItemStyle.xaml"/>
 
     </ResourceDictionary.MergedDictionaries>
 

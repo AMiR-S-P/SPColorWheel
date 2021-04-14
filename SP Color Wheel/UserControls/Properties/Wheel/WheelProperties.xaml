@@ -7,13 +7,14 @@
              xmlns:enums="clr-namespace:SP_Color_Wheel.Enums"
              xmlns:extension="clr-namespace:SP_Color_Wheel.Extensions"
              xmlns:templateSelector="clr-namespace:SP_Color_Wheel.TemplateSelectors"
-             xmlns:converter="clr-namespace:SP_Color_Wheel.Converters" xmlns:harmonyProperties="clr-namespace:SP_Color_Wheel.UserControls.Properties.Wheel.Harmonies"
+             xmlns:converter="clr-namespace:SP_Color_Wheel.Converters" 
+             xmlns:harmonyProperties="clr-namespace:SP_Color_Wheel.UserControls.Properties.Wheel.Harmonies"
              mc:Ignorable="d" x:Name="wheelProperties"
              d:DesignHeight="450" d:DesignWidth="800">
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="/SP_Color_Wheel;component/Resources/Styles/UniversalStyles.Xaml"/>
+                <ResourceDictionary Source="/SP Color Wheel;component/Resources/Styles/UniversalStyles.Xaml"/>
             </ResourceDictionary.MergedDictionaries>
         
         <x:Array x:Key="pointers" Type="{x:Type enums:PointerHarmonyType}"/>

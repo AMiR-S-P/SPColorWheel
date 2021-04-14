@@ -176,7 +176,7 @@ namespace XamlAnalyzer.ViewModel
                 {
                     var content = await new StreamReader(System.Windows.Application.GetResourceStream(uri).Stream).ReadToEndAsync();
                     SPXamlParser xamlParser = new SPXamlParser(content);
-                    xamlParser.LoadXaml(content);
+                    await xamlParser.LoadXaml(content);
                     XamlParser = xamlParser;
                 }
                 catch (Exception ex)

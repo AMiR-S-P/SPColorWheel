@@ -8,17 +8,22 @@
     <Authors>Amir Setvati Paydar</Authors>
     <Version>2.1.10.4</Version>
     <Description>AmirSetvatiPaydar@Gmail.com</Description>
+    <SignAssembly>true</SignAssembly>
+    <AssemblyOriginatorKeyFile>SPCWKey.pfx</AssemblyOriginatorKeyFile>
   </PropertyGroup>
 
   <ItemGroup>
     <None Remove="Resources\Icons\classIcon2.png" />
+    <None Remove="Resources\Icons\class_128x128.png" />
     <None Remove="Resources\Icons\dllIcon.png" />
     <None Remove="Resources\Icons\exportAll_128x128.png" />
     <None Remove="Resources\Icons\exportSelected_128x128.png" />
     <None Remove="Resources\Icons\refresh_128x128.png" />
     <None Remove="Resources\Icons\resourceDictionaryIcon.png" />
+    <None Remove="Resources\Icons\resourceIcon.png" />
     <None Remove="Resources\Icons\tagIcon.png" />
     <None Remove="Resources\Icons\tagIcon2.png" />
+    <None Remove="Resources\Icons\tag_128x128.png" />
     <None Remove="Samples\Calculator.txt" />
     <None Remove="Samples\Shapes.txt" />
     <None Remove="Samples\SignInForm.txt" />
@@ -44,20 +49,23 @@
 
   <ItemGroup>
     <Reference Include="System.Windows.Interactivity">
-      <HintPath>..\SP Color Wheel\bin\Debug\net5.0-windows\System.Windows.Interactivity.dll</HintPath>
+      <HintPath>C:\Users\AMiRSP\Documents\Visual Studio 2019\Projects\SP Electric Motor\SP Electric Motor\bin\Debug\System.Windows.Interactivity.dll</HintPath>
       <Private>true</Private>
     </Reference>
   </ItemGroup>
 
   <ItemGroup>
     <Resource Include="Resources\Icons\classIcon2.png" />
+    <Resource Include="Resources\Icons\class_128x128.png" />
     <Resource Include="Resources\Icons\dllIcon.png" />
     <Resource Include="Resources\Icons\exportAll_128x128.png" />
     <Resource Include="Resources\Icons\exportSelected_128x128.png" />
     <Resource Include="Resources\Icons\refresh_128x128.png" />
     <Resource Include="Resources\Icons\resourceDictionaryIcon.png" />
+    <Resource Include="Resources\Icons\resourceIcon.png" />
     <Resource Include="Resources\Icons\tagIcon.png" />
     <Resource Include="Resources\Icons\tagIcon2.png" />
+    <Resource Include="Resources\Icons\tag_128x128.png" />
     <Resource Include="Samples\Calculator.txt" />
     <Resource Include="Samples\Shapes.txt" />
     <Resource Include="Samples\SignInForm.txt" />

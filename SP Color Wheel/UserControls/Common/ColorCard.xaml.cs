@@ -26,9 +26,7 @@ namespace SP_Color_Wheel.UserControls.Common
         private bool isLocked;
         private bool isLockable;
         private string cardName;
-        static object tempDataContext;
-        string tempColor;
-
+ 
         public static readonly DependencyProperty CurrentColorProperty =
             DependencyProperty.Register("CurrentColor", typeof(Color), typeof(ColorCard), new PropertyMetadata(Colors.Transparent, CurrentColorChanged));
 

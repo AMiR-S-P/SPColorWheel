@@ -49,7 +49,7 @@
             <ToggleButton x:Name="lockBtn" Style="{StaticResource ImageToggleButtonStyle}"
                           IsChecked="{Binding IsLocked,ElementName=colorPreviewer}"
                           HorizontalAlignment="Center" VerticalAlignment="Center" Width="20" Height="20">
-                <Image Source="/SP_Color_Wheel;component/Resources/Icons/lock_128x128.png" Stretch="Fill" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+                <Image Source="/SP Color Wheel;component/Resources/Icons/lock_128x128.png" Stretch="Fill" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
             </ToggleButton>
 
         </StackPanel>

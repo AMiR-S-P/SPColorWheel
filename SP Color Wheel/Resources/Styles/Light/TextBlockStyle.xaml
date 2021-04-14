@@ -3,7 +3,7 @@
                     xmlns:local="clr-namespace:SP_Color_Wheel.Resources.Styles.Light">
     
     <ResourceDictionary.MergedDictionaries>
-        <ResourceDictionary Source="/SP_Color_Wheel;component/Resources/Styles/Light/Colors.Xaml" />
+        <ResourceDictionary Source="/SP Color Wheel;component/Resources/Styles/Light/Colors.Xaml" />
     </ResourceDictionary.MergedDictionaries>
     
     <Style TargetType="TextBlock" x:Key="baseTxtBlckStyle">

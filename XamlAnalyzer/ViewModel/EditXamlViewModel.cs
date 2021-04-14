@@ -51,6 +51,7 @@ namespace XamlAnalyzer.ViewModel
         public AsyncRelayCommand<object> WindowsClosingCommand { get; set; }
         public AsyncRelayCommand<object> AddResourceFileCommand { get; set; }
         public AsyncRelayCommand<object> AddAssemblyFileCommand { get; set; }
+        public AsyncRelayCommand<AssemblyFileModel> DeleteAssemblyFileCommand { get; set; }
 
         public EditXamlViewModel(SPXamlParser xamlParser)
         {
@@ -100,6 +101,13 @@ namespace XamlAnalyzer.ViewModel
             IncludeResourceCommand = new AsyncRelayCommand<ResourceFileModel>(OnIncludeResource);
             AddResourceFileCommand = new AsyncRelayCommand<object>(OnAddResourceFile);
             AddAssemblyFileCommand = new AsyncRelayCommand<object>(OnAddAssemblyFile);
+
+            DeleteAssemblyFileCommand = new AsyncRelayCommand<AssemblyFileModel>(OnDeleteAssemblyFile);
+        }
+
+        private async Task OnDeleteAssemblyFile(AssemblyFileModel arg)
+        {
+            await XamlParser.RemoveAssembly(arg);
         }
 
         private async Task OnAddAssemblyFile(object arg)
@@ -114,7 +122,7 @@ namespace XamlAnalyzer.ViewModel
                         await XamlParser.AddAssemblyFile(new AssemblyFileModel()
                         {
                             Path = fn,
-                            Name = fn.Substring(fileName.LastIndexOf('\\') + 1).Replace(".dll", ""),
+                            Name = fn.Substring(fn.LastIndexOf('\\') + 1).Replace(".dll", ""),
                         });
                     }
                 }
@@ -142,7 +150,7 @@ namespace XamlAnalyzer.ViewModel
         }
 
 
-        private Task OnCheckForError(object arg)
+        private async Task OnCheckForError(object arg)
         {
             try
             {
@@ -154,11 +162,11 @@ namespace XamlAnalyzer.ViewModel
                 //});
 
                 bool lastSave = IsSaved;
-                XamlParser.LoadXaml(Document.Text);
+                await XamlParser.LoadXaml(Document.Text);
 
                 ParserContext parserContext = new ParserContext();
                 parserContext.XamlTypeMapper = new XamlTypeMapper(new string[] { });
-                XamlParser.ReloadAssembelies();
+                await XamlParser.ReloadAssembelies();
                 XamlReader.Parse(XamlParser?.Xaml, parserContext);
                 HasNoError = true;
                 IsSaved = lastSave;
@@ -168,7 +176,6 @@ namespace XamlAnalyzer.ViewModel
                 Error = ex.Message;
                 HasNoError = false;
             }
-            return Task.CompletedTask;
         }
 
         private async Task OnOpen(object arg)
@@ -190,11 +197,10 @@ namespace XamlAnalyzer.ViewModel
         }
 
 
-        private Task OnNew(object arg)
+        private async Task OnNew(object arg)
         {
-            XamlParser.ResetXamlParser();
-            return Task.CompletedTask;
-        }
+            await XamlParser.ResetXamlParser();
+         }
 
         private async Task OnSave(object arg)
         {
@@ -232,9 +238,9 @@ namespace XamlAnalyzer.ViewModel
             await XamlParser.FormatXaml();
         }
 
-        public async Task OnDragComplete(Window obj)
+        public  Task OnDragComplete(Window obj)
         {
-
+            return Task.CompletedTask;
             //Document.Text = XamlParser.Xaml;
             //await FormatXamlCommand.ExecuteAsync(null);
             //using (var file = File.CreateText(Path.Combine("Workplace", XamlParser.ImportedResources.Last().Name)))

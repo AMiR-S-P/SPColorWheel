@@ -62,12 +62,12 @@ namespace XamlAnalyzer.Model
             //(Owner as FrameworkElement).GetType().get
         }
 
-        public void SetOwnerProperty(object? value)
+        public void SetOwnerProperty(object value)
         {
             Owner.SetValue(DependencyProperty, value);
             Value = value;
         }
-        public void SetProperty(object? value)
+        public void SetProperty(object value)
         {
             Property.SetValue(Owner, value);
             Value = value;

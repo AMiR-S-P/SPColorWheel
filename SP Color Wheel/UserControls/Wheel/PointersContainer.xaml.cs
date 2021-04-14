@@ -189,7 +189,7 @@ namespace SP_Color_Wheel.UserControls.Wheel
         {
             try
             {
-                double distance = 0;//Math.Sqrt(Math.Pow((this.ActualWidth-point.X),2)+ Math.Pow((this.ActualHeight - point.Y), 2));
+                //double distance = 0;//Math.Sqrt(Math.Pow((this.ActualWidth-point.X),2)+ Math.Pow((this.ActualHeight - point.Y), 2));
 
                 MainPointer.Margin = new Thickness(point.X, point.Y, -point.X, -point.Y);
 
