@@ -79,8 +79,9 @@ namespace XamlAnalyzer.ViewModel
         {
             try
             {
-                ExportXaml exportXaml = new ExportXaml(UIControls.Where(x => x.IsMarked == true), MustGenerateKey);
-                await exportXaml.CreateResourceDictionary();
+                var marked = UIControls.Where(x => x.IsMarked == true).ToList();
+                ExportXaml exportXaml = new ExportXaml(new ObservableCollection<ControlModel>(marked), MustGenerateKey);
+                await exportXaml?.CreateResourceDictionary();
 
                 using (SaveFileDialog sfd = new SaveFileDialog())
                 {

@@ -1,4 +1,7 @@
-﻿using SP_Color_Wheel.Helper;
+﻿using Microsoft.AppCenter;
+using Microsoft.AppCenter.Analytics;
+using Microsoft.AppCenter.Crashes;
+using SP_Color_Wheel.Helper;
 using SP_Color_Wheel.Resources.Styles;
 using SP_Color_Wheel.ViewModels;
 using SP_Color_Wheel.Views;
@@ -24,6 +27,7 @@ namespace SP_Color_Wheel
 
         public App()
         {
+           
             Application.Current.DispatcherUnhandledException += Current_DispatcherUnhandledException;
             FrameworkElement.StyleProperty.OverrideMetadata(typeof(Window), new FrameworkPropertyMetadata
             {
@@ -57,6 +61,12 @@ namespace SP_Color_Wheel
         private void App_Startup(object sender, StartupEventArgs e)
         {
             //StartupUri = new Uri("pack://application:,,,/XamlAnalyzer;component/View/SplashScreen.xaml");
+        }
+        protected override void OnStartup(StartupEventArgs e)
+        {
+            AppCenter.Start("79f122cc-edcd-4823-ae5c-3784fa0a6f5a",
+                   typeof(Analytics), typeof(Crashes));
+            base.OnStartup(e);
         }
     }
 }

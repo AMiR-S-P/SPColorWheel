@@ -63,6 +63,10 @@ namespace XamlAnalyzer.Utilities
         /// </summary>
         public SPXamlParser()
         {
+            Document = new XmlDocument();
+            XmlSchema xmlSchema = new XmlSchema();
+            xmlSchema.Namespaces.Add("xmlns", XMLNS);
+            Document.Schemas.Add(xmlSchema);
             InitEvents();
         }
 
