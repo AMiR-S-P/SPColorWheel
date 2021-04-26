@@ -1,0 +1,31 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary  Source="/SPCWCore;component/Resources/Styles/UniversalStyles.xaml" />
+        <ResourceDictionary  Source="/SPCWCore;component/Resources/Styles/Light/CheckBoxStyle.xaml" />
+        <ResourceDictionary  Source="/SPCWCore;component/Resources/Styles/Light/ExpanderStyle.xaml" />
+        <ResourceDictionary  Source="/SPCWCore;component/Resources/Styles/Light/ListViewStyle.xaml"/>
+        <ResourceDictionary  Source="/SPCWCore;component/Resources/Styles/Light/ColorSelectorStyles.xaml"/>
+        <ResourceDictionary  Source="/SPCWCore;component/Resources/Styles/Light/ColorSliderStyle.xaml"/>
+        <ResourceDictionary  Source="/SPCWCore;component/Resources/Styles/Light/TextBoxStyle.xaml"/>
+        <ResourceDictionary  Source="/SPCWCore;component/Resources/Styles/Light/TextBlockStyle.xaml"/>
+        <ResourceDictionary  Source="/SPCWCore;component/Resources/Styles/Light/ToggleButtonStyle.xaml"/>
+        <ResourceDictionary  Source="/SPCWCore;component/Resources/Styles/Light/MenuAndItemStyle.xaml"/>
+
+    </ResourceDictionary.MergedDictionaries>
+
+
+
+
+
+
+    <!--<Style TargetType="Grid">
+        <Setter Property="Background" Value="{DynamicResource BaseBackgroundColor}" />
+    </Style
+    
+    <Style TargetType="StackPanel">
+        <Setter Property="Background" Value="{DynamicResource SecondaryBackgroundColor}" />
+    </Style>-->
+
+</ResourceDictionary>

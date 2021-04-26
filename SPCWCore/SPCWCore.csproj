@@ -3,8 +3,61 @@
   <PropertyGroup>
     <TargetFramework>net5.0-windows</TargetFramework>
     <UseWPF>true</UseWPF>
-    <SignAssembly>true</SignAssembly>
+    <SignAssembly>false</SignAssembly>
     <AssemblyOriginatorKeyFile>SPCWKey.pfx</AssemblyOriginatorKeyFile>
   </PropertyGroup>
+
+  <ItemGroup>
+    <Page Remove="Styles\Light\MainTheme.xaml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Resources\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Styles\Light\MainTheme.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Resource>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Page Update="Styles\Light\CheckBoxStyle.xaml">
+      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+    </Page>
+    <Page Update="Styles\Light\Colors.xaml">
+      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+    </Page>
+    <Page Update="Styles\Light\ColorSelectorStyles.xaml">
+      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+    </Page>
+    <Page Update="Styles\Light\ColorSliderStyle.xaml">
+      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+    </Page>
+    <Page Update="Styles\Light\ExpanderStyle.xaml">
+      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+    </Page>
+    <Page Update="Styles\Light\Fonts.xaml">
+      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+    </Page>
+    <Page Update="Styles\Light\ListViewStyle.xaml">
+      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+    </Page>
+    <Page Update="Styles\Light\MenuAndItemStyle.xaml">
+      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+    </Page>
+    <Page Update="Styles\Light\TextBlockStyle.xaml">
+      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+    </Page>
+    <Page Update="Styles\Light\TextBoxStyle.xaml">
+      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+    </Page>
+    <Page Update="Styles\Light\ToggleButtonStyle.xaml">
+      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+    </Page>
+    <Page Update="Styles\UniversalStyles.xaml">
+      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+    </Page>
+  </ItemGroup>
 
 </Project>

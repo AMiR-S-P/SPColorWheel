@@ -8,7 +8,7 @@
     <Authors>Amir Setvati Paydar</Authors>
     <Version>2.1.10.4</Version>
     <Description>AmirSetvatiPaydar@Gmail.com</Description>
-    <SignAssembly>true</SignAssembly>
+    <SignAssembly>false</SignAssembly>
     <AssemblyOriginatorKeyFile>SPCWKey.pfx</AssemblyOriginatorKeyFile>
   </PropertyGroup>
 

@@ -6,7 +6,7 @@
     <RootNamespace>SP_Color_Wheel</RootNamespace>
     <UseWPF>true</UseWPF>
     <AssemblyName>SP Color Wheel</AssemblyName>
-    <SignAssembly>true</SignAssembly>
+    <SignAssembly>false</SignAssembly>
     <AssemblyOriginatorKeyFile>SPCWKey.pfx</AssemblyOriginatorKeyFile>
     <ApplicationIcon>SPColorWheel_128x128.ico</ApplicationIcon>
     <AssemblyVersion>3.5.15.53</AssemblyVersion>
@@ -53,11 +53,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Page Remove="Resources\Styles\Light\MainTheme.xaml" />
-  </ItemGroup>
-
-  <ItemGroup>
     <Folder Include="EventHandlers\" />
+    <Folder Include="Resources\Styles\Light\" />
     <Folder Include="Services\" />
   </ItemGroup>
 
@@ -114,7 +111,6 @@
     <Resource Include="Resources\Images\gitHub.png" />
     <Resource Include="Resources\Images\google.png" />
     <Resource Include="Resources\Images\linkedin.png" />
-    <Resource Include="Resources\Styles\Light\MainTheme.xaml" />
   </ItemGroup>
 
   <ItemGroup>

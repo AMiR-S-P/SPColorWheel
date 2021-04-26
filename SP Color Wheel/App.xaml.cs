@@ -2,7 +2,6 @@
 using Microsoft.AppCenter.Analytics;
 using Microsoft.AppCenter.Crashes;
 using SP_Color_Wheel.Helper;
-using SP_Color_Wheel.Resources.Styles;
 using SP_Color_Wheel.ViewModels;
 using SP_Color_Wheel.Views;
 using System;

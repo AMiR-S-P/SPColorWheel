@@ -39,13 +39,14 @@ namespace XamlAnalyzer.ViewModel
         List<string> allNames = new List<string>();
 
         private bool isExported;
+        private BrushToXaml brushToXaml = new BrushToXaml();
 
         //public ObservableCollection<ControlModel> UIControls { get; set; } = new ObservableCollection<ControlModel>();
         public ControlModel UIControl
         {
             get => uIControl; set
             {
-                uIControl = value; OnPropertyChanged(); 
+                uIControl = value; OnPropertyChanged();
             }
         }
 
@@ -82,12 +83,13 @@ namespace XamlAnalyzer.ViewModel
                 }
             }
         }
+
         public bool IsExported { get => isExported; set { isExported = value; OnPropertyChanged(); } }
 
         //public bool IsCommited { get => isCommited; set { isCommited = value; OnPropertyChanged(); } }
 
-
-        public FrameworkElement UI { get => uI; set { uI = value; OnPropertyChanged();  } }
+        public BrushToXaml BrushToXaml { get => brushToXaml; set { brushToXaml = value; OnPropertyChanged(); } }
+        public FrameworkElement UI { get => uI; set { uI = value; OnPropertyChanged(); } }
         public Window WindowUI { get => windowUI; set { windowUI?.Close(); windowUI = value; OnPropertyChanged(); } }
 
         public object SelectedBrush
@@ -98,6 +100,11 @@ namespace XamlAnalyzer.ViewModel
                 OnPropertyChanged();
                 IsExported = false;
                 SetBrushColorCommand.OnCanExecuteChanged();
+
+                if (value is Brush)
+                {
+                    BrushToXaml.Brush = value;
+                }
             }
         }
         public PropertyModel Brush { get => brush; set { brush = value; OnPropertyChanged(); } }
@@ -118,6 +125,26 @@ namespace XamlAnalyzer.ViewModel
                 SetBackgroundToNoneCommand.OnCanExecuteChanged();
                 SetBackgroundToRadialCommand.OnCanExecuteChanged();
                 SetBackgroundToSolidCommand.OnCanExecuteChanged();
+                //if (value?.Value is null)
+                //{
+                //    BrushToXaml.Brush = null;
+                //}
+                //else if (value.Value is SolidColorBrush)
+                //{
+                //    BrushToXaml.Brush = value.Value as SolidColorBrush;
+                //}
+                //else if (value.Value is RadialGradientBrush)
+                //{
+                //    BrushToXaml.Brush = value.Value as RadialGradientBrush;
+                //}
+                //else if (value.Value is LinearGradientBrush)
+                //{
+                //    BrushToXaml.Brush = value.Value as LinearGradientBrush;
+                //}
+                //else if (value.Value is ImageBrush)
+                //{
+                    BrushToXaml.Brush = value?.Value/* as ImageBrush*/;
+                //}
                 OnPropertyChanged();
             }
         }

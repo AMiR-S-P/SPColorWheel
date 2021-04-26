@@ -8,7 +8,7 @@ using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Shapes;
 
-namespace SP_Color_Wheel.Resources.Styles
+namespace SPCWCore.Resources.Styles
 {
     internal static class ThemeHelper
     {

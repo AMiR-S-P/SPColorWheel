@@ -109,18 +109,18 @@ namespace XamlAnalyzer.ViewModel
 
         private async Task OnApplyBrushToAll(PropertyModel arg)
         {
-            await ApplyBrushToAll(UIControl,SelectedControl, arg);
+            await ApplyBrushToAll(UIControl, SelectedControl, arg);
         }
-        async Task ApplyBrushToAll(ControlModel control,ControlModel baseControl,PropertyModel value)
+        async Task ApplyBrushToAll(ControlModel control, ControlModel baseControl, PropertyModel value)
         {
             foreach (var c in control.Children)
             {
                 if (c.Element.GetType() == baseControl.Element.GetType())
                 {
-                    c.BrushProperties.FirstOrDefault(x=>x.Property.Name == value.Property.Name).SetProperty(value.Value);
-                    
+                    c.BrushProperties.FirstOrDefault(x => x.Property.Name == value.Property.Name).SetProperty(value.Value);
+
                 }
-                await ApplyBrushToAll(c, baseControl,value);
+                await ApplyBrushToAll(c, baseControl, value);
             }
         }
         private async Task OnApplyStyleToSub(object arg)
@@ -133,7 +133,7 @@ namespace XamlAnalyzer.ViewModel
         {
             await ApplyStyleToAll(UIControl, SelectedControl);
         }
-        async Task ApplyStyleToAll(ControlModel controlModel,ControlModel baseControl)
+        async Task ApplyStyleToAll(ControlModel controlModel, ControlModel baseControl)
         {
             foreach (var c in controlModel.Children)
             {
@@ -144,12 +144,12 @@ namespace XamlAnalyzer.ViewModel
                         p.SetProperty(baseControl.BrushProperties.FirstOrDefault(x => x.Property.Name == p.Property.Name).Value);
                     }
                 }
-                await ApplyStyleToAll(c, baseControl) ;
+                await ApplyStyleToAll(c, baseControl);
             }
         }
         private async Task OnSample(string arg)
         {
-            Uri uri=new Uri("Samples/Calculator.txt", UriKind.RelativeOrAbsolute);
+            Uri uri = new Uri("Samples/Calculator.txt", UriKind.RelativeOrAbsolute);
 
             switch (arg)
             {
@@ -222,6 +222,9 @@ namespace XamlAnalyzer.ViewModel
 
                 }
             }
+
+            BrushToXaml.Brush = SelectedBrush ;
+
             return Task.CompletedTask;
         }
 
@@ -233,6 +236,7 @@ namespace XamlAnalyzer.ViewModel
                 GradientBrush val = ((SelectedProperty as PropertyModel).Value as GradientBrush).CloneCurrentValue();
 
                 SelectedProperty.SetOwnerProperty(val);
+                BrushToXaml.Brush = val ;
 
             }
             catch (Exception ex)
@@ -304,7 +308,7 @@ namespace XamlAnalyzer.ViewModel
                 GradientBrush val = ((arg as PropertyModel).Value as GradientBrush).CloneCurrentValue();
 
                 SelectedProperty.SetOwnerProperty(val);
-
+                BrushToXaml.Brush = val;
             }
             catch (Exception ex)
             {
@@ -350,7 +354,7 @@ namespace XamlAnalyzer.ViewModel
             SelectedProperty = element;
             SelectedBrush = element.Value;
 
-            return Task.CompletedTask;
+             return Task.CompletedTask;
         }
 
         private Task OnSetBackgroundToLinear(PropertyModel arg)
@@ -362,7 +366,7 @@ namespace XamlAnalyzer.ViewModel
 
             SelectedProperty = null;
             SelectedProperty = element;
-            SelectedBrush = null;
+            SelectedBrush = element.Value;
 
             return Task.CompletedTask;
         }
@@ -376,9 +380,9 @@ namespace XamlAnalyzer.ViewModel
 
             SelectedProperty = null;
             SelectedProperty = element;
-            SelectedBrush = null;
+            SelectedBrush = element.Value;
 
-            return Task.CompletedTask;
+             return Task.CompletedTask;
         }
 
         private Task OnSetBackgroundToRadial(PropertyModel arg)
@@ -390,7 +394,7 @@ namespace XamlAnalyzer.ViewModel
 
             SelectedProperty = null;
             SelectedProperty = element;
-            SelectedBrush = null;
+            SelectedBrush = element.Value as RadialGradientBrush;
 
             return Task.CompletedTask;
         }

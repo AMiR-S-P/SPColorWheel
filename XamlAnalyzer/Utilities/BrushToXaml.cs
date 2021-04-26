@@ -1,20 +1,56 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Media;
 
 namespace XamlAnalyzer.Utilities
 {
-    public class BrushToXaml
+    public class BrushToXaml : INotifyPropertyChanged
     {
-        public Brush Brush { get; private set; }
-        public string Xaml { get; private set; }
+        private string xaml;
+        private object brush;
+
+        public object Brush
+        {
+            get => brush;
+            set
+            {
+                brush = value;  //Task.Run(async () =>
+                //{
+                    //if (value != null)
+                    //{
+                         Convert();
+                    //}
+                //});
+                OnPropertyChanged();
+            }
+        }
+        public string Xaml { get => xaml; private set { xaml = value; OnPropertyChanged(); } }
 
         public BrushToXaml(Brush brush)
         {
             Brush = brush;
+
+            Task.Run(async () =>
+            {
+                if (Brush != null)
+                {
+                     Convert();
+                }
+            });
+        }
+        public BrushToXaml()
+        {
+
+        }
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        public void Convert()
+        {
 
             if (Brush is SolidColorBrush)
             {
@@ -36,6 +72,12 @@ namespace XamlAnalyzer.Utilities
             {
                 Xaml = "{x:null}";
             }
+            //return Task.CompletedTask;
+        }
+
+        public void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
         string SolidToXaml()
@@ -54,19 +96,23 @@ namespace XamlAnalyzer.Utilities
             linear = $"<LinearGradientBrush StartPoint=\"{brush.StartPoint}\" EndPoint=\"{brush.EndPoint}\" ColorInterpolationMode=\"{brush.ColorInterpolationMode}\" MappingMode=\"{brush.MappingMode}\" Opacity=\"{brush.Opacity}\">{Environment.NewLine}";
             if (brush.GradientStops.Any())
             {
-                linear += "<LinearGradientBrush.GradientStops>";
+                linear += "\t<LinearGradientBrush.GradientStops>";
+                linear += Environment.NewLine;
             }
 
             foreach (var g in brush.GradientStops)
             {
-                linear += $"<GradientStop Color=\"{g.Color}\" Offset=\"{g.Offset}\" />";
+                linear += $"\t\t<GradientStop Color=\"{g.Color}\" Offset=\"{g.Offset}\" />";
+                linear += Environment.NewLine;
             }
 
             if (brush.GradientStops.Any())
             {
-                linear += "</LinearGradientBrush.GradientStops>";
+                linear += "\t</LinearGradientBrush.GradientStops>";
+                linear += Environment.NewLine;
             }
             linear += "</LinearGradientBrush>";
+            linear += Environment.NewLine;
 
             return linear;
         }
@@ -78,19 +124,23 @@ namespace XamlAnalyzer.Utilities
             radial = $"<RadialGradientBrush GradientOrigin=\"{brush.GradientOrigin}\" RadiusX=\"{brush.RadiusX}\"  RadiusY=\"{brush.RadiusY}\"  Center=\"{brush.Center}\" ColorInterpolationMode=\"{brush.ColorInterpolationMode}\" MappingMode=\"{brush.MappingMode}\" SpreadMethod=\"{brush.SpreadMethod}\" Opacity=\"{brush.Opacity}\">{Environment.NewLine}";
             if (brush.GradientStops.Any())
             {
-                radial += "<RadialGradientBrush.GradientStops>";
+                radial += "/t<RadialGradientBrush.GradientStops>";
+                radial += Environment.NewLine;
             }
 
             foreach (var g in brush.GradientStops)
             {
-                radial += $"<GradientStop Color=\"{g.Color}\" Offset=\"{g.Offset}\" />";
+                radial += $"/t/t<GradientStop Color=\"{g.Color}\" Offset=\"{g.Offset}\" />";
+                radial += Environment.NewLine;
             }
 
             if (brush.GradientStops.Any())
             {
-                radial += "</RadialGradientBrush.GradientStops>";
+                radial += "/t</RadialGradientBrush.GradientStops>";
+                radial += Environment.NewLine;
             }
             radial += "</RadialGradientBrush>";
+            radial += Environment.NewLine;
 
             return radial;
         }

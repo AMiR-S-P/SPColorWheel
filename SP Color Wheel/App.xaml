@@ -12,7 +12,7 @@
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="/Resources/Styles/Light/MainTheme.xaml"/>
+                <ResourceDictionary Source="/SPCWCore;component/Resources/Styles/Light/MainTheme.xaml"/>
 
                 <ResourceDictionary>
                     <DataTemplate DataType="{x:Type vm:WheelViewModel}">
