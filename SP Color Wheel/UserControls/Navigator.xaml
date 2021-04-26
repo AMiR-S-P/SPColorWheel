@@ -9,7 +9,7 @@
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="/SP Color Wheel;component/Resources/Styles/Light/ColorSelectorStyles.Xaml" />
+                <ResourceDictionary Source="/SPCWCore;component/Resources/Styles/Light/ColorSelectorStyles.Xaml" />
             </ResourceDictionary.MergedDictionaries>
 
         </ResourceDictionary>

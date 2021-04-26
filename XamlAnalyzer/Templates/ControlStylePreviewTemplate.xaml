@@ -3,7 +3,9 @@
                     xmlns:model="clr-namespace:XamlAnalyzer.Model">
 
         <ResourceDictionary.MergedDictionaries>
-        <ResourceDictionary Source="/XamlAnalyzer;component/Resources/Styles/Light/Colors.xaml"/>
+        <!--<ResourceDictionary Source="/XamlAnalyzer;component/Resources/Styles/Light/MainTheme.xaml"/>-->
+
+        <ResourceDictionary Source="/SPCWCore;component/Resources/Styles/Light/Colors.xaml"/>
     </ResourceDictionary.MergedDictionaries>
 
     <DataTemplate DataType="{x:Type model:ExportControlModel}" x:Key="exportControlTemplate" >

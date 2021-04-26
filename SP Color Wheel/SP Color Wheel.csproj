@@ -26,14 +26,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="Resources\Fonts\Ubuntu-Bold.ttf" />
-    <None Remove="Resources\Fonts\Ubuntu-BoldItalic.ttf" />
-    <None Remove="Resources\Fonts\Ubuntu-Italic.ttf" />
-    <None Remove="Resources\Fonts\Ubuntu-Light.ttf" />
-    <None Remove="Resources\Fonts\Ubuntu-LightItalic.ttf" />
-    <None Remove="Resources\Fonts\Ubuntu-Medium.ttf" />
-    <None Remove="Resources\Fonts\Ubuntu-MediumItalic.ttf" />
-    <None Remove="Resources\Fonts\Ubuntu-Regular.ttf" />
     <None Remove="Resources\Icons\chain_128x128.png" />
     <None Remove="Resources\Icons\lock_128x128.png" />
     <None Remove="Resources\Icons\rgb_128x128.png" />
@@ -54,7 +46,7 @@
 
   <ItemGroup>
     <Folder Include="EventHandlers\" />
-    <Folder Include="Resources\Styles\Light\" />
+    <Folder Include="Resources\Styles\" />
     <Folder Include="Services\" />
   </ItemGroup>
 
@@ -79,30 +71,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Resource Include="Resources\Fonts\Ubuntu-Bold.ttf">
-      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Resources\Fonts\Ubuntu-BoldItalic.ttf">
-      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Resources\Fonts\Ubuntu-Italic.ttf">
-      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Resources\Fonts\Ubuntu-Light.ttf">
-      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Resources\Fonts\Ubuntu-LightItalic.ttf">
-      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Resources\Fonts\Ubuntu-Medium.ttf">
-      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Resources\Fonts\Ubuntu-MediumItalic.ttf">
-      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Resources\Fonts\Ubuntu-Regular.ttf">
-      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-    </Resource>
     <Resource Include="Resources\Icons\chain_128x128.png" />
     <Resource Include="Resources\Icons\lock_128x128.png" />
     <Resource Include="Resources\Icons\rgb_128x128.png" />

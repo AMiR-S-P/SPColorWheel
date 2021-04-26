@@ -30,6 +30,16 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Page Remove="Resources\Styles\Light\Buttons.xaml" />
+    <Page Remove="Resources\Styles\Light\Colors.xaml" />
+    <Page Remove="Resources\Styles\Light\MainTheme.xaml" />
+    <Page Remove="Resources\Styles\Light\MenuItem.xaml" />
+    <Page Remove="Resources\Styles\Light\TextBlock.xaml" />
+    <Page Remove="Resources\Styles\Light\TreeViewItem.xaml" />
+    <Page Remove="Resources\Styles\UniversalStyles.xaml" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Folder Include="Interfaces\" />
     <Folder Include="Parsers\" />
     <Folder Include="Resources\Styles\Dark\" />
@@ -66,6 +76,16 @@
     <Resource Include="Resources\Icons\tagIcon.png" />
     <Resource Include="Resources\Icons\tagIcon2.png" />
     <Resource Include="Resources\Icons\tag_128x128.png" />
+    <Resource Include="Resources\Styles\Light\Buttons.xaml">
+      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+      <SubType>Designer</SubType>
+    </Resource>
+    <Resource Include="Resources\Styles\Light\Colors.xaml" />
+    <Resource Include="Resources\Styles\Light\MainTheme.xaml" />
+    <Resource Include="Resources\Styles\Light\MenuItem.xaml" />
+    <Resource Include="Resources\Styles\Light\TextBlock.xaml" />
+    <Resource Include="Resources\Styles\Light\TreeViewItem.xaml" />
+    <Resource Include="Resources\Styles\UniversalStyles.xaml" />
     <Resource Include="Samples\Calculator.txt" />
     <Resource Include="Samples\Shapes.txt" />
     <Resource Include="Samples\SignInForm.txt" />

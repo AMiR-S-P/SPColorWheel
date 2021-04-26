@@ -14,30 +14,21 @@
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="/SP Color Wheel;component/Resources/Styles/UniversalStyles.Xaml"/>
+                <ResourceDictionary Source="/SPCWCore;component/Resources/Styles/UniversalStyles.Xaml"/>
             </ResourceDictionary.MergedDictionaries>
         
         <x:Array x:Key="pointers" Type="{x:Type enums:PointerHarmonyType}"/>
 
         <templateSelector:ColorHarmonyPropertiesTemplateSelector x:Key="ColorHarmonyPropertiesTemplateSelector" />
         <converter:HarmonyToEnumConverter x:Key="HarmonyToEnumConverter"/>
-
-
-        <!--<DataTemplate >
-            <DataTemplate.DataType>
-                --><!--<enums:PointerHarmonyType>--><!--
-                    Analogous
-                --><!--</enums:PointerHarmonyType>--><!--
-            </DataTemplate.DataType>
-            <harmonyProperties:AnalogousProperties/>
-        </DataTemplate>-->
+ 
 
         </ResourceDictionary>
 
     </UserControl.Resources>
     <ScrollViewer VerticalScrollBarVisibility="Auto">
         <StackPanel>
-            <Expander Header="Colors In Wheel" IsExpanded="True"  FontFamily="/Resources/Fonts/#Ubuntu" >
+            <Expander Header="Colors In Wheel" IsExpanded="True"  FontFamily="/Resources/Fonts/#Ubuntu" Style="{StaticResource TitledExpanderStyle}">
                 <StackPanel >
                     <CheckBox x:Name="redChckBox" Margin="10,10,10,0" Content="Red" IsChecked="{Binding HasRed , Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" />
                     <CheckBox x:Name="greenChckBox" Margin="10,5,10,0"  Content="Green" IsChecked="{Binding HasGreen , Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" />
@@ -46,7 +37,7 @@
             </Expander>
             
             
-            <Expander Header="Color Harmony" IsExpanded="True">
+            <Expander Header="Color Harmony" IsExpanded="True" Style="{StaticResource TitledExpanderStyle}">
                 <DockPanel>
                     <ComboBox DockPanel.Dock="Top" Margin="10,5"  x:Name="pointersComboBox"
                               SelectedItem="{Binding HarmonyType,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"

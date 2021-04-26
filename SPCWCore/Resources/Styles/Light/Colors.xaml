@@ -28,6 +28,24 @@
     <SolidColorBrush x:Key="HeaderButtonIsPressedBorderColor" x:Shared="True"  Color="#55B14E4E"/>
 
 
+    <SolidColorBrush x:Key="MainBackgroundColor" Color="#FFF5F5F5"/>
 
+
+    <SolidColorBrush x:Key="MainBorderColor" Color="#FFACACAC"/>
+    <SolidColorBrush x:Key="AccentTransparentColor" Color="#Cc6495ED"      />
+    <LinearGradientBrush x:Key="MainHighLightBackgroundColor" StartPoint="0.5,1" EndPoint="0.5,0">
+        <GradientStop Color="#FF777777" Offset="0" />
+        <GradientStop Color="#FFF5F5F5" Offset="1"/>
+    </LinearGradientBrush>
+
+    <LinearGradientBrush x:Key="MainSelectedHighLightBackgroundColor" StartPoint="0.5,1" EndPoint="0.5,0">
+        <GradientStop Color="CornflowerBlue" Offset="0" />
+        <GradientStop Color="#FFF5F5F5" Offset="1"/>
+    </LinearGradientBrush>
+
+    <LinearGradientBrush x:Key="MainMouseOverHighLightBackgroundColor" StartPoint="0.5,1" EndPoint="0.5,0">
+        <GradientStop Color="#9c6495ED" Offset="0" />
+        <GradientStop Color="#FFF5F5F5" Offset="1"/>
+    </LinearGradientBrush>
 
 </ResourceDictionary>

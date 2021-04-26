@@ -8,54 +8,103 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Page Remove="Styles\Light\MainTheme.xaml" />
+    <None Remove="Resources\Fonts\Ubuntu-Bold.ttf" />
+    <None Remove="Resources\Fonts\Ubuntu-BoldItalic.ttf" />
+    <None Remove="Resources\Fonts\Ubuntu-Italic.ttf" />
+    <None Remove="Resources\Fonts\Ubuntu-Light.ttf" />
+    <None Remove="Resources\Fonts\Ubuntu-LightItalic.ttf" />
+    <None Remove="Resources\Fonts\Ubuntu-Medium.ttf" />
+    <None Remove="Resources\Fonts\Ubuntu-MediumItalic.ttf" />
+    <None Remove="Resources\Fonts\Ubuntu-Regular.ttf" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Resources\" />
+    <Page Remove="Resources\Styles\Light\CheckBoxStyle.xaml" />
+    <Page Remove="Resources\Styles\Light\Colors.xaml" />
+    <Page Remove="Resources\Styles\Light\ColorSelectorStyles.xaml" />
+    <Page Remove="Resources\Styles\Light\ColorSliderStyle.xaml" />
+    <Page Remove="Resources\Styles\Light\ExpanderStyle.xaml" />
+    <Page Remove="Resources\Styles\Light\Fonts.xaml" />
+    <Page Remove="Resources\Styles\Light\ListViewStyle.xaml" />
+    <Page Remove="Resources\Styles\Light\MainTheme.xaml" />
+    <Page Remove="Resources\Styles\Light\MenuAndItemStyle.xaml" />
+    <Page Remove="Resources\Styles\Light\RadioButton.xaml" />
+    <Page Remove="Resources\Styles\Light\TextBlockStyle.xaml" />
+    <Page Remove="Resources\Styles\Light\TextBoxStyle.xaml" />
+    <Page Remove="Resources\Styles\Light\ToggleButtonStyle.xaml" />
+    <Page Remove="Resources\Styles\UniversalStyles.xaml" />
   </ItemGroup>
 
   <ItemGroup>
-    <Resource Include="Styles\Light\MainTheme.xaml">
-      <Generator>MSBuild:Compile</Generator>
+    <Resource Include="Resources\Fonts\Ubuntu-Bold.ttf">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\Fonts\Ubuntu-BoldItalic.ttf">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\Fonts\Ubuntu-Italic.ttf">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\Fonts\Ubuntu-Light.ttf">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\Fonts\Ubuntu-LightItalic.ttf">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\Fonts\Ubuntu-Medium.ttf">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\Fonts\Ubuntu-MediumItalic.ttf">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\Fonts\Ubuntu-Regular.ttf">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\Styles\Light\CheckBoxStyle.xaml">
+      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+    </Resource>
+    <Resource Include="Resources\Styles\Light\Colors.xaml">
+      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+    </Resource>
+    <Resource Include="Resources\Styles\Light\ColorSelectorStyles.xaml">
+      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+    </Resource>
+    <Resource Include="Resources\Styles\Light\ColorSliderStyle.xaml">
+      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+    </Resource>
+    <Resource Include="Resources\Styles\Light\ExpanderStyle.xaml">
+      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+    </Resource>
+    <Resource Include="Resources\Styles\Light\Fonts.xaml">
+      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+    </Resource>
+    <Resource Include="Resources\Styles\Light\ListViewStyle.xaml">
+      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+    </Resource>
+    <Resource Include="Resources\Styles\Light\MainTheme.xaml" />
+    <Resource Include="Resources\Styles\Light\MenuAndItemStyle.xaml">
+      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+    </Resource>
+    <Resource Include="Resources\Styles\Light\RadioButton.xaml">
+      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+      <SubType>Designer</SubType>
+    </Resource>
+    <Resource Include="Resources\Styles\Light\TextBlockStyle.xaml">
+      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+    </Resource>
+    <Resource Include="Resources\Styles\Light\TextBoxStyle.xaml">
+      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+    </Resource>
+    <Resource Include="Resources\Styles\Light\ToggleButtonStyle.xaml">
+      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+    </Resource>
+    <Resource Include="Resources\Styles\UniversalStyles.xaml">
+      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
     </Resource>
   </ItemGroup>
 
   <ItemGroup>
-    <Page Update="Styles\Light\CheckBoxStyle.xaml">
-      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
-    </Page>
-    <Page Update="Styles\Light\Colors.xaml">
-      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
-    </Page>
-    <Page Update="Styles\Light\ColorSelectorStyles.xaml">
-      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
-    </Page>
-    <Page Update="Styles\Light\ColorSliderStyle.xaml">
-      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
-    </Page>
-    <Page Update="Styles\Light\ExpanderStyle.xaml">
-      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
-    </Page>
-    <Page Update="Styles\Light\Fonts.xaml">
-      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
-    </Page>
-    <Page Update="Styles\Light\ListViewStyle.xaml">
-      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
-    </Page>
-    <Page Update="Styles\Light\MenuAndItemStyle.xaml">
-      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
-    </Page>
-    <Page Update="Styles\Light\TextBlockStyle.xaml">
-      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
-    </Page>
-    <Page Update="Styles\Light\TextBoxStyle.xaml">
-      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
-    </Page>
-    <Page Update="Styles\Light\ToggleButtonStyle.xaml">
-      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
-    </Page>
-    <Page Update="Styles\UniversalStyles.xaml">
+    <Page Update="Resources\Styles\Dark\MainTheme.xaml">
       <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
     </Page>
   </ItemGroup>

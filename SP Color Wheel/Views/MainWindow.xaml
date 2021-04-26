@@ -91,7 +91,7 @@
                 
                 <StackPanel  Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Stretch"  Background="{StaticResource SecondaryBackgroundColor}">
                     <StackPanel Orientation="Vertical" HorizontalAlignment="Left" VerticalAlignment="Top"  Margin="2,2,0,0">
-                        <TextBlock Text="Tints" Style="{StaticResource headerTextBlockStyle}"  HorizontalAlignment="Stretch" TextAlignment="Center"/>
+                        <TextBlock Text="Tints" Style="{StaticResource HeaderTextBlockStyle}"  HorizontalAlignment="Stretch" TextAlignment="Center"/>
                         <usercontrols:ColorCard x:Name="tint2" Width="75"  Height="70" CurrentColor="{Binding CurrentSelector.MainColorTint.Tint2}" Margin="0,0,0,5"/>
                         <usercontrols:ColorCard x:Name="tint3" Width="75"  Height="70" CurrentColor="{Binding CurrentSelector.MainColorTint.Tint3}" Margin="0,0,0,5" />
                         <usercontrols:ColorCard x:Name="tint4" Width="75"  Height="70" CurrentColor="{Binding CurrentSelector.MainColorTint.Tint4}" Margin="0,0,0,5" />
@@ -99,7 +99,7 @@
                         <usercontrols:ColorCard x:Name="tint6" Width="75"  Height="70" CurrentColor="{Binding CurrentSelector.MainColorTint.Tint6}" Margin="0,0,0,5"  />
                     </StackPanel>
                     <StackPanel Orientation="Vertical" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="2,2,0,0">
-                        <TextBlock Text="Shades" Style="{StaticResource headerTextBlockStyle}" HorizontalAlignment="Stretch" TextAlignment="Center" />
+                        <TextBlock Text="Shades" Style="{StaticResource HeaderTextBlockStyle}" HorizontalAlignment="Stretch" TextAlignment="Center" />
                         <usercontrols:ColorCard x:Name="shade2" Width="75"   Height="70" CurrentColor="{Binding CurrentSelector.MainColorShade.Shade2}"  Margin="0,0,0,5"/>
                         <usercontrols:ColorCard x:Name="shade3" Width="75"   Height="70" CurrentColor="{Binding CurrentSelector.MainColorShade.Shade3}"  Margin="0,0,0,5"/>
                         <usercontrols:ColorCard x:Name="shade4" Width="75"   Height="70" CurrentColor="{Binding CurrentSelector.MainColorShade.Shade4}"  Margin="0,0,0,5"/>
@@ -107,7 +107,7 @@
                         <usercontrols:ColorCard x:Name="shade6" Width="75"   Height="70" CurrentColor="{Binding CurrentSelector.MainColorShade.Shade6}" Margin="0,0,0,5"  />
                     </StackPanel>
                     <StackPanel Orientation="Vertical" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="2,2,2,0">
-                        <TextBlock Text="Tones" Style="{StaticResource headerTextBlockStyle}" HorizontalAlignment="Stretch" TextAlignment="Center"/>
+                        <TextBlock Text="Tones" Style="{StaticResource HeaderTextBlockStyle}" HorizontalAlignment="Stretch" TextAlignment="Center"/>
                         <usercontrols:ColorCard x:Name="tone2" Width="75"    Height="70" CurrentColor="{Binding CurrentSelector.MainColorTone.Tone2}" Margin="0,0,0,5"/>
                         <usercontrols:ColorCard x:Name="tone3" Width="75"    Height="70" CurrentColor="{Binding CurrentSelector.MainColorTone.Tone3}" Margin="0,0,0,5"/>
                         <usercontrols:ColorCard x:Name="tone4" Width="75"    Height="70" CurrentColor="{Binding CurrentSelector.MainColorTone.Tone4}" Margin="0,0,0,5"/>

@@ -10,7 +10,7 @@
         <BooleanToVisibilityConverter x:Key="b2v"/>
     </UserControl.Resources>
     <StackPanel>
-        <TextBlock Text="Color Cards"  Style="{StaticResource headerTextBlockStyle}"/>
+        <TextBlock Text="Color Cards"  Style="{StaticResource HeaderTextBlockStyle}"/>
         <TextBlock Text="Background" Style="{StaticResource subHeaderTextBlockStyle}"/>
 
         <Grid>

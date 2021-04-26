@@ -21,7 +21,7 @@
             <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <TextBlock Text="{Binding Title,ElementName=rgbController}"  Style="{DynamicResource headerTextBlockStyle}"
+        <TextBlock Text="{Binding Title,ElementName=rgbController}"  Style="{DynamicResource HeaderTextBlockStyle}"
                    HorizontalAlignment="Stretch" TextAlignment="Center"  FontSize="14"
                    Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2"/>
         

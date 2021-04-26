@@ -133,7 +133,7 @@
                             <RowDefinition Height="Auto" />
                             <RowDefinition Height="1*" />
                         </Grid.RowDefinitions>
-                        <TextBlock Text="Controls" Grid.Row="0" Style="{StaticResource headerTextBlockStyle}"/>
+                        <TextBlock Text="Controls" Grid.Row="0" Style="{StaticResource HeaderTextBlockStyle}"/>
                         <TreeView x:Name="uITreeView" Grid.Row="1"  
                                   ItemsSource="{Binding UIControl.Children}" 
                                   Style="{StaticResource ControlsTreeViewStyle}" >
@@ -142,7 +142,7 @@
                             </interactivity:Interaction.Behaviors>
                         </TreeView>
 
-                        <TextBlock Text="Properties" Grid.Row="2" Style="{StaticResource headerTextBlockStyle}"/>
+                        <TextBlock Text="Properties" Grid.Row="2" Style="{StaticResource HeaderTextBlockStyle}"/>
                         <ListView x:Name="brushPropertiesListView" Grid.Row="3" HorizontalContentAlignment="Center" 
                                   ItemsSource="{Binding SelectedValue.BrushProperties, ElementName=uITreeView}" SelectionMode="Single">
                             <interactivity:Interaction.Triggers>
@@ -266,27 +266,27 @@
                                             <ColumnDefinition Width="*" />
                                             <ColumnDefinition Width="*" />
                                         </Grid.ColumnDefinitions>
-                                        <RadioButton Content="None"  Grid.Column="0" TextBlock.TextAlignment="Center" Padding="2,6"
+                                        <RadioButton Content="None"  Grid.Column="0" TextBlock.TextAlignment="Center" Padding="2,6" Style="{StaticResource BrushRadioButtonStyle}"
                                          IsChecked="{Binding SelectedProperty.Value,Mode=OneWay,Converter={StaticResource NoneBackgroundToBoolConverter}}"
                                          Command="{Binding SetBackgroundToNoneCommand}"
                                          CommandParameter="{Binding SelectedProperty}"/>
 
-                                        <RadioButton Content="Solid"  Grid.Column="1" TextBlock.TextAlignment="Center" Padding="2,6"
+                                        <RadioButton Content="Solid"  Grid.Column="1" TextBlock.TextAlignment="Center" Padding="2,6" Style="{StaticResource BrushRadioButtonStyle}"
                                          IsChecked="{Binding SelectedProperty.Value,Mode=OneWay,Converter={StaticResource SolidBackgroundToBoolConverter}}"
                                          Command="{Binding SetBackgroundToSolidCommand}"
                                          CommandParameter="{Binding SelectedProperty}"/>
 
-                                        <RadioButton Content="Linear"  Grid.Column="2" TextBlock.TextAlignment="Center" Padding="2,6"
+                                        <RadioButton Content="Linear"  Grid.Column="2" TextBlock.TextAlignment="Center" Padding="2,6" Style="{StaticResource BrushRadioButtonStyle}"
                                          IsChecked="{Binding SelectedProperty.Value,Mode=OneWay,Converter={StaticResource LinearBackgroundToBoolConverter}}"                                         
                                          Command="{Binding SetBackgroundToLinearCommand}"
                                          CommandParameter="{Binding SelectedProperty}"/>
 
-                                        <RadioButton Content="Radial"  Grid.Column="3" TextBlock.TextAlignment="Center" Padding="2,6"
+                                        <RadioButton Content="Radial"  Grid.Column="3" TextBlock.TextAlignment="Center" Padding="2,6" Style="{StaticResource BrushRadioButtonStyle}"
                                          IsChecked="{Binding SelectedProperty.Value,Mode=OneWay,Converter={StaticResource RadialBackgroundToBoolConverter}}"                                        
                                          Command="{Binding SetBackgroundToRadialCommand}"
                                          CommandParameter="{Binding SelectedProperty}"/>
 
-                                        <RadioButton Content="Image"  Grid.Column="4" TextBlock.TextAlignment="Center" Padding="2,6"
+                                        <RadioButton Content="Image"  Grid.Column="4" TextBlock.TextAlignment="Center" Padding="2,6" Style="{StaticResource BrushRadioButtonStyle}"
                                          IsChecked="{Binding SelectedProperty.Value,Mode=OneWay,Converter={StaticResource ImageBackgroundToBoolConverter}}"
                                          Command="{Binding SetBackgroundToImageCommand}"
                                          CommandParameter="{Binding SelectedProperty}"/>

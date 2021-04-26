@@ -6,8 +6,10 @@
 
 
     <ResourceDictionary.MergedDictionaries>
-        <ResourceDictionary Source="/XamlAnalyzer;component/Resources/Styles/Light/TextBlock.xaml"/>
-        <ResourceDictionary Source="/XamlAnalyzer;component/Resources/Styles/Light/CheckBoxes.xaml"/>
+
+        <ResourceDictionary Source="/SPCWCore;component/Resources/Styles/Light/TextBlockStyle.xaml" />
+        <ResourceDictionary Source="/SPCWCore;component/Resources/Styles/Light/CheckBoxStyle.xaml"/>
+        <ResourceDictionary Source="/XamlAnalyzer;component/Resources/Styles/Light/Buttons.xaml"/>
     </ResourceDictionary.MergedDictionaries>
 
     <DataTemplate DataType="{x:Type model:PropertyModel}"  x:Key="SolidColorBrushPropertiesTemplate" >

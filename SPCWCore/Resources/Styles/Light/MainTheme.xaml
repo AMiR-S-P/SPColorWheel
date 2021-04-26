@@ -4,14 +4,16 @@
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary  Source="/SPCWCore;component/Resources/Styles/UniversalStyles.xaml" />
         <ResourceDictionary  Source="/SPCWCore;component/Resources/Styles/Light/CheckBoxStyle.xaml" />
-        <ResourceDictionary  Source="/SPCWCore;component/Resources/Styles/Light/ExpanderStyle.xaml" />
-        <ResourceDictionary  Source="/SPCWCore;component/Resources/Styles/Light/ListViewStyle.xaml"/>
         <ResourceDictionary  Source="/SPCWCore;component/Resources/Styles/Light/ColorSelectorStyles.xaml"/>
         <ResourceDictionary  Source="/SPCWCore;component/Resources/Styles/Light/ColorSliderStyle.xaml"/>
-        <ResourceDictionary  Source="/SPCWCore;component/Resources/Styles/Light/TextBoxStyle.xaml"/>
-        <ResourceDictionary  Source="/SPCWCore;component/Resources/Styles/Light/TextBlockStyle.xaml"/>
-        <ResourceDictionary  Source="/SPCWCore;component/Resources/Styles/Light/ToggleButtonStyle.xaml"/>
+        <ResourceDictionary  Source="/SPCWCore;component/Resources/Styles/Light/ExpanderStyle.xaml" />
+        <ResourceDictionary  Source="/SPCWCore;component/Resources/Styles/Light/Fonts.xaml"/>
+        <ResourceDictionary  Source="/SPCWCore;component/Resources/Styles/Light/ListViewStyle.xaml"/>
         <ResourceDictionary  Source="/SPCWCore;component/Resources/Styles/Light/MenuAndItemStyle.xaml"/>
+        <ResourceDictionary  Source="/SPCWCore;component/Resources/Styles/Light/RadioButton.xaml"/>
+        <ResourceDictionary  Source="/SPCWCore;component/Resources/Styles/Light/TextBlockStyle.xaml"/>
+        <ResourceDictionary  Source="/SPCWCore;component/Resources/Styles/Light/TextBoxStyle.xaml"/>
+        <ResourceDictionary  Source="/SPCWCore;component/Resources/Styles/Light/ToggleButtonStyle.xaml"/>
 
     </ResourceDictionary.MergedDictionaries>
 

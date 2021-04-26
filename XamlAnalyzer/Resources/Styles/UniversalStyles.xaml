@@ -13,9 +13,9 @@
         <ResourceDictionary Source="/XamlAnalyzer;component/Templates/NoneBrushPropertiesTemplate.xaml"/>
  </ResourceDictionary.MergedDictionaries>
 
-    <Style TargetType="Grid">
+    <!--<Style TargetType="Grid">
         <Setter Property="Background" Value="Transparent" />
-    </Style>
+    </Style>-->
 
     
 </ResourceDictionary>

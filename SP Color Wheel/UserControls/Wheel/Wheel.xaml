@@ -47,11 +47,11 @@
             <TextBlock Text="{Binding DataContext.RawMainColor, ElementName=PointerContainer}" VerticalAlignment="Center"/>
         </StackPanel>
 
-        <TextBlock Text="Main" Grid.Row="0" Grid.Column="1" Margin="2,-10,7,8" HorizontalAlignment="Center" TextAlignment="Center"  Style="{StaticResource headerTextBlockStyle}"/>
-        <TextBlock Text="1" Grid.Row="0" Grid.Column="2" Margin="5,-10,5,8"  TextAlignment="Center" Style="{StaticResource headerTextBlockStyle}"/>
-        <TextBlock Text="2" Grid.Row="0" Grid.Column="3" Margin="5,-10,5,8"  TextAlignment="Center" Style="{StaticResource headerTextBlockStyle}"/>
-        <TextBlock Text="3" Grid.Row="0" Grid.Column="4" Margin="5,-10,5,8"  TextAlignment="Center" Style="{StaticResource headerTextBlockStyle}"/>
-        <TextBlock Text="4" Grid.Row="0" Grid.Column="5" Margin="5,-10,5,8"  TextAlignment="Center" Style="{StaticResource headerTextBlockStyle}"/>
+        <TextBlock Text="Main" Grid.Row="0" Grid.Column="1" Margin="2,-10,7,8" HorizontalAlignment="Center" TextAlignment="Center"  Style="{StaticResource HeaderTextBlockStyle}"/>
+        <TextBlock Text="1" Grid.Row="0" Grid.Column="2" Margin="5,-10,5,8"  TextAlignment="Center" Style="{StaticResource HeaderTextBlockStyle}"/>
+        <TextBlock Text="2" Grid.Row="0" Grid.Column="3" Margin="5,-10,5,8"  TextAlignment="Center" Style="{StaticResource HeaderTextBlockStyle}"/>
+        <TextBlock Text="3" Grid.Row="0" Grid.Column="4" Margin="5,-10,5,8"  TextAlignment="Center" Style="{StaticResource HeaderTextBlockStyle}"/>
+        <TextBlock Text="4" Grid.Row="0" Grid.Column="5" Margin="5,-10,5,8"  TextAlignment="Center" Style="{StaticResource HeaderTextBlockStyle}"/>
         <!--<local:MainPointer Width="30" Height="30"/>-->
 
     </Grid>

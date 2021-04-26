@@ -3,7 +3,7 @@
 
 
     <ResourceDictionary.MergedDictionaries>
-        <ResourceDictionary Source="/SP Color Wheel;component/Resources/Styles/Light/Colors.Xaml" />
+        <ResourceDictionary Source="/SPCWCore;component/Resources/Styles/Light/Colors.Xaml" />
     </ResourceDictionary.MergedDictionaries>
 
 

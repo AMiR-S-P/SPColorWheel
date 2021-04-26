@@ -6,7 +6,8 @@
 
 
     <ResourceDictionary.MergedDictionaries>
-        <ResourceDictionary Source="/SP Color Wheel;component/Resources/Styles/Light/Colors.Xaml" />
+        <ResourceDictionary Source="/SPCWCore;component/Resources/Styles/Light/Colors.Xaml" />
+        <ResourceDictionary Source="/SPCWCore;component/Resources/Styles/Light/Fonts.Xaml" />
     </ResourceDictionary.MergedDictionaries>
     
     <Style x:Shared="True" TargetType="{x:Type ListBoxItem}" x:Key="listboxitemStyle">

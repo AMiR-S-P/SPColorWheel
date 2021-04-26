@@ -52,4 +52,27 @@
             </Setter.Value>
         </Setter>
     </Style>
+
+    <Style TargetType="CheckBox" x:Key="expanderCheckBox">
+        <Setter Property="Template"  >
+            <Setter.Value>
+                <ControlTemplate TargetType="CheckBox">
+                    <Border Background="Transparent">
+                        <TextBlock x:Name="checkBoxSign" FontFamily="Segoe mdl2 assets" TextAlignment="Right" Margin="5,0" FontSize="10" VerticalAlignment="Center"/>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsChecked" Value="True" >
+                            <Setter Property="Text" Value="&#xE96E;" TargetName="checkBoxSign"/>
+                        </Trigger>
+                        <Trigger Property="IsChecked" Value="False" >
+                            <Setter Property="Text" Value="&#xE96D;" TargetName="checkBoxSign"/>
+                        </Trigger>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Foreground" Value="CornFlowerBlue" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
 </ResourceDictionary>
