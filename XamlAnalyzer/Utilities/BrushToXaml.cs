@@ -93,7 +93,7 @@ namespace XamlAnalyzer.Utilities
         {
             string linear = "";
             LinearGradientBrush brush = Brush as LinearGradientBrush;
-            linear = $"<LinearGradientBrush StartPoint=\"{brush.StartPoint}\" EndPoint=\"{brush.EndPoint}\" ColorInterpolationMode=\"{brush.ColorInterpolationMode}\" MappingMode=\"{brush.MappingMode}\" Opacity=\"{brush.Opacity}\">{Environment.NewLine}";
+            linear = $"<LinearGradientBrush StartPoint=\"{brush.StartPoint}\" EndPoint=\"{brush.EndPoint}\" ColorInterpolationMode=\"{brush.ColorInterpolationMode}\" MappingMode=\"{brush.MappingMode}\"  SpreadMethod=\"{brush.SpreadMethod}\" Opacity=\"{brush.Opacity}\">{Environment.NewLine}";
             if (brush.GradientStops.Any())
             {
                 linear += "\t<LinearGradientBrush.GradientStops>";
@@ -116,7 +116,6 @@ namespace XamlAnalyzer.Utilities
 
             return linear;
         }
-
         string RadialToXaml()
         {
             string radial = "";
@@ -124,19 +123,19 @@ namespace XamlAnalyzer.Utilities
             radial = $"<RadialGradientBrush GradientOrigin=\"{brush.GradientOrigin}\" RadiusX=\"{brush.RadiusX}\"  RadiusY=\"{brush.RadiusY}\"  Center=\"{brush.Center}\" ColorInterpolationMode=\"{brush.ColorInterpolationMode}\" MappingMode=\"{brush.MappingMode}\" SpreadMethod=\"{brush.SpreadMethod}\" Opacity=\"{brush.Opacity}\">{Environment.NewLine}";
             if (brush.GradientStops.Any())
             {
-                radial += "/t<RadialGradientBrush.GradientStops>";
+                radial += "\t<RadialGradientBrush.GradientStops>";
                 radial += Environment.NewLine;
             }
 
             foreach (var g in brush.GradientStops)
             {
-                radial += $"/t/t<GradientStop Color=\"{g.Color}\" Offset=\"{g.Offset}\" />";
+                radial += $"\t\t<GradientStop Color=\"{g.Color}\" Offset=\"{g.Offset}\" />";
                 radial += Environment.NewLine;
             }
 
             if (brush.GradientStops.Any())
             {
-                radial += "/t</RadialGradientBrush.GradientStops>";
+                radial += "\t</RadialGradientBrush.GradientStops>";
                 radial += Environment.NewLine;
             }
             radial += "</RadialGradientBrush>";
@@ -147,12 +146,12 @@ namespace XamlAnalyzer.Utilities
 
         string ImageToXaml()
         {
-            throw new Exception();
-            //string image = "";
-            //var brush = Brush as ImageBrush;
-            //solid = $"<ImageBrush Color=\"{brush}\" Opacity=\"{brush.Opacity}\" />";
+            string image = "";
+            ImageBrush brush = Brush as ImageBrush;
+            image += $"<ImageBrush ImageSource=\"{brush.ImageSource}\" {Environment.NewLine}           AlignmentX=\"{brush.AlignmentX}\" AlignmentY=\"{brush.AlignmentY}\" TileMode=\"{brush.TileMode}\" Stretch=\"{brush.Stretch}\"{Environment.NewLine}           " +
+                     $"Viewport=\"{brush.Viewport}\" ViewportUnits=\"{brush.ViewportUnits}\" Viewbox=\"{brush.Viewbox}\" ViewboxUnits=\"{brush.ViewboxUnits}\" Opacity=\"{brush.Opacity}\" />";
 
-            //return solid;
+            return image;
         }
     }
 }

@@ -52,6 +52,7 @@ namespace XamlAnalyzer.ViewModel
         public AsyncRelayCommand<PropertyModel> ApplyBrushToAllCommand { get; set; }
         public AsyncRelayCommand<PropertyModel> ApplyBrushToSubCommand { get; set; }
 
+        public AsyncRelayCommand<object> RefreshBrushXaml { get; set; }
         public AsyncRelayCommand<object> RefreshUICommand { set; get; }
         private void initCommands()
         {
@@ -87,6 +88,16 @@ namespace XamlAnalyzer.ViewModel
             ApplyBrushToSubCommand = new AsyncRelayCommand<PropertyModel>(OnApplyBrushToSub);
 
             RefreshUICommand = new AsyncRelayCommand<object>(OnRefreshUI);
+            RefreshBrushXaml = new AsyncRelayCommand<object>(OnRefreshBrushXaml);
+        }
+
+        private Task OnRefreshBrushXaml(object arg)
+        {
+            if (SelectedBrush != null && SelectedProperty != null)
+            {
+                BrushToXaml.Brush = SelectedProperty.Value;
+            }
+            return Task.CompletedTask;
         }
 
         private bool CanRefreshUI(object arg)
@@ -223,7 +234,7 @@ namespace XamlAnalyzer.ViewModel
                 }
             }
 
-            BrushToXaml.Brush = SelectedBrush ;
+            BrushToXaml.Brush = SelectedBrush;
 
             return Task.CompletedTask;
         }
@@ -236,7 +247,7 @@ namespace XamlAnalyzer.ViewModel
                 GradientBrush val = ((SelectedProperty as PropertyModel).Value as GradientBrush).CloneCurrentValue();
 
                 SelectedProperty.SetOwnerProperty(val);
-                BrushToXaml.Brush = val ;
+                BrushToXaml.Brush = val;
 
             }
             catch (Exception ex)
@@ -320,7 +331,8 @@ namespace XamlAnalyzer.ViewModel
 
         private Task OnSelectGradientStopBrush(GradientStop arg)
         {
-            SelectedBrush = arg;
+            //SelectedBrush = arg;
+            SelectedGradient = arg;
             return Task.CompletedTask;
         }
 
@@ -332,11 +344,16 @@ namespace XamlAnalyzer.ViewModel
                 {
                     SelectedProperty.SetProperty(arg);
                 }
-                else if (SelectedBrush.GetType() == typeof(GradientStop))
+                //else if (SelectedBrush.GetType() == typeof(GradientStop))
+                //{
+                //    GradientStop gradientStop = (SelectedProperty.Value as GradientBrush).GradientStops.FirstOrDefault(x => x == (SelectedBrush as GradientStop));
+                //    System.Windows.Data.BindingOperations.ClearBinding(gradientStop, GradientStop.ColorProperty);
+                //    System.Windows.Data.BindingOperations.SetBinding(gradientStop, GradientStop.ColorProperty, new System.Windows.Data.Binding("Color") { Source = arg });
+                //}
+                else if (SelectedBrush is GradientBrush && SelectedGradient != null)
                 {
-                    GradientStop gradientStop = (SelectedProperty.Value as GradientBrush).GradientStops.FirstOrDefault(x => x == (SelectedBrush as GradientStop));
-                    System.Windows.Data.BindingOperations.ClearBinding(gradientStop, GradientStop.ColorProperty);
-                    System.Windows.Data.BindingOperations.SetBinding(gradientStop, GradientStop.ColorProperty, new System.Windows.Data.Binding("Color") { Source = arg });
+                    System.Windows.Data.BindingOperations.ClearBinding(SelectedGradient, GradientStop.ColorProperty);
+                    System.Windows.Data.BindingOperations.SetBinding(SelectedGradient, GradientStop.ColorProperty, new System.Windows.Data.Binding("Color") { Source = arg });
                 }
                 IsExported = false;
             }
@@ -354,7 +371,7 @@ namespace XamlAnalyzer.ViewModel
             SelectedProperty = element;
             SelectedBrush = element.Value;
 
-             return Task.CompletedTask;
+            return Task.CompletedTask;
         }
 
         private Task OnSetBackgroundToLinear(PropertyModel arg)
@@ -382,7 +399,7 @@ namespace XamlAnalyzer.ViewModel
             SelectedProperty = element;
             SelectedBrush = element.Value;
 
-             return Task.CompletedTask;
+            return Task.CompletedTask;
         }
 
         private Task OnSetBackgroundToRadial(PropertyModel arg)

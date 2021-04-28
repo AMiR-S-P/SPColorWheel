@@ -40,6 +40,7 @@ namespace XamlAnalyzer.ViewModel
 
         private bool isExported;
         private BrushToXaml brushToXaml = new BrushToXaml();
+        private GradientStop selectedGradient;
 
         //public ObservableCollection<ControlModel> UIControls { get; set; } = new ObservableCollection<ControlModel>();
         public ControlModel UIControl
@@ -105,6 +106,19 @@ namespace XamlAnalyzer.ViewModel
                 {
                     BrushToXaml.Brush = value;
                 }
+                else
+                {
+
+                }
+            }
+        }
+        public GradientStop SelectedGradient
+        {
+            get => selectedGradient;
+            set
+            {
+                selectedGradient = value;
+                OnPropertyChanged();
             }
         }
         public PropertyModel Brush { get => brush; set { brush = value; OnPropertyChanged(); } }
@@ -143,7 +157,7 @@ namespace XamlAnalyzer.ViewModel
                 //}
                 //else if (value.Value is ImageBrush)
                 //{
-                    BrushToXaml.Brush = value?.Value/* as ImageBrush*/;
+                BrushToXaml.Brush = value?.Value/* as ImageBrush*/;
                 //}
                 OnPropertyChanged();
             }

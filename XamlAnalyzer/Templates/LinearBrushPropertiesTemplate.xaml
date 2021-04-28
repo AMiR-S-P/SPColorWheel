@@ -2,7 +2,8 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:system="clr-namespace:System;assembly=mscorlib"
                     xmlns:model="clr-namespace:XamlAnalyzer.Model" 
-                    xmlns:View="clr-namespace:XamlAnalyzer.View">
+                    xmlns:View="clr-namespace:XamlAnalyzer.View"
+                    xmlns:interactivity="http://schemas.microsoft.com/expression/2010/interactivity">
 
     <ResourceDictionary.MergedDictionaries>
 
@@ -16,7 +17,11 @@
             <x:Type TypeName="GradientSpreadMethod" />
         </ObjectDataProvider.MethodParameters>
     </ObjectDataProvider>
-
+    <ObjectDataProvider ObjectType="{x:Type system:Enum}" x:Key="colorInterpolationMode" MethodName="GetValues">
+        <ObjectDataProvider.MethodParameters>
+            <x:Type TypeName="ColorInterpolationMode"/>
+        </ObjectDataProvider.MethodParameters>
+    </ObjectDataProvider>
     <ObjectDataProvider ObjectType="{x:Type system:Enum}" x:Key="mappingMode" MethodName="GetValues">
         <ObjectDataProvider.MethodParameters>
             <x:Type TypeName="BrushMappingMode"/>
@@ -57,26 +62,70 @@
                             <RowDefinition Height="1*" />
                             <RowDefinition Height="1*" />
                             <RowDefinition Height="1*" />
+                            <RowDefinition Height="1*" />
                         </Grid.RowDefinitions>
 
                         <TextBlock Text="Start Point" Grid.Row="0" Grid.Column="0" Margin="5" ToolTip="Start Point"/>
-                        <TextBox Grid.Row="0" Grid.Column="1" Margin="5,4" Text="{Binding Value.StartPoint, Mode=TwoWay}"/>
+                        <TextBox Grid.Row="0" Grid.Column="1" Margin="5,4" Text="{Binding Value.StartPoint, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}">
+                            <interactivity:Interaction.Triggers>
+                                <interactivity:EventTrigger EventName="TextChanged" >
+                                    <interactivity:InvokeCommandAction Command="{Binding DataContext.RefreshBrushXaml,RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=View:XamlEditor}}"/>
+                                </interactivity:EventTrigger>
+                            </interactivity:Interaction.Triggers>
+                        </TextBox>
 
                         <TextBlock Text="End Point" Grid.Row="1" Margin="5" Grid.Column="0" ToolTip="End Point"/>
-                        <TextBox Grid.Row="1" Grid.Column="1" Margin="5,4" Text="{Binding Value.EndPoint, Mode=TwoWay}"/>
+                        <TextBox Grid.Row="1" Grid.Column="1" Margin="5,4" Text="{Binding Value.EndPoint, Mode=TwoWay}">
+                            <interactivity:Interaction.Triggers>
+                                <interactivity:EventTrigger EventName="TextChanged" >
+                                    <interactivity:InvokeCommandAction Command="{Binding DataContext.RefreshBrushXaml,RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=View:XamlEditor}}"/>
+                                </interactivity:EventTrigger>
+                            </interactivity:Interaction.Triggers>
+                        </TextBox>
 
                         <TextBlock Text="Mapping Point" Grid.Row="2" Margin="5" Grid.Column="0" ToolTip="Mapping Point"/>
                         <ComboBox Grid.Row="2" Grid.Column="1" Margin="5" Grid.ColumnSpan="2" 
                               ItemsSource="{Binding Source={StaticResource mappingMode}}" 
-                              SelectedItem="{Binding Value.MappingMode, Mode=TwoWay}"/>
+                              SelectedItem="{Binding Value.MappingMode, Mode=TwoWay}">
+                            <interactivity:Interaction.Triggers>
+                                <interactivity:EventTrigger EventName="SelectionChanged" >
+                                    <interactivity:InvokeCommandAction Command="{Binding DataContext.RefreshBrushXaml,RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=View:XamlEditor}}"/>
+                                </interactivity:EventTrigger>
+                            </interactivity:Interaction.Triggers>
+                        </ComboBox>
 
+                        
                         <TextBlock Text="Spread Method" Grid.Row="3" Margin="5" Grid.Column="0" ToolTip="Spread Method"/>
                         <ComboBox Grid.Row="3" Grid.Column="1" Margin="5" Grid.ColumnSpan="2" 
                               ItemsSource="{Binding Source={StaticResource spread}}" 
-                              SelectedItem="{Binding Value.SpreadMethod, Mode=TwoWay}"/>
+                              SelectedItem="{Binding Value.SpreadMethod, Mode=TwoWay}">
+                            <interactivity:Interaction.Triggers>
+                                <interactivity:EventTrigger EventName="SelectionChanged" >
+                                    <interactivity:InvokeCommandAction Command="{Binding DataContext.RefreshBrushXaml,RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=View:XamlEditor}}"/>
+                                </interactivity:EventTrigger>
+                            </interactivity:Interaction.Triggers>
+                        </ComboBox>
 
-                        <TextBlock Text="Opacity" Grid.Row="4" Margin="5" Grid.Column="0" ToolTip="Opacity"/>
-                        <TextBox Grid.Row="4" Grid.Column="1" Margin="5,4" Grid.ColumnSpan="2" Text="{Binding Value.Opacity, Mode=TwoWay}"/>
+
+                        <TextBlock Text="Color Interpolation Mode" ToolTip="Color Interpolation Mode"  Grid.Row="4" Margin="5" Grid.Column="0"/>
+                        <ComboBox Grid.Row="4" Grid.Column="1" Margin="5" Grid.ColumnSpan="2" 
+                              ItemsSource="{Binding Source={StaticResource colorInterpolationMode}}" 
+                              SelectedItem="{Binding Value.ColorInterpolationMode, Mode=TwoWay}">
+                            <interactivity:Interaction.Triggers>
+                                <interactivity:EventTrigger EventName="SelectionChanged" >
+                                    <interactivity:InvokeCommandAction Command="{Binding DataContext.RefreshBrushXaml,RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=View:XamlEditor}}"/>
+                                </interactivity:EventTrigger>
+                            </interactivity:Interaction.Triggers>
+                        </ComboBox>
+                        
+                        <TextBlock Text="Opacity" Grid.Row="5" Margin="5" Grid.Column="0" ToolTip="Opacity"/>
+                        <TextBox Grid.Row="5" Grid.Column="1" Margin="5,4" Grid.ColumnSpan="2" Text="{Binding Value.Opacity, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}">
+                            <interactivity:Interaction.Triggers>
+                                <interactivity:EventTrigger EventName="TextChanged" >
+                                    <interactivity:InvokeCommandAction Command="{Binding DataContext.RefreshBrushXaml,RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=View:XamlEditor}}"/>
+                                </interactivity:EventTrigger>
+                            </interactivity:Interaction.Triggers>
+                        </TextBox>
                     </Grid>
 
                 </Grid>
@@ -107,7 +156,7 @@
                         <!--we use gradientStop instead of Value.Gradientstops becuase Value.Gradientstops does not have properychanged-->
                         <ItemsControl.ItemTemplate>
                             <DataTemplate>
-                                <RadioButton GroupName="Colors" x:Name="rb" Margin="0,2"
+                                <RadioButton GroupName="Colors" x:Name="rb" Margin="0,2" Style="{StaticResource BrushRadioButtonStyle}"
                                          Command="{Binding DataContext.SelectGradientStopBrushCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type View:XamlEditor}}}"
                                          CommandParameter="{Binding .}">
                                     <Grid >
@@ -139,7 +188,13 @@
                                             </Grid.ColumnDefinitions>
 
                                             <TextBlock Text="Offset" Grid.Column="0"/>
-                                            <TextBox Text="{Binding Offset,Mode=TwoWay}" Grid.Column="1"/>
+                                            <TextBox Text="{Binding Offset,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged,StringFormat=N2}" Grid.Column="1">
+                                                <interactivity:Interaction.Triggers>
+                                                    <interactivity:EventTrigger EventName="TextChanged" >
+                                                        <interactivity:InvokeCommandAction Command="{Binding DataContext.RefreshBrushXaml,RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=View:XamlEditor}}"/>
+                                                    </interactivity:EventTrigger>
+                                                </interactivity:Interaction.Triggers>
+                                            </TextBox>
                                         </Grid >
                                     </Grid>
                                 </RadioButton>

@@ -216,7 +216,7 @@
                 <Grid.RowDefinitions>
                     <RowDefinition Height="*" />
                     <RowDefinition Height="5" />
-                    <RowDefinition Height="*" MaxHeight="200" MinHeight="100"/>
+                    <RowDefinition Height="*" MaxHeight="400" MinHeight="170"/>
                 </Grid.RowDefinitions>
 
                 <Grid Grid.Row="0" Background="#ff222222">
@@ -349,7 +349,7 @@
 
                 <Grid Grid.Row="2" Background="WhiteSmoke">
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="1*" />
+                        <RowDefinition Height="1*" MaxHeight="100"/>
                         <RowDefinition Height="1*" />
                     </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
