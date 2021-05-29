@@ -485,7 +485,7 @@ namespace SP_Color_Wheel.UserControls.Common
         }
         internal protected void OnKeyDown(object sender, KeyEventArgs e)
         {
-            if (e.Key == Key.LeftCtrl || e.Key == Key.RightCtrl)
+            if (e.Key == Key.LeftShift || e.Key == Key.RightShift)
             {
                 isAlphaMode = true;
 
@@ -506,7 +506,7 @@ namespace SP_Color_Wheel.UserControls.Common
         }
         internal protected void OnKeyUp(object sender, KeyEventArgs e)
         {
-            if (e.Key == Key.LeftCtrl || e.Key == Key.RightCtrl)
+            if (e.Key == Key.LeftShift || e.Key == Key.RightShift)
             {
                 isAlphaMode = false;
 

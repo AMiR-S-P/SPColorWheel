@@ -186,9 +186,10 @@ namespace XamlAnalyzer.ViewModel
                 try
                 {
                     var content = await new StreamReader(System.Windows.Application.GetResourceStream(uri).Stream).ReadToEndAsync();
-                    SPXamlParser xamlParser = new SPXamlParser(content);
-                    await xamlParser.LoadXaml(content);
-                    XamlParser = xamlParser;
+                    XamlParser = new SPXamlParser();
+                    //await xamlParser.LoadXaml(content);
+                    //XamlParser = xamlParser;
+                    await XamlParser.LoadXaml(content);
                 }
                 catch (Exception ex)
                 {
@@ -357,6 +358,7 @@ namespace XamlAnalyzer.ViewModel
                 }
                 IsExported = false;
             }
+            BrushToXaml.Convert();
             return Task.CompletedTask;
         }
 

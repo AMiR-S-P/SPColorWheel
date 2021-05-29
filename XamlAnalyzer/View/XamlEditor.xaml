@@ -111,15 +111,42 @@
                             </MenuItem>
                         </Menu>
                         <StackPanel Orientation="Horizontal" Grid.Column="1">
-                            <Button   ToolTip="Export" Width="25" Height="25" Margin="0"
+                            <StackPanel.Resources>
+                                <Style TargetType="Button">
+                                    <Setter Property="Width" Value="25"/>
+                                    <Setter Property="Height" Value="25"/>
+                                    <Setter Property="BorderThickness" Value="0" />
+                                    <Setter Property="Background" Value="Transparent" />
+                                    <Setter Property="Template">
+                                        <Setter.Value>
+                                            <ControlTemplate TargetType="Button">
+                                                <Border x:Name="border">
+                                                    <ContentPresenter Margin="2" Content="{TemplateBinding Content}"
+                                                      HorizontalAlignment="Center"
+                                                      VerticalAlignment="Center"
+                                                      RecognizesAccessKey="True"/>
+                                                </Border>
+
+                                            </ControlTemplate>
+                                        </Setter.Value>
+                                    </Setter>
+                                    <Style.Triggers>
+                                        <Trigger Property="IsMouseOver" Value="True">
+                                            <Setter Property="Width" Value="30" />
+                                            <Setter Property="Height" Value="30" />
+                                        </Trigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </StackPanel.Resources>
+                            <Button   ToolTip="Export" 
                                     Command="{Binding ExportCommand}">
                                 <Image Source="/XamlAnalyzer;component/Resources/Icons/exportSelected_128x128.png" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
                             </Button>
-                            <Button  ToolTip="Export All" Width="25" Height="25" Margin="0"
+                            <Button  ToolTip="Export All" 
                                     Command="{Binding ExportAllCommand}">
                                 <Image Source="/XamlAnalyzer;component/Resources/Icons/exportAll_128x128.png" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
                             </Button>
-                            <Button  ToolTip="Refresh UI" Width="25" Height="25" Margin="0"
+                            <Button  ToolTip="Refresh UI" 
                                     Command="{Binding RefreshUICommand}">
                                 <Image Source="/XamlAnalyzer;component/Resources/Icons/refresh_128x128.png" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
                             </Button>
@@ -216,7 +243,7 @@
                 <Grid.RowDefinitions>
                     <RowDefinition Height="*" />
                     <RowDefinition Height="5" />
-                    <RowDefinition Height="*" MaxHeight="400" MinHeight="170"/>
+                    <RowDefinition Height="170" MaxHeight="400" MinHeight="170"/>
                 </Grid.RowDefinitions>
 
                 <Grid Grid.Row="0" Background="#ff222222">
@@ -412,27 +439,27 @@
                                HorizontalAlignment="Center" VerticalAlignment="Center" >
                         <Run FontWeight="Bold" FontSize="12">M</Run>ain
                         </TextBlock>
-                        <RadioButton Grid.Row="0" Grid.Column="1"   HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="3">
+                        <RadioButton Grid.Row="0" Grid.Column="1"   HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="3"  ToolTip="{Binding Background.Color,RelativeSource={RelativeSource Self}}">
                             <RadioButton.Background>
                                 <SolidColorBrush Color="{Binding MainColor}"/>
                             </RadioButton.Background>
                         </RadioButton>
-                        <RadioButton Grid.Row="0" Grid.Column="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="3">
+                        <RadioButton Grid.Row="0" Grid.Column="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="3" ToolTip="{Binding Background.Color,RelativeSource={RelativeSource Self}}">
                             <RadioButton.Background>
                                 <SolidColorBrush Color="{Binding Color2}"/>
                             </RadioButton.Background>
                         </RadioButton>
-                        <RadioButton Grid.Row="0" Grid.Column="3"   HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="3">
+                        <RadioButton Grid.Row="0" Grid.Column="3"   HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="3" ToolTip="{Binding Background.Color,RelativeSource={RelativeSource Self}}">
                             <RadioButton.Background>
                                 <SolidColorBrush Color="{Binding Color3}"/>
                             </RadioButton.Background>
                         </RadioButton>
-                        <RadioButton Grid.Row="0" Grid.Column="4" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="3">
+                        <RadioButton Grid.Row="0" Grid.Column="4" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="3" ToolTip="{Binding Background.Color,RelativeSource={RelativeSource Self}}">
                             <RadioButton.Background>
                                 <SolidColorBrush Color="{Binding Color4}"/>
                             </RadioButton.Background>
                         </RadioButton>
-                        <RadioButton Grid.Row="0" Grid.Column="5"   HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="3">
+                        <RadioButton Grid.Row="0" Grid.Column="5"   HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="3" ToolTip="{Binding Background.Color,RelativeSource={RelativeSource Self}}">
                             <RadioButton.Background>
                                 <SolidColorBrush Color="{Binding Color5}"/>
                             </RadioButton.Background>
@@ -443,27 +470,27 @@
                                HorizontalAlignment="Center" VerticalAlignment="Center">
                         <Run FontWeight="Bold" FontSize="12">B</Run>ase
                         </TextBlock>
-                        <RadioButton Grid.Row="2" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="3" Opacity="0.8">
+                        <RadioButton Grid.Row="2" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="3" Opacity="0.8" ToolTip="{Binding Background.Color,RelativeSource={RelativeSource Self}}">
                             <RadioButton.Background>
                                 <SolidColorBrush Color="#ffff0000"/>
                             </RadioButton.Background>
                         </RadioButton>
-                        <RadioButton Grid.Row="2" Grid.Column="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="3" Opacity="0.8">
+                        <RadioButton Grid.Row="2" Grid.Column="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="3" Opacity="0.8" ToolTip="{Binding Background.Color,RelativeSource={RelativeSource Self}}">
                             <RadioButton.Background>
                                 <SolidColorBrush Color="#ff00ff00"/>
                             </RadioButton.Background>
                         </RadioButton>
-                        <RadioButton Grid.Row="2" Grid.Column="3"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="3" Opacity="0.85">
+                        <RadioButton Grid.Row="2" Grid.Column="3"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="3" Opacity="0.85" ToolTip="{Binding Background.Color,RelativeSource={RelativeSource Self}}">
                             <RadioButton.Background>
                                 <SolidColorBrush Color="#ff0000ff"/>
                             </RadioButton.Background>
                         </RadioButton>
-                        <RadioButton Grid.Row="2" Grid.Column="4"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="3">
+                        <RadioButton Grid.Row="2" Grid.Column="4"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="3" ToolTip="{Binding Background.Color,RelativeSource={RelativeSource Self}}">
                             <RadioButton.Background>
                                 <SolidColorBrush Color="#ffffffff"/>
                             </RadioButton.Background>
                         </RadioButton>
-                        <RadioButton Grid.Row="2" Grid.Column="5"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="3">
+                        <RadioButton Grid.Row="2" Grid.Column="5"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="3" ToolTip="{Binding Background.Color,RelativeSource={RelativeSource Self}}">
                             <RadioButton.Background>
                                 <SolidColorBrush Color="#ff000000"/>
                             </RadioButton.Background>
@@ -503,27 +530,27 @@
                         <TextBlock Grid.Row="1" Grid.Column="5"  TextAlignment="Center" TextWrapping="Wrap" FontSize="11"  Margin="2,0,0,5" 
                                HorizontalAlignment="Center" VerticalAlignment="Center">
                         <Run>100%</Run></TextBlock>
-                        <RadioButton Grid.Row="1" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="3" >
+                        <RadioButton Grid.Row="1" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="3"  ToolTip="{Binding Background.Color,RelativeSource={RelativeSource Self}}">
                             <RadioButton.Background>
                                 <SolidColorBrush Color="#00ffffff"/>
                             </RadioButton.Background>
                         </RadioButton>
-                        <RadioButton Grid.Row="1" Grid.Column="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="3" >
+                        <RadioButton Grid.Row="1" Grid.Column="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="3" ToolTip="{Binding Background.Color,RelativeSource={RelativeSource Self}}" >
                             <RadioButton.Background>
                                 <SolidColorBrush Color="#3fffffff"/>
                             </RadioButton.Background>
                         </RadioButton>
-                        <RadioButton Grid.Row="1" Grid.Column="3"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="3">
+                        <RadioButton Grid.Row="1" Grid.Column="3"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="3" ToolTip="{Binding Background.Color,RelativeSource={RelativeSource Self}}">
                             <RadioButton.Background>
                                 <SolidColorBrush Color="#7effffff"/>
                             </RadioButton.Background>
                         </RadioButton>
-                        <RadioButton Grid.Row="1" Grid.Column="4"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="3">
+                        <RadioButton Grid.Row="1" Grid.Column="4"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="3" ToolTip="{Binding Background.Color,RelativeSource={RelativeSource Self}}">
                             <RadioButton.Background>
                                 <SolidColorBrush Color="#bdffffff"/>
                             </RadioButton.Background>
                         </RadioButton>
-                        <RadioButton Grid.Row="1" Grid.Column="5"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="3">
+                        <RadioButton Grid.Row="1" Grid.Column="5"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="3" ToolTip="{Binding Background.Color,RelativeSource={RelativeSource Self}}">
                             <RadioButton.Background>
                                 <SolidColorBrush Color="#ffffffff"/>
                             </RadioButton.Background>
@@ -533,27 +560,27 @@
                                HorizontalAlignment="Center" VerticalAlignment="Center">
                         <Run FontWeight="Bold" FontSize="12">T</Run>int
                         </TextBlock>
-                        <RadioButton Grid.Row="0" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="3">
+                        <RadioButton Grid.Row="0" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="3" ToolTip="{Binding Background.Color,RelativeSource={RelativeSource Self}}">
                             <RadioButton.Background>
                                 <SolidColorBrush Color="{Binding Tint2}"/>
                             </RadioButton.Background>
                         </RadioButton>
-                        <RadioButton Grid.Row="0" Grid.Column="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="3">
+                        <RadioButton Grid.Row="0" Grid.Column="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="3" ToolTip="{Binding Background.Color,RelativeSource={RelativeSource Self}}">
                             <RadioButton.Background>
                                 <SolidColorBrush Color="{Binding Tint3}"/>
                             </RadioButton.Background>
                         </RadioButton>
-                        <RadioButton Grid.Row="0" Grid.Column="3"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="3">
+                        <RadioButton Grid.Row="0" Grid.Column="3"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="3" ToolTip="{Binding Background.Color,RelativeSource={RelativeSource Self}}">
                             <RadioButton.Background>
                                 <SolidColorBrush Color="{Binding Tint4}"/>
                             </RadioButton.Background>
                         </RadioButton>
-                        <RadioButton Grid.Row="0" Grid.Column="4"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="3">
+                        <RadioButton Grid.Row="0" Grid.Column="4"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="3" ToolTip="{Binding Background.Color,RelativeSource={RelativeSource Self}}">
                             <RadioButton.Background>
                                 <SolidColorBrush Color="{Binding Tint5}"/>
                             </RadioButton.Background>
                         </RadioButton>
-                        <RadioButton Grid.Row="0" Grid.Column="5"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="3">
+                        <RadioButton Grid.Row="0" Grid.Column="5"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="3" ToolTip="{Binding Background.Color,RelativeSource={RelativeSource Self}}">
                             <RadioButton.Background>
                                 <SolidColorBrush Color="{Binding Tint6}"/>
                             </RadioButton.Background>
@@ -577,27 +604,27 @@
                                HorizontalAlignment="Center" VerticalAlignment="Center">
                         <Run FontWeight="Bold" FontSize="12">S</Run>hade
                         </TextBlock>
-                        <RadioButton Grid.Row="0" Grid.Column="1"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="3">
+                        <RadioButton Grid.Row="0" Grid.Column="1"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="3" ToolTip="{Binding Background.Color,RelativeSource={RelativeSource Self}}">
                             <RadioButton.Background>
                                 <SolidColorBrush Color="{Binding Shade2}"/>
                             </RadioButton.Background>
                         </RadioButton>
-                        <RadioButton Grid.Row="0" Grid.Column="2"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="3">
+                        <RadioButton Grid.Row="0" Grid.Column="2"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="3" ToolTip="{Binding Background.Color,RelativeSource={RelativeSource Self}}">
                             <RadioButton.Background>
                                 <SolidColorBrush Color="{Binding Shade3}"/>
                             </RadioButton.Background>
                         </RadioButton>
-                        <RadioButton Grid.Row="0" Grid.Column="3"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="3">
+                        <RadioButton Grid.Row="0" Grid.Column="3"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="3" ToolTip="{Binding Background.Color,RelativeSource={RelativeSource Self}}">
                             <RadioButton.Background>
                                 <SolidColorBrush Color="{Binding Shade4}"/>
                             </RadioButton.Background>
                         </RadioButton>
-                        <RadioButton Grid.Row="0" Grid.Column="4" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="3">
+                        <RadioButton Grid.Row="0" Grid.Column="4" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="3" ToolTip="{Binding Background.Color,RelativeSource={RelativeSource Self}}">
                             <RadioButton.Background>
                                 <SolidColorBrush Color="{Binding Shade5}"/>
                             </RadioButton.Background>
                         </RadioButton>
-                        <RadioButton Grid.Row="0" Grid.Column="5"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="3">
+                        <RadioButton Grid.Row="0" Grid.Column="5"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="3" ToolTip="{Binding Background.Color,RelativeSource={RelativeSource Self}}">
                             <RadioButton.Background>
                                 <SolidColorBrush Color="{Binding Shade6}"/>
                             </RadioButton.Background>
@@ -607,27 +634,27 @@
                                HorizontalAlignment="Center" VerticalAlignment="Center">
                         <Run FontWeight="Bold" FontSize="12">T</Run>one
                         </TextBlock>
-                        <RadioButton Grid.Row="2" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="3">
+                        <RadioButton Grid.Row="2" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="3" ToolTip="{Binding Background.Color,RelativeSource={RelativeSource Self}}">
                             <RadioButton.Background>
                                 <SolidColorBrush Color="{Binding Tone2}"/>
                             </RadioButton.Background>
                         </RadioButton>
-                        <RadioButton Grid.Row="2" Grid.Column="2"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="3">
+                        <RadioButton Grid.Row="2" Grid.Column="2"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="3" ToolTip="{Binding Background.Color,RelativeSource={RelativeSource Self}}">
                             <RadioButton.Background>
                                 <SolidColorBrush Color="{Binding Tone3}"/>
                             </RadioButton.Background>
                         </RadioButton>
-                        <RadioButton Grid.Row="2" Grid.Column="3" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="3">
+                        <RadioButton Grid.Row="2" Grid.Column="3" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="3" ToolTip="{Binding Background.Color,RelativeSource={RelativeSource Self}}">
                             <RadioButton.Background>
                                 <SolidColorBrush Color="{Binding Tone4}"/>
                             </RadioButton.Background>
                         </RadioButton>
-                        <RadioButton Grid.Row="2" Grid.Column="4"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="3">
+                        <RadioButton Grid.Row="2" Grid.Column="4"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="3" ToolTip="{Binding Background.Color,RelativeSource={RelativeSource Self}}">
                             <RadioButton.Background>
                                 <SolidColorBrush Color="{Binding Tone5}"/>
                             </RadioButton.Background>
                         </RadioButton>
-                        <RadioButton Grid.Row="2" Grid.Column="5"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="3">
+                        <RadioButton Grid.Row="2" Grid.Column="5"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="3" ToolTip="{Binding Background.Color,RelativeSource={RelativeSource Self}}">
                             <RadioButton.Background>
                                 <SolidColorBrush Color="{Binding Tone6}"/>
                             </RadioButton.Background>

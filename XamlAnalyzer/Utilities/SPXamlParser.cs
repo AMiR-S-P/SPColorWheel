@@ -54,8 +54,8 @@ namespace XamlAnalyzer.Utilities
             Task.Run(async () =>
             {
                 await LoadXaml(xaml);
-            });
-            InitEvents();
+                await InitEvents();
+            }).Wait();
         }
 
         /// <summary>
@@ -70,7 +70,7 @@ namespace XamlAnalyzer.Utilities
             InitEvents();
         }
 
-        void InitEvents()
+        Task InitEvents()
         {
             ImportedResources.CollectionChanged += async (s, e) =>
             {
@@ -108,6 +108,8 @@ namespace XamlAnalyzer.Utilities
                 }
 
             };
+
+            return Task.CompletedTask;
         }
         public async Task ResetXamlParser()
         {
@@ -171,7 +173,7 @@ namespace XamlAnalyzer.Utilities
                     {
                         Document.LoadXml(Xaml);
                         //((XmlElement)Document.ChildNodes[0]).SetAttribute("xmlns", XMLNS);
-                        Xaml = Document.InnerXml;
+                        //Xaml = Document.InnerXml;
                         //LoadXaml(Xaml);
 
                         //ms.WriteAsync(Encoding.UTF8.GetBytes(Xaml), 0, xaml.Length);
@@ -226,13 +228,13 @@ namespace XamlAnalyzer.Utilities
                 throw new FileNotFoundException();
             }
 
-            using (FileStream file = new FileStream(path, FileMode.Open))
+            using (TextReader file = new StreamReader(path, Encoding.UTF8, true))
             {
-                byte[] bytes = new byte[file.Length];
-                await file.ReadAsync(bytes);
+                //byte[] bytes = new byte[file.Length];
+                //await file.ReadAsync(bytes);
                 ResourceFileModel resourceFileModel = new ResourceFileModel()
                 {
-                    Content = Encoding.UTF8.GetString(bytes),
+                    Content = await  file.ReadToEndAsync()/* Encoding.UTF8.GetString(bytes)*/,
                     FilePath = path,
                     Name = path.Substring(path.LastIndexOf('\\') + 1)
                 };

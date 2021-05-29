@@ -35,7 +35,7 @@
             </ResourceDictionary.MergedDictionaries>
 
             <Style TargetType="Button" BasedOn="{StaticResource buttonStyle}"/>
-            <Style TargetType="cc:CheckButton" BasedOn="{StaticResource checkButtonStyle}"/>
+            <Style TargetType="{x:Type cc:CheckButton}" BasedOn="{StaticResource checkButtonStyle}"/>
         </ResourceDictionary>
 
     </Window.Resources>

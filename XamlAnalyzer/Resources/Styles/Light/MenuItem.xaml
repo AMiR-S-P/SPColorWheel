@@ -269,7 +269,7 @@
             </Trigger>
         </ControlTemplate.Triggers>
     </ControlTemplate>
-    <Style TargetType="{x:Type MenuItem}" >
+    <!--<Style TargetType="{x:Type MenuItem}" >
         <Setter Property="HorizontalContentAlignment" Value="{Binding HorizontalContentAlignment, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}"/>
         <Setter Property="VerticalContentAlignment" Value="{Binding VerticalContentAlignment, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}"/>
         <Setter Property="Background" Value="Transparent"/>
@@ -278,7 +278,7 @@
         <Setter Property="ScrollViewer.PanningMode" Value="Both"/>
         <Setter Property="Stylus.IsFlicksEnabled" Value="False"/>
         <Setter Property="Template" Value="{DynamicResource {ComponentResourceKey ResourceId=SubmenuItemTemplateKey, TypeInTargetAssembly={x:Type MenuItem}}}"/>
-        <!--<Setter Property="Template" >
+        --><!--<Setter Property="Template" >
             <Setter.Value>
                 <ControlTemplate TargetType="MenuItem">
                     <Border>
@@ -295,7 +295,7 @@
                     </Border>
                 </ControlTemplate>
             </Setter.Value>
-        </Setter>-->
+        </Setter>--><!--
 
         <Style.Triggers>
             <Trigger Property="Role" Value="TopLevelHeader">
@@ -316,7 +316,7 @@
                 <Setter Property="Template" Value="{DynamicResource {ComponentResourceKey ResourceId=SubmenuHeaderTemplateKey, TypeInTargetAssembly={x:Type MenuItem}}}"/>
             </Trigger>
         </Style.Triggers>
-    </Style>
+    </Style>-->
     
     
     

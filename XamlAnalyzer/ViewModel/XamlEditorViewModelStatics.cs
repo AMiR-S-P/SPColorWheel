@@ -38,27 +38,27 @@ namespace XamlAnalyzer.ViewModel
         }
         // Using a DependencyProperty as the backing store for Color.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty Color5Property =
-            DependencyProperty.Register("Color5", typeof(Color), typeof(XamlEditorViewModel), new PropertyMetadata(Colors.Transparent));
+            DependencyProperty.Register("Color5", typeof(Color), typeof(XamlEditorViewModel), new PropertyMetadata(Colors.Transparent, PropertyChangedCallBack));
 
 
         // Using a DependencyProperty as the backing store for Color4.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty Color4Property =
-            DependencyProperty.Register("Color4", typeof(Color), typeof(XamlEditorViewModel), new PropertyMetadata(Colors.Transparent));
+            DependencyProperty.Register("Color4", typeof(Color), typeof(XamlEditorViewModel), new PropertyMetadata(Colors.Transparent, PropertyChangedCallBack));
 
 
         // Using a DependencyProperty as the backing store for Color3.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty Color3Property =
-            DependencyProperty.Register("Color3", typeof(Color), typeof(XamlEditorViewModel), new PropertyMetadata(Colors.Transparent));
+            DependencyProperty.Register("Color3", typeof(Color), typeof(XamlEditorViewModel), new PropertyMetadata(Colors.Transparent, PropertyChangedCallBack));
 
 
         // Using a DependencyProperty as the backing store for Color.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty Color2Property =
-            DependencyProperty.Register("Color2", typeof(Color), typeof(XamlEditorViewModel), new PropertyMetadata(Colors.Transparent));
+            DependencyProperty.Register("Color2", typeof(Color), typeof(XamlEditorViewModel), new PropertyMetadata(Colors.Transparent, PropertyChangedCallBack));
 
 
         // Using a DependencyProperty as the backing store for MainColor.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty MainColorProperty =
-            DependencyProperty.Register("MainColor", typeof(Color), typeof(XamlEditorViewModel), new PropertyMetadata(Colors.Transparent));
+            DependencyProperty.Register("MainColor", typeof(Color), typeof(XamlEditorViewModel), new PropertyMetadata(Colors.Transparent, PropertyChangedCallBack));
 
         #endregion
 
@@ -91,20 +91,20 @@ namespace XamlAnalyzer.ViewModel
 
         // Using a DependencyProperty as the backing store for Tint6.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty Tint6Property =
-            DependencyProperty.Register("Tint6", typeof(Color), typeof(XamlEditorViewModel), new PropertyMetadata(Colors.Transparent));
+            DependencyProperty.Register("Tint6", typeof(Color), typeof(XamlEditorViewModel), new PropertyMetadata(Colors.Transparent, PropertyChangedCallBack));
         // Using a DependencyProperty as the backing store for Tint5.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty Tint5Property =
-            DependencyProperty.Register("Tint5", typeof(Color), typeof(XamlEditorViewModel), new PropertyMetadata(Colors.Transparent));
+            DependencyProperty.Register("Tint5", typeof(Color), typeof(XamlEditorViewModel), new PropertyMetadata(Colors.Transparent, PropertyChangedCallBack));
         // Using a DependencyProperty as the backing store for Tint4.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty Tint4Property =
-            DependencyProperty.Register("Tint4", typeof(Color), typeof(XamlEditorViewModel), new PropertyMetadata(Colors.Transparent));
+            DependencyProperty.Register("Tint4", typeof(Color), typeof(XamlEditorViewModel), new PropertyMetadata(Colors.Transparent, PropertyChangedCallBack));
         // Using a DependencyProperty as the backing store for Tint3.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty Tint3Property =
-            DependencyProperty.Register("Tint3", typeof(Color), typeof(XamlEditorViewModel), new PropertyMetadata(Colors.Transparent));
+            DependencyProperty.Register("Tint3", typeof(Color), typeof(XamlEditorViewModel), new PropertyMetadata(Colors.Transparent, PropertyChangedCallBack));
 
         // Using a DependencyProperty as the backing store for Tint2.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty Tint2Property =
-            DependencyProperty.Register("Tint2", typeof(Color), typeof(XamlEditorViewModel), new PropertyMetadata(Colors.Transparent));
+            DependencyProperty.Register("Tint2", typeof(Color), typeof(XamlEditorViewModel), new PropertyMetadata(Colors.Transparent, PropertyChangedCallBack));
         #endregion
 
         #region Tones
@@ -138,23 +138,24 @@ namespace XamlAnalyzer.ViewModel
 
         // Using a DependencyProperty as the backing store for Tone6.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty Tone6Property =
-            DependencyProperty.Register("Tone6", typeof(Color), typeof(XamlEditorViewModel), new PropertyMetadata(Colors.Transparent));
+            DependencyProperty.Register("Tone6", typeof(Color), typeof(XamlEditorViewModel), new PropertyMetadata(Colors.Transparent,PropertyChangedCallBack));
+
 
         // Using a DependencyProperty as the backing store for Tone5.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty Tone5Property =
-            DependencyProperty.Register("Tone5", typeof(Color), typeof(XamlEditorViewModel), new PropertyMetadata(Colors.Transparent));
+            DependencyProperty.Register("Tone5", typeof(Color), typeof(XamlEditorViewModel), new PropertyMetadata(Colors.Transparent, PropertyChangedCallBack));
 
         // Using a DependencyProperty as the backing store for MyProperty.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty Tone4Property =
-            DependencyProperty.Register("Tone4", typeof(Color), typeof(XamlEditorViewModel), new PropertyMetadata(Colors.Transparent   ));
+            DependencyProperty.Register("Tone4", typeof(Color), typeof(XamlEditorViewModel), new PropertyMetadata(Colors.Transparent, PropertyChangedCallBack));
 
         // Using a DependencyProperty as the backing store for Tone3.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty Tone3Property =
-            DependencyProperty.Register("Tone3", typeof(Color), typeof(XamlEditorViewModel), new PropertyMetadata(Colors.Transparent));
+            DependencyProperty.Register("Tone3", typeof(Color), typeof(XamlEditorViewModel), new PropertyMetadata(Colors.Transparent, PropertyChangedCallBack));
 
         // Using a DependencyProperty as the backing store for Tone2.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty Tone2Property =
-            DependencyProperty.Register("Tone2", typeof(Color), typeof(XamlEditorViewModel), new PropertyMetadata(Colors.Transparent));
+            DependencyProperty.Register("Tone2", typeof(Color), typeof(XamlEditorViewModel), new PropertyMetadata(Colors.Transparent, PropertyChangedCallBack));
 
 
         #endregion
@@ -190,23 +191,31 @@ namespace XamlAnalyzer.ViewModel
 
         // Using a DependencyProperty as the backing store for Shade6.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty Shade6Property =
-            DependencyProperty.Register("Shade6", typeof(Color), typeof(XamlEditorViewModel), new PropertyMetadata(Colors.Transparent));
+            DependencyProperty.Register("Shade6", typeof(Color), typeof(XamlEditorViewModel), new PropertyMetadata(Colors.Transparent, PropertyChangedCallBack));
         // Using a DependencyProperty as the backing store for Shade5.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty Shade5Property =
-            DependencyProperty.Register("Shade5", typeof(Color), typeof(XamlEditorViewModel), new PropertyMetadata(Colors.Transparent));
+            DependencyProperty.Register("Shade5", typeof(Color), typeof(XamlEditorViewModel), new PropertyMetadata(Colors.Transparent, PropertyChangedCallBack));
         // Using a DependencyProperty as the backing store for Shade4.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty Shade4Property =
-            DependencyProperty.Register("Shade4", typeof(Color), typeof(XamlEditorViewModel), new PropertyMetadata(Colors.Transparent));
+            DependencyProperty.Register("Shade4", typeof(Color), typeof(XamlEditorViewModel), new PropertyMetadata(Colors.Transparent, PropertyChangedCallBack));
 
         // Using a DependencyProperty as the backing store for Shade3.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty Shade3Property =
-            DependencyProperty.Register("Shade3", typeof(Color), typeof(XamlEditorViewModel), new PropertyMetadata(Colors.Transparent));
+            DependencyProperty.Register("Shade3", typeof(Color), typeof(XamlEditorViewModel), new PropertyMetadata(Colors.Transparent, PropertyChangedCallBack));
 
         // Using a DependencyProperty as the backing store for Shade2.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty Shade2Property =
-            DependencyProperty.Register("Shade2", typeof(Color), typeof(XamlEditorViewModel), new PropertyMetadata(Colors.Transparent));
+            DependencyProperty.Register("Shade2", typeof(Color), typeof(XamlEditorViewModel), new PropertyMetadata(Colors.Transparent, PropertyChangedCallBack));
 
 
+        #endregion
+
+
+        #region Common
+        private static void PropertyChangedCallBack(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            (d as XamlEditorViewModel)?.BrushToXaml?.Convert();
+        }
         #endregion
     }
 }
