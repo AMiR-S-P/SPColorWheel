@@ -29,6 +29,7 @@ namespace SP_Color_Wheel.ViewModels
             GoogleCommand = new AsyncRelayCommand<object>(OnGoogle);
             Versions.Add(Assembly.GetExecutingAssembly().GetName());
             Versions.Add(Assembly.GetAssembly(typeof(XamlAnalyzer.Model.ControlModel)).GetName());
+            Versions.Add(Assembly.GetAssembly(typeof(ICSharpCode.AvalonEdit.TextEditor)).GetName());
         }
 
         private Task OnGitHub(object arg)
