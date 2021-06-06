@@ -23,17 +23,7 @@ namespace SP_Color_Wheel.UserControls.Properties.Wheel.Harmonies
         public AnalogousProperties()
         {
             InitializeComponent();
-            DataContextChanged += AnalogousProperties_DataContextChanged;
         }
 
-        private void AnalogousProperties_DataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
-        {
-         }
-
-        private void Button_Click(object sender, RoutedEventArgs e)
-        
-        {
-
-        }
     }
 }

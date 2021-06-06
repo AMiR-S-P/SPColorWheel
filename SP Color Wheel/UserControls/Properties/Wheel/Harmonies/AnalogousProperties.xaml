@@ -9,6 +9,5 @@
     <StackPanel Margin="5">
         <TextBlock Text="Angle" FontSize="14" Foreground="Black"/>
         <TextBox Text="{Binding Angle,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Stretch" VerticalAlignment="Center" Margin="5" />
-        <Button Content="test" Click="Button_Click"/>
     </StackPanel>
 </UserControl>
