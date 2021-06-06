@@ -19,10 +19,16 @@
     <PackageLicenseFile>New Text Document.txt</PackageLicenseFile>
     <PackageIcon>SPColorWheel_128x128.png</PackageIcon>
     <NeutralLanguage>en-US</NeutralLanguage>
+    <PreserveCompilationContext>false</PreserveCompilationContext>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='//Debug|AnyCPU'">
     <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <DebugType>none</DebugType>
+    <DebugSymbols>false</DebugSymbols>
   </PropertyGroup>
 
   <ItemGroup>

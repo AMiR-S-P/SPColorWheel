@@ -7,6 +7,11 @@
     <AssemblyOriginatorKeyFile>SPCWKey.pfx</AssemblyOriginatorKeyFile>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <DebugType>none</DebugType>
+    <DebugSymbols>false</DebugSymbols>
+  </PropertyGroup>
+
   <ItemGroup>
     <None Remove="Resources\Fonts\Ubuntu-Bold.ttf" />
     <None Remove="Resources\Fonts\Ubuntu-BoldItalic.ttf" />
